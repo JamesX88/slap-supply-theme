@@ -1,0 +1,230 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+<footer class="slap-footer-v2">
+  <div class="page-width">
+    <div class="slap-footer-v2__grid">
+      <!-- Column 1: Brand -->
+      <div class="slap-footer-v2__col slap-footer-v2__col--brand">
+        <h3 class="slap-footer-v2__logo">SLAP SUPPLY</h3>
+        <p class="slap-footer-v2__tagline">{{ section.settings.tagline }}</p>
+      </div>
+
+      <!-- Column 2: Products -->
+      <div class="slap-footer-v2__col">
+        <h4 class="slap-footer-v2__heading">PRODUCTS</h4>
+        <ul class="slap-footer-v2__links">
+          <li><a href="#">Custom Stickers</a></li>
+          <li><a href="#">Product Labels</a></li>
+          <li><a href="#">Adhesive Prints</a></li>
+          <li><a href="#">Art Prints</a></li>
+          <li><a href="#">Bulk Orders</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Company -->
+      <div class="slap-footer-v2__col">
+        <h4 class="slap-footer-v2__heading">COMPANY</h4>
+        <ul class="slap-footer-v2__links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact -->
+      <div class="slap-footer-v2__col">
+        <h4 class="slap-footer-v2__heading">GET IN TOUCH</h4>
+        <div class="slap-footer-v2__contact">
+          <p>hello@slapsupply.com</p>
+          <p>1-800-SLAP-IT</p>
+        </div>
+        <div class="slap-footer-v2__social">
+          <a href="#" class="slap-footer-v2__social-icon">IG</a>
+          <a href="#" class="slap-footer-v2__social-icon">TW</a>
+          <a href="#" class="slap-footer-v2__social-icon">TK</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="slap-footer-v2__bottom">
+      <span class="slap-footer-v2__copyright">&copy; 2026 SLAP SUPPLY CO. ALL RIGHTS RESERVED.</span>
+      <span class="slap-footer-v2__concept">CONCEPT 01 — "THE PRESS ROOM" — SAFETY GREEN — NEO-BRUTALIST INDUSTRIAL</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .slap-footer-v2 {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 4rem 0 2rem;
+    border-top: none;
+  }
+
+  .slap-footer-v2__grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .slap-footer-v2__logo {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin: 0 0 0.8rem;
+  }
+
+  .slap-footer-v2__tagline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 250px;
+  }
+
+  .slap-footer-v2__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 0 1.2rem;
+  }
+
+  .slap-footer-v2__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .slap-footer-v2__links li {
+    margin-bottom: 0.6rem;
+  }
+
+  .slap-footer-v2__links a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .slap-footer-v2__links a:hover {
+    color: #39FF14 !important;
+  }
+
+  .slap-footer-v2__contact p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 0.4rem;
+  }
+
+  .slap-footer-v2__social {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .slap-footer-v2__social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .slap-footer-v2__social-icon:hover {
+    border-color: #39FF14;
+    color: #39FF14 !important;
+    background: rgba(57, 255, 20, 0.1);
+  }
+
+  .slap-footer-v2__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .slap-footer-v2__copyright {
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+  }
+
+  .slap-footer-v2__concept {
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 989px) {
+    .slap-footer-v2__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-footer-v2__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .slap-footer-v2__bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Footer",
+  "tag": "section",
+  "class": "section slap-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "default": "Industrial-grade custom stickers, labels, adhesives, and prints. Built for creators and businesses.",
+      "label": "Tagline"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Footer"
+    }
+  ]
+}
+{% endschema %}

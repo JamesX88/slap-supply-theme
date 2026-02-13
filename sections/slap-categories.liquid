@@ -14,233 +14,215 @@
   }
 {%- endstyle -%}
 
-<div class="slap-categories color-{{ section.settings.color_scheme }}">
-  <!-- Section Header -->
+<div class="slap-categories-v2">
   <div class="page-width section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank -%}
-      <div class="slap-categories__header">
-        <div class="slap-categories__label slap-label">{{ section.settings.label_text }}</div>
-        <h2 class="slap-categories__heading">{{ section.settings.heading }}</h2>
-        {%- if section.settings.description != blank -%}
-          <p class="slap-categories__description">{{ section.settings.description }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    <!-- Section Header -->
+    <div class="slap-categories-v2__header">
+      <div class="slap-categories-v2__station-label">STATION 02 — PRODUCTS</div>
+      <h2 class="slap-categories-v2__heading">WHAT WE MAKE</h2>
+    </div>
 
     <!-- Category Grid -->
-    <div class="slap-categories__grid slap-categories__grid--{{ section.blocks.size }}">
+    <div class="slap-categories-v2__grid">
       {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="slap-category-card" {{ block.shopify_attributes }}>
-          <div class="slap-category-card__image-wrapper">
+        <a href="{{ block.settings.link | default: '#' }}" class="slap-cat-card" {{ block.shopify_attributes }}>
+          <div class="slap-cat-card__image-wrapper">
             {%- if block.settings.image != blank -%}
               {{
                 block.settings.image
                 | image_url: width: 800
                 | image_tag:
-                  class: 'slap-category-card__image',
+                  class: 'slap-cat-card__image',
                   sizes: '(min-width: 750px) 25vw, 50vw',
                   widths: '200, 400, 600, 800'
               }}
             {%- else -%}
-              <div class="slap-category-card__placeholder">
-                <span class="slap-category-card__placeholder-icon">{{ block.settings.icon_text }}</span>
+              <div class="slap-cat-card__placeholder">
+                <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=400&q=80" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
               </div>
             {%- endif -%}
-            <div class="slap-category-card__overlay">
-              <span class="slap-category-card__cta">SHOP NOW →</span>
-            </div>
-          </div>
-          <div class="slap-category-card__content">
-            <span class="slap-category-card__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-            <h3 class="slap-category-card__title">{{ block.settings.title }}</h3>
-            {%- if block.settings.subtitle != blank -%}
-              <p class="slap-category-card__subtitle">{{ block.settings.subtitle }}</p>
+            {%- if block.settings.badge_text != blank -%}
+              <div class="slap-cat-card__badge">{{ block.settings.badge_text }}</div>
             {%- endif -%}
+          </div>
+          <div class="slap-cat-card__content">
+            <h3 class="slap-cat-card__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="slap-cat-card__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+            <span class="slap-cat-card__configure">CONFIGURE <span class="slap-cat-card__configure-arrow">›</span></span>
           </div>
         </a>
       {%- endfor -%}
     </div>
   </div>
 
-  <!-- Caution Tape Divider -->
-  <div class="section-divider-caution"></div>
+  <!-- Red dashed divider -->
+  <div class="slap-red-divider"></div>
 </div>
 
 <style>
-  .slap-categories {
-    background-color: var(--slap-white);
+  .slap-categories-v2 {
+    background-color: #E8E4DF;
   }
 
-  .slap-categories__header {
+  .slap-categories-v2__header {
     text-align: left;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
 
-  .slap-categories__label {
-    margin-bottom: 1rem;
+  .slap-categories-v2__station-label {
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.8rem;
   }
 
-  .slap-categories__heading {
+  .slap-categories-v2__heading {
     font-family: 'Oswald', sans-serif !important;
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1;
-    margin: 0 0 1rem;
-    color: var(--slap-black);
-  }
-
-  .slap-categories__description {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    color: var(--slap-mid-gray);
-    max-width: 600px;
-    line-height: 1.5;
     margin: 0;
+    color: #1a1a1a;
   }
 
   /* Category Grid */
-  .slap-categories__grid {
+  .slap-categories-v2__grid {
     display: grid;
     gap: 1.5rem;
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .slap-categories__grid--2 { grid-template-columns: repeat(2, 1fr); }
-  .slap-categories__grid--3 { grid-template-columns: repeat(3, 1fr); }
-  .slap-categories__grid--4 { grid-template-columns: repeat(4, 1fr); }
-  .slap-categories__grid--5 { grid-template-columns: repeat(5, 1fr); }
-  .slap-categories__grid--6 { grid-template-columns: repeat(3, 1fr); }
-
   /* Category Card */
-  .slap-category-card {
+  .slap-cat-card {
     display: block;
     text-decoration: none;
     color: inherit;
-    border: 3px solid var(--slap-black);
-    background: var(--slap-white);
-    box-shadow: 4px 4px 0 var(--slap-neon-green);
+    border: 2px solid #1a1a1a;
+    background: #fff;
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     overflow: hidden;
   }
 
-  .slap-category-card:hover {
-    box-shadow: 6px 6px 0 var(--slap-neon-green);
+  .slap-cat-card:hover {
+    box-shadow: 4px 4px 0 #39FF14;
     transform: translate(-2px, -2px);
+    text-decoration: none;
+    color: inherit;
   }
 
-  .slap-category-card:hover .slap-category-card__image {
-    transform: scale(1.05);
-  }
-
-  .slap-category-card:hover .slap-category-card__overlay {
-    opacity: 1;
-  }
-
-  .slap-category-card__image-wrapper {
+  .slap-cat-card__image-wrapper {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1;
-    border-bottom: 3px solid var(--slap-black);
+    aspect-ratio: 4/3;
+    border-bottom: 2px solid #1a1a1a;
   }
 
-  .slap-category-card__image {
+  .slap-cat-card__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
+    display: block;
   }
 
-  .slap-category-card__placeholder {
+  .slap-cat-card:hover .slap-cat-card__image {
+    transform: scale(1.05);
+  }
+
+  .slap-cat-card__placeholder {
     width: 100%;
     height: 100%;
-    background: var(--slap-off-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image:
-      linear-gradient(rgba(18, 18, 18, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(18, 18, 18, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
   }
 
-  .slap-category-card__placeholder-icon {
-    font-size: 3rem;
-    opacity: 0.3;
-  }
-
-  .slap-category-card__overlay {
+  .slap-cat-card__badge {
     position: absolute;
-    inset: 0;
-    background: rgba(57, 255, 20, 0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .slap-category-card__cta {
-    font-family: 'Oswald', sans-serif;
+    top: 10px;
+    left: 10px;
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.6rem;
     font-weight: 700;
-    font-size: 1.2rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--slap-black);
+    color: #fff;
+    background: #1a1a1a;
+    padding: 4px 8px;
+    z-index: 2;
   }
 
-  .slap-category-card__content {
-    padding: 1.2rem;
-    position: relative;
+  .slap-cat-card__content {
+    padding: 1rem 1.2rem 1.2rem;
   }
 
-  .slap-category-card__number {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--slap-neon-green);
-    letter-spacing: 0.1em;
-    display: block;
-    margin-bottom: 0.3rem;
-    text-shadow: 1px 1px 0 var(--slap-black);
-    -webkit-text-stroke: 0.5px var(--slap-black);
-  }
-
-  .slap-category-card__title {
+  .slap-cat-card__title {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
     text-transform: uppercase;
     margin: 0 0 0.3rem;
     line-height: 1.2;
-    color: var(--slap-black);
+    color: #1a1a1a;
   }
 
-  .slap-category-card__subtitle {
+  .slap-cat-card__subtitle {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: var(--slap-mid-gray);
-    margin: 0;
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0 0 0.8rem;
     line-height: 1.4;
   }
 
+  .slap-cat-card__configure {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .slap-cat-card__configure-arrow {
+    font-size: 1.1em;
+    transition: transform 0.2s ease;
+  }
+
+  .slap-cat-card:hover .slap-cat-card__configure-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Red dashed divider */
+  .slap-red-divider {
+    width: 100%;
+    height: 0;
+    border-top: 3px dashed #cc0000;
+    margin: 0;
+  }
+
   @media screen and (max-width: 989px) {
-    .slap-categories__grid {
+    .slap-categories-v2__grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media screen and (max-width: 749px) {
-    .slap-categories__grid {
+    .slap-categories-v2__grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
 
-    .slap-category-card__content {
+    .slap-cat-card__content {
       padding: 0.8rem;
     }
 
-    .slap-category-card__title {
+    .slap-cat-card__title {
       font-size: 1rem;
     }
   }
@@ -266,12 +248,6 @@
       "id": "heading",
       "default": "PRODUCT CATEGORIES",
       "label": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "description",
-      "default": "From die-cut stickers to industrial labels — we print it all. Choose your weapon.",
-      "label": "Description"
     },
     {
       "type": "color_scheme",
@@ -314,20 +290,20 @@
         {
           "type": "text",
           "id": "title",
-          "default": "STICKERS",
+          "default": "CUSTOM STICKERS",
           "label": "Title"
         },
         {
           "type": "text",
           "id": "subtitle",
-          "default": "Custom die-cut stickers",
+          "default": "Die-cut, kiss-cut, vinyl, holographic",
           "label": "Subtitle"
         },
         {
           "type": "text",
-          "id": "icon_text",
-          "default": "◆",
-          "label": "Placeholder Icon"
+          "id": "badge_text",
+          "default": "BEST SELLER",
+          "label": "Badge Text"
         },
         {
           "type": "url",
@@ -344,33 +320,33 @@
         {
           "type": "category",
           "settings": {
-            "title": "STICKERS",
-            "subtitle": "Die-cut, kiss-cut, vinyl & more",
-            "icon_text": "◆"
+            "title": "CUSTOM STICKERS",
+            "subtitle": "Die-cut, kiss-cut, vinyl, holographic",
+            "badge_text": "BEST SELLER"
           }
         },
         {
           "type": "category",
           "settings": {
-            "title": "LABELS",
-            "subtitle": "Product labels & packaging",
-            "icon_text": "▬"
+            "title": "PRODUCT LABELS",
+            "subtitle": "Rolls, sheets, waterproof, freezer-safe",
+            "badge_text": "B2B READY"
           }
         },
         {
           "type": "category",
           "settings": {
-            "title": "ADHESIVES",
-            "subtitle": "Industrial-grade adhesive solutions",
-            "icon_text": "●"
+            "title": "ADHESIVE PRINTS",
+            "subtitle": "Wall graphics, floor decals, window clings",
+            "badge_text": "LARGE FORMAT"
           }
         },
         {
           "type": "category",
           "settings": {
-            "title": "PRINTS",
-            "subtitle": "Large format & specialty prints",
-            "icon_text": "■"
+            "title": "CUSTOM PRINTS",
+            "subtitle": "Art prints, posters, packaging inserts",
+            "badge_text": "NEW"
           }
         }
       ]

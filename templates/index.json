@@ -2,66 +2,18 @@
   "sections": {
     "slap_hero": {
       "type": "slap-hero",
-      "blocks": {
-        "trust_1": {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "✓",
-            "badge_text": "Free Shipping on $50+"
-          }
-        },
-        "trust_2": {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "⚡",
-            "badge_text": "3-Day Turnaround"
-          }
-        },
-        "trust_3": {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "★",
-            "badge_text": "Weatherproof & Durable"
-          }
-        }
-      },
-      "block_order": ["trust_1", "trust_2", "trust_3"],
       "settings": {
-        "overlay_opacity": 60,
-        "hero_height": 90,
-        "subtitle": "CUSTOM STICKER COMPANY",
-        "heading": "<p>STICK IT.<br><em>YOUR WAY.<\/em><\/p>",
-        "subheading": "Premium custom stickers, labels, and adhesive prints. Built for brands that refuse to blend in.",
-        "button_label_1": "START YOUR ORDER",
-        "button_link_1": "shopify:\/\/collections\/all",
-        "button_label_2": "SEE OUR WORK",
+        "button_label_1": "START CUSTOMIZING",
+        "button_link_1": "",
+        "button_label_2": "VIEW CATALOG",
         "button_link_2": "",
-        "show_trust_badges": true,
-        "show_scroll_indicator": true,
-        "color_scheme": "scheme-3"
+        "color_scheme": "scheme-1"
       }
     },
     "slap_marquee_1": {
       "type": "slap-marquee",
-      "blocks": {
-        "text_1": { "type": "text", "settings": { "text": "STICKERS" } },
-        "text_2": { "type": "text", "settings": { "text": "LABELS" } },
-        "text_3": { "type": "text", "settings": { "text": "ADHESIVES" } },
-        "text_4": { "type": "text", "settings": { "text": "PRINTS" } },
-        "text_5": { "type": "text", "settings": { "text": "CUSTOM ORDERS" } },
-        "text_6": { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
-        "text_7": { "type": "text", "settings": { "text": "3-DAY TURNAROUND" } },
-        "text_8": { "type": "text", "settings": { "text": "WEATHERPROOF" } }
-      },
-      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5", "text_6", "text_7", "text_8"],
       "settings": {
-        "background_color": "#121212",
-        "text_color": "#39FF14",
-        "border_color": "#39FF14",
-        "separator": "//",
-        "speed": 25,
-        "font_size": 11,
-        "padding": 6,
+        "overlay_text": "PRODUCT CATEGORIES",
         "color_scheme": "scheme-3"
       }
     },
@@ -71,33 +23,33 @@
         "cat_1": {
           "type": "category",
           "settings": {
-            "title": "STICKERS",
-            "subtitle": "Die-cut, kiss-cut, vinyl & more",
-            "icon_text": "◆"
+            "title": "CUSTOM STICKERS",
+            "subtitle": "Die-cut, kiss-cut, vinyl, holographic",
+            "badge_text": "BEST SELLER"
           }
         },
         "cat_2": {
           "type": "category",
           "settings": {
-            "title": "LABELS",
-            "subtitle": "Product labels & packaging",
-            "icon_text": "▬"
+            "title": "PRODUCT LABELS",
+            "subtitle": "Rolls, sheets, waterproof, freezer-safe",
+            "badge_text": "B2B READY"
           }
         },
         "cat_3": {
           "type": "category",
           "settings": {
-            "title": "ADHESIVES",
-            "subtitle": "Industrial-grade adhesive solutions",
-            "icon_text": "●"
+            "title": "ADHESIVE PRINTS",
+            "subtitle": "Wall graphics, floor decals, window clings",
+            "badge_text": "LARGE FORMAT"
           }
         },
         "cat_4": {
           "type": "category",
           "settings": {
-            "title": "PRINTS",
-            "subtitle": "Large format & specialty prints",
-            "icon_text": "■"
+            "title": "CUSTOM PRINTS",
+            "subtitle": "Art prints, posters, packaging inserts",
+            "badge_text": "NEW"
           }
         }
       },
@@ -105,24 +57,6 @@
       "settings": {
         "label_text": "WHAT WE MAKE",
         "heading": "PRODUCT CATEGORIES",
-        "description": "From die-cut stickers to industrial labels — we print it all. Choose your weapon.",
-        "color_scheme": "scheme-1",
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "slap_featured": {
-      "type": "slap-featured-products",
-      "settings": {
-        "label_text": "FROM THE PRESS",
-        "heading": "FEATURED PRODUCTS",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "image_ratio": "square",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "show_view_all": true,
         "color_scheme": "scheme-1",
         "padding_top": 60,
         "padding_bottom": 60
@@ -134,33 +68,33 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "icon_text": "📤",
-            "title": "UPLOAD YOUR DESIGN",
-            "text": "Upload your artwork or let us know what you need. We accept all major file formats."
+            "icon_text": "↑",
+            "title": "UPLOAD",
+            "text": "Drop your artwork or design from scratch using our editor"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "icon_text": "⚙️",
-            "title": "CHOOSE YOUR SPECS",
-            "text": "Pick your material, size, finish, and quantity. We'll handle the rest."
+            "icon_text": "⚙",
+            "title": "CONFIGURE",
+            "text": "Choose size, material, finish, and quantity"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "icon_text": "🖨️",
-            "title": "WE PRINT IT",
-            "text": "Your order hits our press room floor. Premium materials, precision cuts."
+            "icon_text": "≡",
+            "title": "PROOF",
+            "text": "Review your digital proof — adjust until it's perfect"
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
             "icon_text": "📦",
-            "title": "FAST DELIVERY",
-            "text": "Shipped to your door in 3-5 business days. Free shipping on orders over $50."
+            "title": "SHIP",
+            "text": "We print, cut, and ship in as fast as 3 business days"
           }
         }
       },
@@ -168,47 +102,22 @@
       "settings": {
         "label_text": "THE PROCESS",
         "heading": "HOW IT WORKS",
-        "description": "From concept to delivery in 4 simple steps. No BS, no hidden fees.",
-        "button_label": "GET STARTED NOW",
-        "button_link": "shopify:\/\/collections\/all",
-        "color_scheme": "scheme-2",
-        "padding_top": 60,
-        "padding_bottom": 60
+        "description": "",
+        "button_label": "",
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "slap_cta": {
       "type": "slap-cta-banner",
-      "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "number": "10K+",
-            "label": "Orders Shipped"
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "number": "500+",
-            "label": "5-Star Reviews"
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "number": "3 DAY",
-            "label": "Avg. Turnaround"
-          }
-        }
-      },
-      "block_order": ["stat_1", "stat_2", "stat_3"],
       "settings": {
-        "label_text": "READY TO PRINT?",
-        "heading": "<p>LET'S MAKE<br>SOMETHING <em>LOUD<\/em><\/p>",
-        "description": "Whether you need 50 stickers or 50,000 labels — we've got the press power to deliver. B2B and B2C welcome.",
-        "button_label_1": "GET A QUOTE",
+        "label_text": "",
+        "heading": "<p>READY TO <em>SLAP</em>?</p>",
+        "description": "Upload your design, configure your order, and get a free instant proof. No account required.",
+        "button_label_1": "START YOUR ORDER",
         "button_link_1": "",
-        "button_label_2": "CONTACT US",
+        "button_label_2": "",
         "button_link_2": "",
         "color_scheme": "scheme-3",
         "padding_top": 80,
@@ -220,7 +129,6 @@
     "slap_hero",
     "slap_marquee_1",
     "slap_categories",
-    "slap_featured",
     "slap_how_it_works",
     "slap_cta"
   ]

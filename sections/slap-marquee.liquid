@@ -1,49 +1,56 @@
 {{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
 
-<div class="slap-marquee-section color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.background_color }};">
-  <div class="slap-marquee" style="
-    background-color: {{ section.settings.background_color }};
-    color: {{ section.settings.text_color }};
-    border-top-color: {{ section.settings.border_color }};
-    border-bottom-color: {{ section.settings.border_color }};
-    font-size: {{ section.settings.font_size }}rem;
-    padding: {{ section.settings.padding }}rem 0;
-  ">
-    <div class="slap-marquee__inner" style="animation-duration: {{ section.settings.speed }}s;">
-      {%- for block in section.blocks -%}
-        <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
-      {%- endfor -%}
-      {%- for block in section.blocks -%}
-        <span>{{ block.settings.text }}</span>
-        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
-      {%- endfor -%}
-      {%- for block in section.blocks -%}
-        <span>{{ block.settings.text }}</span>
-        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
-      {%- endfor -%}
-      {%- for block in section.blocks -%}
-        <span>{{ block.settings.text }}</span>
-        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
-      {%- endfor -%}
+<div class="slap-caution-divider">
+  <div class="slap-caution-divider__tape">
+    <div class="slap-caution-divider__text-overlay">
+      <span>{{ section.settings.overlay_text }}</span>
     </div>
   </div>
 </div>
 
 <style>
-  .slap-marquee-section {
+  .slap-caution-divider {
+    position: relative;
     overflow: hidden;
   }
 
-  .slap-marquee__separator {
-    padding: 0 1.5rem;
-    opacity: 0.5;
+  .slap-caution-divider__tape {
+    width: 100%;
+    height: 48px;
+    background: repeating-linear-gradient(
+      -45deg,
+      #39FF14,
+      #39FF14 10px,
+      #121212 10px,
+      #121212 20px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slap-caution-divider__text-overlay {
+    position: relative;
+    z-index: 2;
+  }
+
+  .slap-caution-divider__text-overlay span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #121212;
+    padding: 6px 20px;
+    display: inline-block;
   }
 </style>
 
 {% schema %}
 {
-  "name": "SLAP Marquee Ticker",
+  "name": "SLAP Caution Divider",
   "tag": "section",
   "class": "section slap-section slap-marquee-section",
   "disabled_on": {
@@ -51,58 +58,10 @@
   },
   "settings": [
     {
-      "type": "color",
-      "id": "background_color",
-      "default": "#121212",
-      "label": "Background Color"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "default": "#39FF14",
-      "label": "Text Color"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "default": "#39FF14",
-      "label": "Border Color"
-    },
-    {
       "type": "text",
-      "id": "separator",
-      "default": "//",
-      "label": "Separator Character"
-    },
-    {
-      "type": "range",
-      "id": "speed",
-      "min": 10,
-      "max": 60,
-      "step": 5,
-      "default": 25,
-      "unit": "s",
-      "label": "Scroll Speed"
-    },
-    {
-      "type": "range",
-      "id": "font_size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "default": 11,
-      "unit": "px",
-      "label": "Font Size (rem * 10)"
-    },
-    {
-      "type": "range",
-      "id": "padding",
-      "min": 3,
-      "max": 15,
-      "step": 1,
-      "default": 6,
-      "unit": "px",
-      "label": "Vertical Padding (rem * 10)"
+      "id": "overlay_text",
+      "default": "PRODUCT CATEGORIES",
+      "label": "Overlay Text"
     },
     {
       "type": "color_scheme",
@@ -111,34 +70,9 @@
       "default": "scheme-3"
     }
   ],
-  "blocks": [
-    {
-      "type": "text",
-      "name": "Ticker Text",
-      "limit": 10,
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "default": "STICKERS",
-          "label": "Text"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "SLAP Marquee Ticker",
-      "blocks": [
-        { "type": "text", "settings": { "text": "STICKERS" } },
-        { "type": "text", "settings": { "text": "LABELS" } },
-        { "type": "text", "settings": { "text": "ADHESIVES" } },
-        { "type": "text", "settings": { "text": "PRINTS" } },
-        { "type": "text", "settings": { "text": "CUSTOM ORDERS" } },
-        { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
-        { "type": "text", "settings": { "text": "3-DAY TURNAROUND" } },
-        { "type": "text", "settings": { "text": "WEATHERPROOF" } }
-      ]
+      "name": "SLAP Caution Divider"
     }
   ]
 }

@@ -14,145 +14,100 @@
   }
 {%- endstyle -%}
 
-<div class="slap-cta color-{{ section.settings.color_scheme }}">
+<div class="slap-cta-v2">
   <div class="page-width section-{{ section.id }}-padding">
-    <div class="slap-cta__inner">
-      <div class="slap-cta__content">
-        {%- if section.settings.label_text != blank -%}
-          <div class="slap-cta__label slap-label">{{ section.settings.label_text }}</div>
-        {%- endif -%}
-        <h2 class="slap-cta__heading">{{ section.settings.heading }}</h2>
-        {%- if section.settings.description != blank -%}
-          <p class="slap-cta__description">{{ section.settings.description }}</p>
-        {%- endif -%}
-        <div class="slap-cta__buttons">
-          {%- if section.settings.button_label_1 != blank -%}
-            <a href="{{ section.settings.button_link_1 }}" class="button button--primary slap-cta__btn">
-              {{ section.settings.button_label_1 | escape }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.button_label_2 != blank -%}
-            <a href="{{ section.settings.button_link_2 }}" class="button button--secondary slap-cta__btn">
-              {{ section.settings.button_label_2 | escape }}
-            </a>
-          {%- endif -%}
-        </div>
+    <div class="slap-cta-v2__inner">
+      <div class="slap-cta-v2__content">
+        <h2 class="slap-cta-v2__heading">
+          READY TO <span class="slap-cta-v2__heading-green">SLAP</span>?
+        </h2>
+        <p class="slap-cta-v2__description">
+          {{ section.settings.description }}
+        </p>
       </div>
-
-      {%- if section.blocks.size > 0 -%}
-        <div class="slap-cta__stats">
-          {%- for block in section.blocks -%}
-            <div class="slap-cta__stat" {{ block.shopify_attributes }}>
-              <span class="slap-cta__stat-number">{{ block.settings.number }}</span>
-              <span class="slap-cta__stat-label">{{ block.settings.label }}</span>
-            </div>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+      <div class="slap-cta-v2__action">
+        {%- if section.settings.button_label_1 != blank -%}
+          <a href="{{ section.settings.button_link_1 }}" class="slap-cta-v2__btn">
+            {{ section.settings.button_label_1 | escape }}
+          </a>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-  .slap-cta {
-    background-color: var(--slap-black);
-    color: var(--slap-white);
+  .slap-cta-v2 {
+    background-color: #1a1a1a;
+    color: #fff;
     position: relative;
   }
 
-  .slap-cta__inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4rem;
+  .slap-cta-v2__inner {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
   }
 
-  .slap-cta__label {
-    margin-bottom: 1rem;
-  }
-
-  .slap-cta__heading {
+  .slap-cta-v2__heading {
     font-family: 'Oswald', sans-serif !important;
     font-size: clamp(2.4rem, 5vw, 4.5rem);
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1;
-    margin: 0 0 1.2rem;
-    color: var(--slap-white);
+    margin: 0 0 1rem;
+    color: #fff;
   }
 
-  .slap-cta__heading em,
-  .slap-cta__heading i {
-    color: var(--slap-neon-green);
-    font-style: normal;
+  .slap-cta-v2__heading-green {
+    color: #39FF14;
   }
 
-  .slap-cta__description {
+  .slap-cta-v2__description {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
     line-height: 1.5;
     max-width: 500px;
-    margin: 0 0 2rem;
+    margin: 0;
   }
 
-  .slap-cta__buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .slap-cta__btn {
-    padding: 1rem 2rem !important;
-  }
-
-  /* Stats */
-  .slap-cta__stats {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .slap-cta__stat {
-    text-align: center;
-    padding: 1.5rem 2rem;
-    border: 3px solid var(--slap-neon-green);
-    background: rgba(57, 255, 20, 0.05);
-  }
-
-  .slap-cta__stat-number {
-    display: block;
+  .slap-cta-v2__btn {
+    display: inline-block;
+    padding: 20px 40px;
     font-family: 'Oswald', sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: var(--slap-neon-green);
-    line-height: 1;
-    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    background-color: #39FF14;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.3);
   }
 
-  .slap-cta__stat-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
+  .slap-cta-v2__btn:hover {
+    box-shadow: 6px 6px 0 rgba(57, 255, 20, 0.5);
+    transform: translate(-2px, -2px);
+    text-decoration: none;
+    color: #000;
   }
 
   @media screen and (max-width: 749px) {
-    .slap-cta__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+    .slap-cta-v2__inner {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
     }
 
-    .slap-cta__stats {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .slap-cta__stat {
-      flex: 1;
-      min-width: 120px;
+    .slap-cta-v2__description {
+      max-width: 100%;
     }
   }
 </style>
@@ -169,36 +124,36 @@
     {
       "type": "text",
       "id": "label_text",
-      "default": "READY TO PRINT?",
+      "default": "",
       "label": "Section Label"
     },
     {
       "type": "richtext",
       "id": "heading",
-      "default": "<p>LET'S MAKE<br>SOMETHING <em>LOUD</em></p>",
+      "default": "<p>READY TO <em>SLAP</em>?</p>",
       "label": "Heading"
     },
     {
       "type": "text",
       "id": "description",
-      "default": "Whether you need 50 stickers or 50,000 labels — we've got the press power to deliver. B2B and B2C welcome.",
+      "default": "Upload your design, configure your order, and get a free instant proof. No account required.",
       "label": "Description"
     },
     {
       "type": "text",
       "id": "button_label_1",
-      "default": "GET A QUOTE",
-      "label": "Primary Button Label"
+      "default": "START YOUR ORDER",
+      "label": "Button Label"
     },
     {
       "type": "url",
       "id": "button_link_1",
-      "label": "Primary Button Link"
+      "label": "Button Link"
     },
     {
       "type": "text",
       "id": "button_label_2",
-      "default": "CONTACT US",
+      "default": "",
       "label": "Secondary Button Label"
     },
     {
@@ -256,30 +211,7 @@
   ],
   "presets": [
     {
-      "name": "SLAP CTA Banner",
-      "blocks": [
-        {
-          "type": "stat",
-          "settings": {
-            "number": "10K+",
-            "label": "Orders Shipped"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "500+",
-            "label": "5-Star Reviews"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "3 DAY",
-            "label": "Avg. Turnaround"
-          }
-        }
-      ]
+      "name": "SLAP CTA Banner"
     }
   ]
 }

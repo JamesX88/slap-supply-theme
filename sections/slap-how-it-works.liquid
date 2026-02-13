@@ -14,227 +14,159 @@
   }
 {%- endstyle -%}
 
-<div class="slap-how-it-works color-{{ section.settings.color_scheme }}">
+<div class="slap-hiw-v2">
   <div class="page-width section-{{ section.id }}-padding">
     <!-- Section Header -->
-    <div class="slap-hiw__header">
-      <div class="slap-hiw__label slap-label">{{ section.settings.label_text }}</div>
-      <h2 class="slap-hiw__heading">{{ section.settings.heading }}</h2>
-      {%- if section.settings.description != blank -%}
-        <p class="slap-hiw__description">{{ section.settings.description }}</p>
-      {%- endif -%}
+    <div class="slap-hiw-v2__header">
+      <div class="slap-hiw-v2__station-label">STATION 03 — PROCESS</div>
+      <h2 class="slap-hiw-v2__heading">HOW IT WORKS</h2>
     </div>
 
     <!-- Steps Grid -->
-    <div class="slap-hiw__steps">
+    <div class="slap-hiw-v2__steps">
       {%- for block in section.blocks -%}
-        <div class="slap-hiw__step" {{ block.shopify_attributes }}>
-          <!-- Step Number -->
-          <div class="slap-hiw__step-number">
-            <span class="slap-hiw__step-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <div class="slap-hiw-v2__step {% if forloop.last %}slap-hiw-v2__step--last{% endif %}" {{ block.shopify_attributes }}>
+          <div class="slap-hiw-v2__step-number">
+            {{ forloop.index | prepend: '0' | slice: -2, 2 }}
           </div>
-
-          <!-- Step Content -->
-          <div class="slap-hiw__step-content">
-            {%- if block.settings.icon_text != blank -%}
-              <div class="slap-hiw__step-icon">{{ block.settings.icon_text }}</div>
-            {%- endif -%}
-            <h3 class="slap-hiw__step-title">{{ block.settings.title }}</h3>
-            <p class="slap-hiw__step-text">{{ block.settings.text }}</p>
-          </div>
-
-          <!-- Connector Line (not on last item) -->
-          {%- unless forloop.last -%}
-            <div class="slap-hiw__connector">
-              <div class="slap-hiw__connector-line"></div>
-              <div class="slap-hiw__connector-arrow">→</div>
-            </div>
-          {%- endunless -%}
+          {%- if block.settings.icon_text != blank -%}
+            <div class="slap-hiw-v2__step-icon">{{ block.settings.icon_text }}</div>
+          {%- endif -%}
+          <h3 class="slap-hiw-v2__step-title">{{ block.settings.title }}</h3>
+          <p class="slap-hiw-v2__step-text">{{ block.settings.text }}</p>
         </div>
       {%- endfor -%}
     </div>
-
-    {%- if section.settings.button_label != blank -%}
-      <div class="slap-hiw__cta">
-        <a href="{{ section.settings.button_link }}" class="button button--primary slap-hiw__btn">
-          {{ section.settings.button_label | escape }}
-        </a>
-      </div>
-    {%- endif -%}
   </div>
-
-  <!-- Caution Tape Divider -->
-  <div class="section-divider-caution"></div>
 </div>
 
 <style>
-  .slap-how-it-works {
-    background-color: var(--slap-off-white);
+  .slap-hiw-v2 {
+    background-color: #fafaf8;
     position: relative;
   }
 
-  .slap-how-it-works.color-scheme-3,
-  .slap-how-it-works.color-scheme-5 {
-    background-color: var(--slap-black);
+  .slap-hiw-v2__header {
+    text-align: left;
+    margin-bottom: 3rem;
   }
 
-  .slap-hiw__header {
-    text-align: center;
-    margin-bottom: 4rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+  .slap-hiw-v2__station-label {
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.8rem;
   }
 
-  .slap-hiw__label {
-    margin-bottom: 1rem;
-  }
-
-  .slap-hiw__heading {
+  .slap-hiw-v2__heading {
     font-family: 'Oswald', sans-serif !important;
     font-size: clamp(2.4rem, 5vw, 4rem);
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1;
-    margin: 0 0 1rem;
-  }
-
-  .slap-hiw__description {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    color: var(--slap-mid-gray);
-    line-height: 1.5;
     margin: 0;
+    color: #1a1a1a;
   }
 
-  /* Steps Layout */
-  .slap-hiw__steps {
+  /* Steps Layout - 4 cards in a row with thin borders */
+  .slap-hiw-v2__steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    position: relative;
   }
 
-  .slap-hiw__step {
+  .slap-hiw-v2__step {
     position: relative;
-    text-align: center;
-    padding: 2rem 1.5rem;
+    padding: 2rem;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    background: transparent;
+    transition: all 0.3s ease;
   }
 
-  .slap-hiw__step-number {
+  .slap-hiw-v2__step + .slap-hiw-v2__step {
+    border-left: none;
+  }
+
+  .slap-hiw-v2__step--last {
+  }
+
+  .slap-hiw-v2__step:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  .slap-hiw-v2__step:hover .slap-hiw-v2__step-title {
+    color: #fff;
+  }
+
+  .slap-hiw-v2__step:hover .slap-hiw-v2__step-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .slap-hiw-v2__step-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #39FF14;
+    line-height: 1;
     margin-bottom: 1.5rem;
   }
 
-  .slap-hiw__step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border: 3px solid var(--slap-black);
-    background: var(--slap-neon-green);
-    color: var(--slap-black);
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    box-shadow: 3px 3px 0 var(--slap-black);
-  }
-
-  .slap-hiw__step-icon {
-    font-size: 2.5rem;
+  .slap-hiw-v2__step-icon {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
     line-height: 1;
+    opacity: 0.6;
   }
 
-  .slap-hiw__step-title {
+  .slap-hiw-v2__step-title {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
     text-transform: uppercase;
     margin: 0 0 0.8rem;
     letter-spacing: 0.03em;
+    color: #1a1a1a;
   }
 
-  .slap-hiw__step-text {
+  .slap-hiw-v2__step-text {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.95rem;
-    color: var(--slap-mid-gray);
+    font-size: 0.85rem;
+    color: #888;
     line-height: 1.5;
     margin: 0;
   }
 
-  /* Connector */
-  .slap-hiw__connector {
-    position: absolute;
-    right: -1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-    display: flex;
-    align-items: center;
-  }
+  @media screen and (max-width: 989px) {
+    .slap-hiw-v2__steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-  .slap-hiw__connector-arrow {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.5rem;
-    color: var(--slap-neon-green);
-    font-weight: 700;
-    background: var(--slap-off-white);
-    padding: 0 0.3rem;
-  }
+    .slap-hiw-v2__step {
+      border-bottom: 1px solid #e0e0e0;
+    }
 
-  .slap-hiw__connector-line {
-    display: none;
-  }
-
-  /* CTA */
-  .slap-hiw__cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .slap-hiw__btn {
-    padding: 1.2rem 3rem !important;
-    font-size: 1.1rem !important;
+    .slap-hiw-v2__step:nth-child(2) {
+      border-right: none;
+    }
   }
 
   @media screen and (max-width: 749px) {
-    .slap-hiw__steps {
+    .slap-hiw-v2__steps {
       grid-template-columns: 1fr;
-      gap: 0;
     }
 
-    .slap-hiw__step {
-      display: flex;
-      align-items: flex-start;
-      text-align: left;
-      gap: 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 2px dashed var(--slap-light-gray);
+    .slap-hiw-v2__step {
+      border-right: none;
+      border-bottom: 1px solid #e0e0e0;
     }
 
-    .slap-hiw__step:last-child {
+    .slap-hiw-v2__step--last {
       border-bottom: none;
-    }
-
-    .slap-hiw__step-number {
-      margin-bottom: 0;
-      flex-shrink: 0;
-    }
-
-    .slap-hiw__step-num {
-      width: 48px;
-      height: 48px;
-      font-size: 1.4rem;
-    }
-
-    .slap-hiw__connector {
-      display: none;
-    }
-
-    .slap-hiw__step-icon {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
     }
   }
 </style>
@@ -263,13 +195,13 @@
     {
       "type": "text",
       "id": "description",
-      "default": "From concept to delivery in 4 simple steps. No BS, no hidden fees.",
+      "default": "",
       "label": "Description"
     },
     {
       "type": "text",
       "id": "button_label",
-      "default": "GET STARTED NOW",
+      "default": "",
       "label": "Button Label"
     },
     {
@@ -291,7 +223,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 60
+      "default": 80
     },
     {
       "type": "range",
@@ -301,7 +233,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
-      "default": 60
+      "default": 80
     }
   ],
   "blocks": [
@@ -313,19 +245,19 @@
         {
           "type": "text",
           "id": "icon_text",
-          "default": "📤",
-          "label": "Icon/Emoji"
+          "default": "↑",
+          "label": "Icon/Symbol"
         },
         {
           "type": "text",
           "id": "title",
-          "default": "UPLOAD YOUR DESIGN",
+          "default": "UPLOAD",
           "label": "Step Title"
         },
         {
           "type": "textarea",
           "id": "text",
-          "default": "Upload your artwork or use our design tools to create something fresh.",
+          "default": "Drop your artwork or design from scratch using our editor",
           "label": "Step Description"
         }
       ]
@@ -338,33 +270,33 @@
         {
           "type": "step",
           "settings": {
-            "icon_text": "📤",
-            "title": "UPLOAD YOUR DESIGN",
-            "text": "Upload your artwork or let us know what you need. We accept all major file formats."
+            "icon_text": "↑",
+            "title": "UPLOAD",
+            "text": "Drop your artwork or design from scratch using our editor"
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon_text": "⚙️",
-            "title": "CHOOSE YOUR SPECS",
-            "text": "Pick your material, size, finish, and quantity. We'll handle the rest."
+            "icon_text": "⚙",
+            "title": "CONFIGURE",
+            "text": "Choose size, material, finish, and quantity"
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon_text": "🖨️",
-            "title": "WE PRINT IT",
-            "text": "Your order hits our press room floor. Premium materials, precision cuts."
+            "icon_text": "≡",
+            "title": "PROOF",
+            "text": "Review your digital proof — adjust until it's perfect"
           }
         },
         {
           "type": "step",
           "settings": {
             "icon_text": "📦",
-            "title": "FAST DELIVERY",
-            "text": "Shipped to your door in 3-5 business days. Free shipping on orders over $50."
+            "title": "SHIP",
+            "text": "We print, cut, and ship in as fast as 3 business days"
           }
         }
       ]

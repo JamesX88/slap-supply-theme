@@ -1,315 +1,226 @@
 {{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  #SlapHero-{{ section.id }} {
-    --hero-min-height: {{ section.settings.hero_height }}vh;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-{%- endstyle -%}
+<div id="SlapHero-{{ section.id }}" class="slap-hero-v2">
+  <div class="slap-hero-v2__inner page-width">
+    <!-- Left Content -->
+    <div class="slap-hero-v2__content">
+      <div class="slap-hero-v2__station-label">STATION 01 — HERO</div>
 
-<div id="SlapHero-{{ section.id }}" class="slap-hero color-{{ section.settings.color_scheme }}">
-  <!-- Background Image / Overlay -->
-  <div class="slap-hero__media">
-    {%- if section.settings.image != blank -%}
-      {{
-        section.settings.image
-        | image_url: width: 3840
-        | image_tag:
-          class: 'slap-hero__image',
-          sizes: '100vw',
-          widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
-          fetchpriority: 'high'
-      }}
-    {%- else -%}
-      <div class="slap-hero__placeholder">
-        <div class="slap-hero__grid-pattern"></div>
-      </div>
-    {%- endif -%}
-    <div class="slap-hero__overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
-  </div>
+      <h1 class="slap-hero-v2__heading">
+        STICK IT.<br>
+        <span class="slap-hero-v2__heading-green">PRINT IT.</span><br>
+        OWN IT.
+      </h1>
 
-  <!-- Hero Content -->
-  <div class="slap-hero__content page-width">
-    <div class="slap-hero__content-inner">
-      {%- if section.settings.subtitle != blank -%}
-        <div class="slap-hero__subtitle slap-label">
-          {{ section.settings.subtitle }}
-        </div>
-      {%- endif -%}
+      <p class="slap-hero-v2__subheading">
+        Custom stickers, labels, and prints built to your exact specifications. Industrial-grade quality. No minimum orders.
+      </p>
 
-      {%- if section.settings.heading != blank -%}
-        <h1 class="slap-hero__heading">
-          {{ section.settings.heading }}
-        </h1>
-      {%- endif -%}
-
-      {%- if section.settings.subheading != blank -%}
-        <p class="slap-hero__subheading">
-          {{ section.settings.subheading }}
-        </p>
-      {%- endif -%}
-
-      <div class="slap-hero__buttons">
+      <div class="slap-hero-v2__buttons">
         {%- if section.settings.button_label_1 != blank -%}
-          <a
-            href="{{ section.settings.button_link_1 }}"
-            class="button button--primary slap-hero__btn"
-          >
-            {{ section.settings.button_label_1 | escape }}
+          <a href="{{ section.settings.button_link_1 }}" class="slap-hero-v2__btn slap-hero-v2__btn--primary">
+            {{ section.settings.button_label_1 | escape }} <span class="slap-hero-v2__btn-arrow">→</span>
           </a>
         {%- endif -%}
         {%- if section.settings.button_label_2 != blank -%}
-          <a
-            href="{{ section.settings.button_link_2 }}"
-            class="button button--secondary slap-hero__btn"
-          >
+          <a href="{{ section.settings.button_link_2 }}" class="slap-hero-v2__btn slap-hero-v2__btn--secondary">
             {{ section.settings.button_label_2 | escape }}
           </a>
         {%- endif -%}
       </div>
-
-      {%- if section.settings.show_trust_badges -%}
-        <div class="slap-hero__trust">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'trust_badge' -%}
-              <div class="slap-hero__trust-item" {{ block.shopify_attributes }}>
-                <span class="slap-hero__trust-icon">{{ block.settings.icon_text }}</span>
-                <span class="slap-hero__trust-label">{{ block.settings.badge_text }}</span>
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
     </div>
 
-    {%- if section.settings.show_scroll_indicator -%}
-      <div class="slap-hero__scroll-indicator">
-        <span>SCROLL</span>
-        <div class="slap-hero__scroll-line"></div>
+    <!-- Right Image -->
+    <div class="slap-hero-v2__image-wrapper">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag:
+            class: 'slap-hero-v2__image',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            widths: '375, 750, 1100, 1200',
+            fetchpriority: 'high'
+        }}
+      {%- else -%}
+        <div class="slap-hero-v2__placeholder-image">
+          <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Sticker workshop" class="slap-hero-v2__image" loading="eager">
+        </div>
+      {%- endif -%}
+      <div class="slap-hero-v2__image-caption">
+        <span>WORKSHOP FLOOR — 2026</span>
       </div>
-    {%- endif -%}
+    </div>
   </div>
-
-  <!-- Caution Tape Bottom Border -->
-  <div class="section-divider-caution"></div>
 </div>
 
 <style>
-  .slap-hero {
-    position: relative;
-    min-height: var(--hero-min-height, 90vh);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  .slap-hero-v2 {
+    background-color: #FFFFFF;
+    padding: 0;
     overflow: hidden;
-    background-color: var(--slap-black);
   }
 
-  .slap-hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+  .slap-hero-v2__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    min-height: 500px;
   }
 
-  .slap-hero__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .slap-hero__placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: var(--slap-black);
-    position: relative;
-  }
-
-  .slap-hero__grid-pattern {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(57, 255, 20, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(57, 255, 20, 0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  .slap-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(18, 18, 18, 0.3) 0%,
-      rgba(18, 18, 18, 0.6) 50%,
-      rgba(18, 18, 18, 0.9) 100%
-    );
-  }
-
-  .slap-hero__content {
-    position: relative;
-    z-index: 2;
-    padding: 4rem 0 5rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .slap-hero__content-inner {
-    max-width: 800px;
-  }
-
-  .slap-hero__subtitle {
-    margin-bottom: 1.5rem;
-    font-size: 0.85rem;
-    display: inline-block;
-  }
-
-  .slap-hero__heading {
-    font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(3rem, 8vw, 7rem);
+  .slap-hero-v2__station-label {
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.7rem;
     font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-hero-v2__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
     text-transform: uppercase;
     line-height: 0.95;
-    color: var(--slap-white);
+    color: #1a1a1a;
     margin: 0 0 1.5rem;
     letter-spacing: -0.02em;
   }
 
-  .slap-hero__heading em,
-  .slap-hero__heading i {
-    color: var(--slap-neon-green);
-    font-style: normal;
+  .slap-hero-v2__heading-green {
+    color: #39FF14;
+    -webkit-text-stroke: 0px;
   }
 
-  .slap-hero__subheading {
+  .slap-hero-v2__subheading {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 550px;
-    line-height: 1.5;
-    margin: 0 0 2.5rem;
+    font-size: 1rem;
+    color: #555;
+    max-width: 400px;
+    line-height: 1.6;
+    margin: 0 0 2rem;
     font-weight: 400;
   }
 
-  .slap-hero__buttons {
+  .slap-hero-v2__buttons {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
   }
 
-  .slap-hero__btn {
-    padding: 1.2rem 2.5rem !important;
-    font-size: 1.1rem !important;
-  }
-
-  .slap-hero__btn.button--primary {
-    background-color: var(--slap-neon-green) !important;
-    color: var(--slap-black) !important;
-    border-color: var(--slap-neon-green) !important;
-    box-shadow: 4px 4px 0 var(--slap-white) !important;
-  }
-
-  .slap-hero__btn.button--primary:hover {
-    box-shadow: 6px 6px 0 var(--slap-white) !important;
-    transform: translate(-2px, -2px);
-  }
-
-  .slap-hero__btn.button--secondary {
-    background-color: transparent !important;
-    color: var(--slap-white) !important;
-    border-color: var(--slap-white) !important;
-    box-shadow: 4px 4px 0 var(--slap-neon-green) !important;
-  }
-
-  .slap-hero__btn.button--secondary:hover {
-    background-color: var(--slap-neon-green) !important;
-    color: var(--slap-black) !important;
-    border-color: var(--slap-neon-green) !important;
-  }
-
-  /* Trust Badges */
-  .slap-hero__trust {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .slap-hero__trust-item {
-    display: flex;
+  .slap-hero-v2__btn {
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .slap-hero__trust-icon {
-    font-size: 1.2rem;
-    color: var(--slap-neon-green);
-    font-weight: 700;
-  }
-
-  /* Scroll Indicator */
-  .slap-hero__scroll-indicator {
-    position: absolute;
-    right: 2rem;
-    bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    padding: 16px 32px;
     font-family: 'Oswald', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-size: 0.875rem;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
   }
 
-  .slap-hero__scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(180deg, var(--slap-neon-green), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
+  .slap-hero-v2__btn--primary {
+    background-color: #39FF14;
+    color: #000;
+    box-shadow: 4px 4px 0 #000;
   }
 
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; height: 30px; }
-    50% { opacity: 1; height: 50px; }
+  .slap-hero-v2__btn--primary:hover {
+    box-shadow: 6px 6px 0 #000;
+    transform: translate(-2px, -2px);
+    color: #000;
+    text-decoration: none;
+  }
+
+  .slap-hero-v2__btn--secondary {
+    background-color: transparent;
+    color: #1a1a1a;
+    border-style: dashed;
+    box-shadow: none;
+  }
+
+  .slap-hero-v2__btn--secondary:hover {
+    background-color: #1a1a1a;
+    color: #39FF14;
+    border-style: solid;
+    text-decoration: none;
+  }
+
+  .slap-hero-v2__btn-arrow {
+    font-size: 1.1em;
+  }
+
+  .slap-hero-v2__image-wrapper {
+    position: relative;
+    border: 3px solid #1a1a1a;
+    box-shadow: 6px 6px 0 #39FF14;
+    overflow: hidden;
+    background: #f5f5f0;
+  }
+
+  .slap-hero-v2__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    min-height: 400px;
+  }
+
+  .slap-hero-v2__placeholder-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .slap-hero-v2__image-caption {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: #fff;
+    border: 1px solid #1a1a1a;
+    padding: 6px 12px;
+    font-family: 'Space Mono', 'Space Grotesk', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    z-index: 2;
   }
 
   @media screen and (max-width: 749px) {
-    .slap-hero {
-      min-height: 80vh;
+    .slap-hero-v2__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
-    .slap-hero__content {
-      padding: 2rem 0 3rem;
-    }
-
-    .slap-hero__heading {
+    .slap-hero-v2__heading {
       font-size: clamp(2.5rem, 10vw, 4rem);
     }
 
-    .slap-hero__buttons {
+    .slap-hero-v2__buttons {
       flex-direction: column;
     }
 
-    .slap-hero__btn {
+    .slap-hero-v2__btn {
       text-align: center;
-      width: 100%;
+      justify-content: center;
     }
 
-    .slap-hero__trust {
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .slap-hero__scroll-indicator {
-      display: none;
+    .slap-hero-v2__image {
+      min-height: 250px;
     }
   }
 </style>
@@ -326,50 +237,12 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Background Image"
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "default": 60,
-      "unit": "%",
-      "label": "Overlay Opacity"
-    },
-    {
-      "type": "range",
-      "id": "hero_height",
-      "min": 50,
-      "max": 100,
-      "step": 5,
-      "default": 90,
-      "unit": "vh",
-      "label": "Hero Height"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "default": "CUSTOM STICKER COMPANY",
-      "label": "Subtitle Label"
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "default": "<p>STICK IT.<br><em>YOUR WAY.</em></p>",
-      "label": "Heading (use italic for green accent)"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "default": "Premium custom stickers, labels, and adhesive prints. Built for brands that refuse to blend in.",
-      "label": "Subheading"
+      "label": "Hero Image (right side)"
     },
     {
       "type": "text",
       "id": "button_label_1",
-      "default": "START YOUR ORDER",
+      "default": "START CUSTOMIZING",
       "label": "Primary Button Label"
     },
     {
@@ -380,7 +253,7 @@
     {
       "type": "text",
       "id": "button_label_2",
-      "default": "SEE OUR WORK",
+      "default": "VIEW CATALOG",
       "label": "Secondary Button Label"
     },
     {
@@ -389,71 +262,15 @@
       "label": "Secondary Button Link"
     },
     {
-      "type": "checkbox",
-      "id": "show_trust_badges",
-      "default": true,
-      "label": "Show Trust Badges"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_scroll_indicator",
-      "default": true,
-      "label": "Show Scroll Indicator"
-    },
-    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
-      "default": "scheme-3"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "trust_badge",
-      "name": "Trust Badge",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "text",
-          "id": "icon_text",
-          "default": "✓",
-          "label": "Icon/Symbol"
-        },
-        {
-          "type": "text",
-          "id": "badge_text",
-          "default": "Free Shipping on $50+",
-          "label": "Badge Text"
-        }
-      ]
+      "default": "scheme-1"
     }
   ],
   "presets": [
     {
-      "name": "SLAP Hero Banner",
-      "blocks": [
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "✓",
-            "badge_text": "Free Shipping on $50+"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "⚡",
-            "badge_text": "3-Day Turnaround"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon_text": "★",
-            "badge_text": "Weatherproof & Durable"
-          }
-        }
-      ]
+      "name": "SLAP Hero Banner"
     }
   ]
 }

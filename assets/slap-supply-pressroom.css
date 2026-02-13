@@ -5,7 +5,7 @@
    ============================================================ */
 
 /* --- Google Fonts: Oswald (headings) + Space Grotesk (body) --- */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 /* ============================================================
    CSS CUSTOM PROPERTIES
@@ -234,8 +234,8 @@ a.button:active {
    HEADER / NAVIGATION
    ============================================================ */
 .header-wrapper {
-  border-bottom: var(--slap-border-width) solid var(--slap-black) !important;
-  background-color: var(--slap-white) !important;
+  border-bottom: 2px solid #1a1a1a !important;
+  background-color: #FFFFFF !important;
 }
 
 .header {
@@ -249,6 +249,16 @@ a.button:active {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: #1a1a1a !important;
+}
+
+.header__heading-link .h2,
+.header__heading-link span {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  color: #1a1a1a !important;
 }
 
 /* Navigation links */
@@ -259,21 +269,17 @@ a.button:active {
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.05em;
-  font-size: 1.4rem;
+  font-size: 0.85rem;
+  color: #1a1a1a;
 }
 
 .header__menu-item:hover {
   color: var(--slap-neon-green) !important;
 }
 
-/* Announcement bar */
-.announcement-bar {
-  background-color: var(--slap-black) !important;
-  color: var(--slap-neon-green) !important;
-  border-bottom: var(--slap-border-width) solid var(--slap-neon-green);
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+/* Announcement bar - hidden when using SLAP announcement bar */
+.utility-bar {
+  display: none !important;
 }
 
 .announcement-bar__message {
@@ -289,24 +295,11 @@ a.button:active {
 .footer {
   background-color: var(--slap-black) !important;
   color: var(--slap-white) !important;
-  border-top: var(--slap-border-width) solid var(--slap-neon-green);
+  border-top: none;
 }
 
 .footer::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 12px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--slap-neon-green),
-    var(--slap-neon-green) 10px,
-    var(--slap-black) 10px,
-    var(--slap-black) 20px
-  );
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: none;
 }
 
 .footer h2,
@@ -696,4 +689,84 @@ a:not(.button):not(.header__menu-item):hover {
    ============================================================ */
 .loading__spinner circle {
   stroke: var(--slap-neon-green);
+}
+
+/* ============================================================
+   GLOBAL ZERO BORDER-RADIUS OVERRIDE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+/* ============================================================
+   SECTION SPACING OVERRIDE
+   ============================================================ */
+.shopify-section + .shopify-section {
+  margin-top: 0;
+}
+
+.section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   HEADER COLOR OVERRIDE - WHITE BG
+   ============================================================ */
+.section-header .header-wrapper,
+.section-header .color-scheme-3,
+.section-header .color-scheme-1 {
+  background-color: #FFFFFF !important;
+  color: #1a1a1a !important;
+}
+
+.section-header .header-wrapper .header__heading-link,
+.section-header .header-wrapper .header__heading-link span,
+.section-header .header-wrapper .header__heading-link .h2 {
+  color: #1a1a1a !important;
+}
+
+.section-header .header-wrapper .header__icon,
+.section-header .header-wrapper .header__icon svg {
+  color: #1a1a1a !important;
+}
+
+.section-header .header-wrapper .header__menu-item,
+.section-header .header-wrapper .header__menu-item span {
+  color: #1a1a1a !important;
+}
+
+.section-header .header-wrapper .header__menu-item:hover,
+.section-header .header-wrapper .header__menu-item:hover span {
+  color: #39FF14 !important;
+}
+
+/* Force white background on header regardless of color scheme */
+.header-wrapper.color-scheme-3 {
+  --color-background: 255, 255, 255;
+  --color-foreground: 26, 26, 26;
+  background: #FFFFFF !important;
+}
+
+/* ============================================================
+   PASSWORD PAGE OVERRIDE
+   ============================================================ */
+.password-header,
+.password-content {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.password-content input {
+  border: 2px solid #1a1a1a !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+/* ============================================================
+   REMOVE DEFAULT DAWN SECTION SPACING
+   ============================================================ */
+.shopify-section {
+  --spacing-sections-desktop: 0px;
+  --spacing-sections-mobile: 0px;
 }
