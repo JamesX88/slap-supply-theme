@@ -1,5 +1,27 @@
 {
   "sections": {
+    "slap_marquee_collection": {
+      "type": "slap-marquee",
+      "blocks": {
+        "text_1": { "type": "text", "settings": { "text": "STICKERS" } },
+        "text_2": { "type": "text", "settings": { "text": "LABELS" } },
+        "text_3": { "type": "text", "settings": { "text": "ADHESIVES" } },
+        "text_4": { "type": "text", "settings": { "text": "PRINTS" } },
+        "text_5": { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
+        "text_6": { "type": "text", "settings": { "text": "WEATHERPROOF" } }
+      },
+      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5", "text_6"],
+      "settings": {
+        "background_color": "#121212",
+        "text_color": "#39FF14",
+        "border_color": "#39FF14",
+        "separator": "//",
+        "speed": 25,
+        "font_size": 10,
+        "padding": 4,
+        "color_scheme": "scheme-3"
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -25,10 +47,51 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "slap_cta_collection": {
+      "type": "slap-cta-banner",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "Orders Shipped"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "500+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "settings": {
+        "label_text": "READY TO PRINT?",
+        "heading": "<p>CAN'T FIND<br>WHAT YOU NEED?</p>",
+        "description": "We do custom orders too. Tell us what you need and we'll make it happen.",
+        "button_label_1": "GET A QUOTE",
+        "button_link_1": "",
+        "button_label_2": "CONTACT US",
+        "button_link_2": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
     }
   },
   "order": [
+    "slap_marquee_collection",
     "banner",
-    "product-grid"
+    "product-grid",
+    "slap_cta_collection"
   ]
 }
