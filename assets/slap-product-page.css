@@ -1,0 +1,435 @@
+/* ============================================================
+   SLAP SUPPLY — PRODUCT DETAIL PAGE
+   Press Room Neo-Brutalist Styling
+   ============================================================ */
+
+/* --- Product Page Layout --- */
+.product {
+  gap: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .product {
+    gap: 4rem;
+  }
+}
+
+/* --- Product Title --- */
+.product__title h1,
+.product__title .h1,
+.product__title h2 {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--slap-black);
+}
+
+/* --- Product Vendor/Brand Label --- */
+.product__text.caption-with-letter-spacing {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: var(--slap-neon-green);
+  font-size: 0.85rem;
+  -webkit-text-stroke: 0.3px var(--slap-black);
+  margin-bottom: 0.3rem;
+}
+
+/* --- Price Styling --- */
+.price--large .price-item--regular,
+.price--large .price-item--sale {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--slap-black);
+}
+
+.price--large .price-item--sale {
+  color: var(--slap-neon-green);
+  -webkit-text-stroke: 0.5px var(--slap-black);
+}
+
+.price .price-item--regular.price-item--last {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* --- Product Info Container --- */
+.product__info-container {
+  padding: 0;
+}
+
+/* --- Variant Picker (Material/Size/Finish) --- */
+.product-form__input {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px dashed var(--slap-light-gray);
+}
+
+.product-form__input:last-of-type {
+  border-bottom: none;
+}
+
+.product-form__input .form__label {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  color: var(--slap-black);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-form__input .form__label::before {
+  content: '▸';
+  color: var(--slap-neon-green);
+  font-size: 1.1rem;
+}
+
+/* Variant buttons (pill style) */
+.product-form__input input[type="radio"] + label,
+variant-radios label {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  min-width: 60px;
+  text-align: center;
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: var(--slap-white);
+  color: var(--slap-black);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.product-form__input input[type="radio"]:checked + label {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  border-color: var(--slap-black) !important;
+  box-shadow: 3px 3px 0 var(--slap-black);
+  transform: translate(-1px, -1px);
+}
+
+.product-form__input input[type="radio"] + label:hover {
+  background-color: rgba(57, 255, 20, 0.15) !important;
+  box-shadow: 2px 2px 0 var(--slap-neon-green);
+  transform: translate(-1px, -1px);
+}
+
+.product-form__input input[type="radio"]:disabled + label,
+.product-form__input input[type="radio"] + label.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* Select dropdown variant */
+.product-form__input select {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+  background: var(--slap-white);
+  cursor: pointer;
+}
+
+/* --- Quantity Selector --- */
+.product-form__quantity {
+  margin-bottom: 1.5rem;
+}
+
+.product-form__quantity .quantity__label,
+.product-form__quantity .form__label {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+
+.product-form__quantity .quantity__label::before,
+.product-form__quantity .form__label::before {
+  content: '▸';
+  color: var(--slap-neon-green);
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+
+.product-form__quantity .quantity {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+.product-form__quantity .quantity__button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  background: transparent;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.product-form__quantity .quantity__button:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black);
+}
+
+.product-form__quantity .quantity__input {
+  width: 60px;
+  text-align: center;
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-left: 3px solid var(--slap-black) !important;
+  border-right: 3px solid var(--slap-black) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+}
+
+/* --- Buy Buttons --- */
+.product-form__submit {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 1.2rem;
+  padding: 1.4rem 2rem !important;
+  background-color: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 var(--slap-neon-green);
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
+}
+
+.product-form__submit:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  box-shadow: 6px 6px 0 var(--slap-black) !important;
+  transform: translate(-2px, -2px);
+}
+
+.product-form__submit:active {
+  box-shadow: 1px 1px 0 var(--slap-neon-green) !important;
+  transform: translate(2px, 2px);
+}
+
+/* Dynamic checkout button */
+.shopify-payment-button__button {
+  border-radius: 0 !important;
+  border: 3px solid var(--slap-black) !important;
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+}
+
+/* --- Product Description --- */
+.product__description {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(18, 18, 18, 0.8);
+}
+
+.product__description h2,
+.product__description h3,
+.product__description h4 {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
+
+/* --- Accordion / Collapsible Tabs --- */
+.product__accordion {
+  border-bottom: 2px solid var(--slap-black) !important;
+}
+
+.product__accordion summary {
+  padding: 1.2rem 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.product__accordion summary:hover {
+  background-color: rgba(57, 255, 20, 0.05);
+}
+
+.product__accordion .accordion__title {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.product__accordion .accordion__content {
+  font-family: 'Space Grotesk', sans-serif !important;
+  padding-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* --- Product Media / Gallery --- */
+.product__media-wrapper {
+  position: relative;
+}
+
+.product__media-item {
+  border: 3px solid var(--slap-black);
+  border-radius: 0 !important;
+  overflow: hidden;
+}
+
+.product__media-item:hover {
+  box-shadow: 4px 4px 0 var(--slap-neon-green);
+}
+
+/* --- Tax/Shipping Notice --- */
+.product__tax {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: var(--slap-mid-gray);
+  margin-top: 0.5rem;
+}
+
+/* --- Share Button --- */
+.share-button {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- SKU Display --- */
+.product__sku {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: var(--slap-mid-gray);
+  letter-spacing: 0.1em;
+}
+
+/* --- Inventory Status --- */
+.product__inventory {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* --- Related Products Section --- */
+.related-products .title {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* --- Volume Pricing --- */
+.volume-pricing-note {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  color: var(--slap-neon-green);
+  font-weight: 600;
+  -webkit-text-stroke: 0.3px var(--slap-black);
+}
+
+/* --- Product Page Breadcrumb Bar --- */
+.slap-product-breadcrumb {
+  background: var(--slap-off-white);
+  border-bottom: 3px solid var(--slap-black);
+  padding: 0.8rem 0;
+}
+
+.slap-product-breadcrumb__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.slap-product-breadcrumb a {
+  color: var(--slap-mid-gray);
+  text-decoration: none;
+}
+
+.slap-product-breadcrumb a:hover {
+  color: var(--slap-neon-green);
+}
+
+.slap-product-breadcrumb__separator {
+  color: var(--slap-light-gray);
+}
+
+.slap-product-breadcrumb__current {
+  color: var(--slap-black);
+}
+
+/* --- Product Specs Table (for custom liquid block) --- */
+.slap-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+}
+
+.slap-specs-table tr {
+  border-bottom: 1px solid var(--slap-light-gray);
+}
+
+.slap-specs-table td {
+  padding: 0.8rem 0;
+}
+
+.slap-specs-table td:first-child {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--slap-mid-gray);
+  width: 40%;
+}
+
+.slap-specs-table td:last-child {
+  font-weight: 500;
+  color: var(--slap-black);
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 749px) {
+  .product__title h1,
+  .product__title .h1,
+  .product__title h2 {
+    font-size: 2rem;
+  }
+
+  .price--large .price-item--regular,
+  .price--large .price-item--sale {
+    font-size: 2rem;
+  }
+
+  .product-form__submit {
+    font-size: 1rem;
+    padding: 1.2rem 1.5rem !important;
+  }
+}
