@@ -1,0 +1,362 @@
+/* ============================================================
+   SLAP SUPPLY — COLLECTION / CATALOG PAGE
+   Press Room Neo-Brutalist Styling
+   ============================================================ */
+
+/* --- Collection Hero / Banner --- */
+.collection-hero {
+  background-color: var(--slap-black) !important;
+  color: var(--slap-white) !important;
+  border-bottom: 3px solid var(--slap-neon-green);
+  padding: 3rem 0;
+  position: relative;
+}
+
+.collection-hero::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 12px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--slap-neon-green),
+    var(--slap-neon-green) 10px,
+    var(--slap-black) 10px,
+    var(--slap-black) 20px
+  );
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.collection-hero__title {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1;
+  color: var(--slap-white) !important;
+  letter-spacing: 0.02em;
+}
+
+.collection-hero__description {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+/* --- Collection Label --- */
+.slap-collection-label {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 1rem;
+  border: 2px solid var(--slap-neon-green);
+  background: transparent;
+  color: var(--slap-neon-green);
+  font-size: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+/* --- Category Tabs --- */
+.slap-category-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 3px solid var(--slap-black);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: var(--slap-white);
+  padding: 0;
+}
+
+.slap-category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.slap-category-tab {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--slap-mid-gray);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
+.slap-category-tab:hover {
+  color: var(--slap-black);
+  background: rgba(57, 255, 20, 0.05);
+}
+
+.slap-category-tab.active,
+.slap-category-tab--active {
+  color: var(--slap-black);
+  border-bottom-color: var(--slap-neon-green);
+  background: rgba(57, 255, 20, 0.08);
+}
+
+/* --- Facets / Filters --- */
+.facets-wrapper {
+  border-bottom: 3px solid var(--slap-black);
+  padding: 1rem 0;
+}
+
+.facets__heading,
+.facet-filters__label label,
+.facet-filters__label {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+
+.facets__summary span {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Filter dropdown */
+.facets__disclosure .disclosure__list {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 var(--slap-neon-green);
+}
+
+/* Filter checkbox */
+.facet-checkbox {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.facet-checkbox input[type="checkbox"] {
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+}
+
+.facet-checkbox input[type="checkbox"]:checked {
+  background-color: var(--slap-neon-green) !important;
+  border-color: var(--slap-black) !important;
+}
+
+/* Sort dropdown */
+.facet-filters__sort,
+.select__select {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  padding: 0.6rem 2rem 0.6rem 0.8rem;
+}
+
+/* Active filter pills */
+.active-facets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.active-facets__button {
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.active-facets__button:hover {
+  background: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+}
+
+.active-facets__button-wrapper .active-facets__button--light {
+  background: transparent !important;
+  color: var(--slap-black) !important;
+}
+
+/* --- Product Count --- */
+.product-count__text {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.85rem;
+  color: var(--slap-mid-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Product Grid --- */
+.collection .grid {
+  gap: 1.5rem;
+}
+
+.collection .grid__item .card-wrapper,
+.collection .grid__item .card {
+  border: 3px solid var(--slap-black);
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 var(--slap-neon-green);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  background: var(--slap-white);
+}
+
+.collection .grid__item .card-wrapper:hover,
+.collection .grid__item .card:hover {
+  box-shadow: 6px 6px 0 var(--slap-neon-green);
+  transform: translate(-2px, -2px);
+}
+
+.collection .card__inner {
+  border-radius: 0 !important;
+}
+
+.collection .card__heading {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.collection .card__heading a {
+  text-decoration: none;
+  color: var(--slap-black);
+}
+
+.collection .card__heading a:hover {
+  color: var(--slap-neon-green);
+}
+
+.collection .price-item {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Quick add button in grid */
+.quick-add__submit {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+}
+
+.quick-add__submit:hover {
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* --- Pagination --- */
+.pagination {
+  margin-top: 3rem;
+}
+
+.pagination__list {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.pagination__item {
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.pagination__item--current,
+.pagination__item.pagination__item--current {
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  border-color: var(--slap-black) !important;
+}
+
+.pagination__item:hover:not(.pagination__item--current) {
+  background: rgba(57, 255, 20, 0.15) !important;
+}
+
+.pagination__item a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Empty Collection State --- */
+.collection--empty {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.collection--empty p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  color: var(--slap-mid-gray);
+}
+
+/* --- Vertical Filters (Sidebar) --- */
+.facets-vertical .facets__header {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-bottom: 3px solid var(--slap-black);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.facets-vertical .facets__disclosure {
+  border-bottom: 1px solid var(--slap-light-gray);
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 749px) {
+  .collection-hero {
+    padding: 2rem 0;
+  }
+
+  .collection-hero__title {
+    font-size: 2.4rem;
+  }
+
+  .slap-category-tabs {
+    padding: 0 1rem;
+  }
+
+  .collection .grid {
+    gap: 1rem;
+  }
+}
