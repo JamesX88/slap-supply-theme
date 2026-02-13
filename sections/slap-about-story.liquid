@@ -1,0 +1,342 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-about-story color-{{ section.settings.color_scheme }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <!-- Story Section -->
+    <div class="slap-about-story__grid">
+      <div class="slap-about-story__content">
+        <div class="slap-about-story__label slap-label">{{ section.settings.label_text }}</div>
+        <h2 class="slap-about-story__heading">{{ section.settings.heading }}</h2>
+        <div class="slap-about-story__text rte">
+          {{ section.settings.text }}
+        </div>
+      </div>
+      <div class="slap-about-story__image-wrapper">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 800
+            | image_tag:
+              class: 'slap-about-story__image',
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              widths: '400, 600, 800'
+          }}
+        {%- else -%}
+          <div class="slap-about-story__image-placeholder">
+            <div class="slap-about-story__placeholder-grid"></div>
+            <span class="slap-about-story__placeholder-text">SLAP<br>SUPPLY</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Values Grid -->
+    {%- if section.blocks.size > 0 -%}
+      <div class="slap-about-values">
+        <h3 class="slap-about-values__heading">{{ section.settings.values_heading }}</h3>
+        <div class="slap-about-values__grid">
+          {%- for block in section.blocks -%}
+            <div class="slap-about-value" {{ block.shopify_attributes }}>
+              <div class="slap-about-value__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+              <h4 class="slap-about-value__title">{{ block.settings.title }}</h4>
+              <p class="slap-about-value__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="section-divider-caution"></div>
+</div>
+
+<style>
+  .slap-about-story {
+    background-color: var(--slap-white);
+  }
+
+  .slap-about-story__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .slap-about-story__label {
+    margin-bottom: 1rem;
+  }
+
+  .slap-about-story__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0 0 1.5rem;
+  }
+
+  .slap-about-story__text {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(18, 18, 18, 0.8);
+  }
+
+  .slap-about-story__text p {
+    margin-bottom: 1rem;
+  }
+
+  .slap-about-story__image-wrapper {
+    position: relative;
+  }
+
+  .slap-about-story__image {
+    width: 100%;
+    height: auto;
+    border: 3px solid var(--slap-black);
+    box-shadow: 8px 8px 0 var(--slap-neon-green);
+  }
+
+  .slap-about-story__image-placeholder {
+    aspect-ratio: 4/3;
+    background: var(--slap-black);
+    border: 3px solid var(--slap-black);
+    box-shadow: 8px 8px 0 var(--slap-neon-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slap-about-story__placeholder-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(57, 255, 20, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 255, 20, 0.08) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .slap-about-story__placeholder-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--slap-neon-green);
+    text-align: center;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  /* Values */
+  .slap-about-values {
+    padding-top: 3rem;
+    border-top: 3px solid var(--slap-black);
+  }
+
+  .slap-about-values__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 2rem;
+    text-align: center;
+  }
+
+  .slap-about-values__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .slap-about-value {
+    border: 3px solid var(--slap-black);
+    padding: 2rem 1.5rem;
+    background: var(--slap-white);
+    box-shadow: 4px 4px 0 var(--slap-neon-green);
+    transition: all 0.2s ease;
+  }
+
+  .slap-about-value:hover {
+    box-shadow: 6px 6px 0 var(--slap-neon-green);
+    transform: translate(-2px, -2px);
+  }
+
+  .slap-about-value__number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--slap-neon-green);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+    -webkit-text-stroke: 1px var(--slap-black);
+  }
+
+  .slap-about-value__title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .slap-about-value__text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: var(--slap-mid-gray);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-about-story__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .slap-about-values__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP About Story",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "OUR STORY",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "BORN IN THE PRESS ROOM",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>SLAP Supply started with a simple idea: stickers should be as bold as the brands that use them. We're not your average print shop — we're a crew of designers, printers, and adhesive nerds who believe every surface is a canvas.</p><p>From our press room floor, we produce premium custom stickers, labels, adhesives, and prints for brands, businesses, and creators who refuse to blend in. Whether you need 50 die-cuts for your laptop or 50,000 labels for your product line — we've got you covered.</p>",
+      "label": "Story Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story Image"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "default": "WHAT WE STAND FOR",
+      "label": "Values Section Heading"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "QUALITY FIRST",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Premium materials, precision cuts, and colors that pop. We don't cut corners — we cut stickers.",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP About Story",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "QUALITY FIRST",
+            "text": "Premium materials, precision cuts, and colors that pop. We don't cut corners — we cut stickers."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "FAST TURNAROUND",
+            "text": "3-day standard turnaround because your brand can't wait. Rush options available for the impatient."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "BUILT TO LAST",
+            "text": "Weatherproof, UV-resistant, dishwasher-safe. Our stickers survive what your brand goes through."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "B2B + B2C",
+            "text": "From indie creators to enterprise brands — we serve everyone. Volume discounts and dedicated accounts available."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

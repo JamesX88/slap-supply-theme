@@ -1,0 +1,174 @@
+{
+  "sections": {
+    "about_hero": {
+      "type": "slap-about-hero",
+      "settings": {
+        "label_text": "ABOUT US",
+        "heading": "<p>WE ARE<br><em>SLAP SUPPLY</em></p>",
+        "subheading": "Born in the press room. Built for brands that refuse to blend in. We're a custom sticker company that believes every surface is a canvas.",
+        "color_scheme": "scheme-3",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "about_marquee": {
+      "type": "slap-marquee",
+      "blocks": {
+        "text_1": { "type": "text", "settings": { "text": "STICKERS" } },
+        "text_2": { "type": "text", "settings": { "text": "LABELS" } },
+        "text_3": { "type": "text", "settings": { "text": "ADHESIVES" } },
+        "text_4": { "type": "text", "settings": { "text": "PRINTS" } },
+        "text_5": { "type": "text", "settings": { "text": "SINCE DAY ONE" } },
+        "text_6": { "type": "text", "settings": { "text": "PRESS ROOM QUALITY" } }
+      },
+      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5", "text_6"],
+      "settings": {
+        "background_color": "#39FF14",
+        "text_color": "#121212",
+        "border_color": "#121212",
+        "separator": "◆",
+        "speed": 20,
+        "font_size": 12,
+        "padding": 5,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "about_story": {
+      "type": "slap-about-story",
+      "blocks": {
+        "value_1": {
+          "type": "value",
+          "settings": {
+            "title": "QUALITY FIRST",
+            "text": "Premium materials, precision cuts, and colors that pop. We don't cut corners — we cut stickers."
+          }
+        },
+        "value_2": {
+          "type": "value",
+          "settings": {
+            "title": "FAST TURNAROUND",
+            "text": "3-day standard turnaround because your brand can't wait. Rush options available for the impatient."
+          }
+        },
+        "value_3": {
+          "type": "value",
+          "settings": {
+            "title": "BUILT TO LAST",
+            "text": "Weatherproof, UV-resistant, dishwasher-safe. Our stickers survive what your brand goes through."
+          }
+        },
+        "value_4": {
+          "type": "value",
+          "settings": {
+            "title": "B2B + B2C",
+            "text": "From indie creators to enterprise brands — we serve everyone. Volume discounts and dedicated accounts available."
+          }
+        }
+      },
+      "block_order": ["value_1", "value_2", "value_3", "value_4"],
+      "settings": {
+        "label_text": "OUR STORY",
+        "heading": "BORN IN THE PRESS ROOM",
+        "text": "<p>SLAP Supply started with a simple idea: stickers should be as bold as the brands that use them. We're not your average print shop — we're a crew of designers, printers, and adhesive nerds who believe every surface is a canvas.</p><p>From our press room floor, we produce premium custom stickers, labels, adhesives, and prints for brands, businesses, and creators who refuse to blend in. Whether you need 50 die-cuts for your laptop or 50,000 labels for your product line — we've got you covered.</p>",
+        "values_heading": "WHAT WE STAND FOR",
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "about_how_it_works": {
+      "type": "slap-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon_text": "📤",
+            "title": "UPLOAD YOUR DESIGN",
+            "text": "Upload your artwork or let us know what you need. We accept all major file formats."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon_text": "⚙️",
+            "title": "CHOOSE YOUR SPECS",
+            "text": "Pick your material, size, finish, and quantity. We'll handle the rest."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon_text": "🖨️",
+            "title": "WE PRINT IT",
+            "text": "Your order hits our press room floor. Premium materials, precision cuts."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon_text": "📦",
+            "title": "FAST DELIVERY",
+            "text": "Shipped to your door in 3-5 business days. Free shipping on orders over $50."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "label_text": "THE PROCESS",
+        "heading": "HOW IT WORKS",
+        "description": "From concept to delivery in 4 simple steps. No BS, no hidden fees.",
+        "button_label": "START YOUR ORDER",
+        "button_link": "shopify:\/\/collections\/all",
+        "color_scheme": "scheme-2",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "about_cta": {
+      "type": "slap-cta-banner",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "Orders Shipped"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "500+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "settings": {
+        "label_text": "LET'S WORK TOGETHER",
+        "heading": "<p>READY TO<br><em>SLAP</em> SOMETHING?</p>",
+        "description": "Whether you're a startup, a Fortune 500, or just someone who loves stickers — we're here for it.",
+        "button_label_1": "GET A QUOTE",
+        "button_link_1": "",
+        "button_label_2": "SHOP NOW",
+        "button_link_2": "shopify:\/\/collections\/all",
+        "color_scheme": "scheme-3",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "about_hero",
+    "about_marquee",
+    "about_story",
+    "about_how_it_works",
+    "about_cta"
+  ]
+}
