@@ -1,0 +1,380 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-categories color-{{ section.settings.color_scheme }}">
+  <!-- Section Header -->
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <div class="slap-categories__header">
+        <div class="slap-categories__label slap-label">{{ section.settings.label_text }}</div>
+        <h2 class="slap-categories__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.description != blank -%}
+          <p class="slap-categories__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Category Grid -->
+    <div class="slap-categories__grid slap-categories__grid--{{ section.blocks.size }}">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="slap-category-card" {{ block.shopify_attributes }}>
+          <div class="slap-category-card__image-wrapper">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 800
+                | image_tag:
+                  class: 'slap-category-card__image',
+                  sizes: '(min-width: 750px) 25vw, 50vw',
+                  widths: '200, 400, 600, 800'
+              }}
+            {%- else -%}
+              <div class="slap-category-card__placeholder">
+                <span class="slap-category-card__placeholder-icon">{{ block.settings.icon_text }}</span>
+              </div>
+            {%- endif -%}
+            <div class="slap-category-card__overlay">
+              <span class="slap-category-card__cta">SHOP NOW →</span>
+            </div>
+          </div>
+          <div class="slap-category-card__content">
+            <span class="slap-category-card__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <h3 class="slap-category-card__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="slap-category-card__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Caution Tape Divider -->
+  <div class="section-divider-caution"></div>
+</div>
+
+<style>
+  .slap-categories {
+    background-color: var(--slap-white);
+  }
+
+  .slap-categories__header {
+    text-align: left;
+    margin-bottom: 3rem;
+  }
+
+  .slap-categories__label {
+    margin-bottom: 1rem;
+  }
+
+  .slap-categories__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0 0 1rem;
+    color: var(--slap-black);
+  }
+
+  .slap-categories__description {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    color: var(--slap-mid-gray);
+    max-width: 600px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Category Grid */
+  .slap-categories__grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .slap-categories__grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .slap-categories__grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .slap-categories__grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .slap-categories__grid--5 { grid-template-columns: repeat(5, 1fr); }
+  .slap-categories__grid--6 { grid-template-columns: repeat(3, 1fr); }
+
+  /* Category Card */
+  .slap-category-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 3px solid var(--slap-black);
+    background: var(--slap-white);
+    box-shadow: 4px 4px 0 var(--slap-neon-green);
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+  }
+
+  .slap-category-card:hover {
+    box-shadow: 6px 6px 0 var(--slap-neon-green);
+    transform: translate(-2px, -2px);
+  }
+
+  .slap-category-card:hover .slap-category-card__image {
+    transform: scale(1.05);
+  }
+
+  .slap-category-card:hover .slap-category-card__overlay {
+    opacity: 1;
+  }
+
+  .slap-category-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    border-bottom: 3px solid var(--slap-black);
+  }
+
+  .slap-category-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .slap-category-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--slap-off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 18, 18, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .slap-category-card__placeholder-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+  }
+
+  .slap-category-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(57, 255, 20, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slap-category-card__cta {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--slap-black);
+  }
+
+  .slap-category-card__content {
+    padding: 1.2rem;
+    position: relative;
+  }
+
+  .slap-category-card__number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--slap-neon-green);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.3rem;
+    text-shadow: 1px 1px 0 var(--slap-black);
+    -webkit-text-stroke: 0.5px var(--slap-black);
+  }
+
+  .slap-category-card__title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 0.3rem;
+    line-height: 1.2;
+    color: var(--slap-black);
+  }
+
+  .slap-category-card__subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: var(--slap-mid-gray);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 989px) {
+    .slap-categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .slap-category-card__content {
+      padding: 0.8rem;
+    }
+
+    .slap-category-card__title {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Categories",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "WHAT WE MAKE",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "PRODUCT CATEGORIES",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "default": "From die-cut stickers to industrial labels — we print it all. Choose your weapon.",
+      "label": "Description"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "STICKERS",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "default": "Custom die-cut stickers",
+          "label": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "icon_text",
+          "default": "◆",
+          "label": "Placeholder Icon"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "STICKERS",
+            "subtitle": "Die-cut, kiss-cut, vinyl & more",
+            "icon_text": "◆"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "LABELS",
+            "subtitle": "Product labels & packaging",
+            "icon_text": "▬"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "ADHESIVES",
+            "subtitle": "Industrial-grade adhesive solutions",
+            "icon_text": "●"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "PRINTS",
+            "subtitle": "Large format & specialty prints",
+            "icon_text": "■"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+<div class="slap-marquee-section color-{{ section.settings.color_scheme }}" style="background-color: {{ section.settings.background_color }};">
+  <div class="slap-marquee" style="
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    border-top-color: {{ section.settings.border_color }};
+    border-bottom-color: {{ section.settings.border_color }};
+    font-size: {{ section.settings.font_size }}rem;
+    padding: {{ section.settings.padding }}rem 0;
+  ">
+    <div class="slap-marquee__inner" style="animation-duration: {{ section.settings.speed }}s;">
+      {%- for block in section.blocks -%}
+        <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
+      {%- endfor -%}
+      {%- for block in section.blocks -%}
+        <span>{{ block.settings.text }}</span>
+        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
+      {%- endfor -%}
+      {%- for block in section.blocks -%}
+        <span>{{ block.settings.text }}</span>
+        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
+      {%- endfor -%}
+      {%- for block in section.blocks -%}
+        <span>{{ block.settings.text }}</span>
+        <span class="slap-marquee__separator">{{ section.settings.separator }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .slap-marquee-section {
+    overflow: hidden;
+  }
+
+  .slap-marquee__separator {
+    padding: 0 1.5rem;
+    opacity: 0.5;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Marquee Ticker",
+  "tag": "section",
+  "class": "section slap-section slap-marquee-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#121212",
+      "label": "Background Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#39FF14",
+      "label": "Text Color"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "default": "#39FF14",
+      "label": "Border Color"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "default": "//",
+      "label": "Separator Character"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 25,
+      "unit": "s",
+      "label": "Scroll Speed"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "default": 11,
+      "unit": "px",
+      "label": "Font Size (rem * 10)"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "default": 6,
+      "unit": "px",
+      "label": "Vertical Padding (rem * 10)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Ticker Text",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "STICKERS",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Marquee Ticker",
+      "blocks": [
+        { "type": "text", "settings": { "text": "STICKERS" } },
+        { "type": "text", "settings": { "text": "LABELS" } },
+        { "type": "text", "settings": { "text": "ADHESIVES" } },
+        { "type": "text", "settings": { "text": "PRINTS" } },
+        { "type": "text", "settings": { "text": "CUSTOM ORDERS" } },
+        { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
+        { "type": "text", "settings": { "text": "3-DAY TURNAROUND" } },
+        { "type": "text", "settings": { "text": "WEATHERPROOF" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

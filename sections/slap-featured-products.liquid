@@ -1,0 +1,287 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-featured color-{{ section.settings.color_scheme }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <!-- Section Header -->
+    <div class="slap-featured__header">
+      <div class="slap-featured__header-left">
+        <div class="slap-featured__label slap-label">{{ section.settings.label_text }}</div>
+        <h2 class="slap-featured__heading">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.show_view_all -%}
+        <a href="{{ section.settings.collection.url | default: routes.all_products_collection_url }}" class="button button--secondary slap-featured__view-all">
+          VIEW ALL PRODUCTS →
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Product Grid -->
+    <div class="slap-featured__grid grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--2-col-tablet-down">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+          <div class="grid__item">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: section.settings.image_ratio,
+              image_shape: 'default',
+              show_secondary_image: section.settings.show_secondary_image,
+              show_vendor: section.settings.show_vendor,
+              show_rating: section.settings.show_rating,
+              section_id: section.id
+            %}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <div class="grid__item">
+            <div class="slap-product-placeholder">
+              <div class="slap-product-placeholder__image">
+                <div class="slap-product-placeholder__grid-bg"></div>
+                <span class="slap-product-placeholder__icon">◆</span>
+              </div>
+              <div class="slap-product-placeholder__content">
+                <h3 class="slap-product-placeholder__title">SAMPLE PRODUCT {{ i }}</h3>
+                <p class="slap-product-placeholder__price">From $4.99</p>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .slap-featured {
+    background-color: var(--slap-white);
+  }
+
+  .slap-featured__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .slap-featured__label {
+    margin-bottom: 0.8rem;
+  }
+
+  .slap-featured__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .slap-featured__view-all {
+    font-size: 0.9rem !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+
+  .slap-featured__grid {
+    gap: 1.5rem;
+  }
+
+  /* Placeholder cards */
+  .slap-product-placeholder {
+    border: 3px solid var(--slap-black);
+    box-shadow: 4px 4px 0 var(--slap-neon-green);
+    transition: all 0.2s ease;
+    background: var(--slap-white);
+  }
+
+  .slap-product-placeholder:hover {
+    box-shadow: 6px 6px 0 var(--slap-neon-green);
+    transform: translate(-2px, -2px);
+  }
+
+  .slap-product-placeholder__image {
+    aspect-ratio: 1;
+    background: var(--slap-off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-bottom: 3px solid var(--slap-black);
+    overflow: hidden;
+  }
+
+  .slap-product-placeholder__grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 18, 18, 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .slap-product-placeholder__icon {
+    font-size: 3rem;
+    opacity: 0.15;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slap-product-placeholder__content {
+    padding: 1.2rem;
+  }
+
+  .slap-product-placeholder__title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 0.3rem;
+  }
+
+  .slap-product-placeholder__price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--slap-neon-green);
+    margin: 0;
+    -webkit-text-stroke: 0.3px var(--slap-black);
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-featured__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Featured Products",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "FROM THE PRESS",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "FEATURED PRODUCTS",
+      "label": "Heading"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Desktop columns"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "square",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show secondary image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View All' button"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Featured Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,286 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-cta color-{{ section.settings.color_scheme }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="slap-cta__inner">
+      <div class="slap-cta__content">
+        {%- if section.settings.label_text != blank -%}
+          <div class="slap-cta__label slap-label">{{ section.settings.label_text }}</div>
+        {%- endif -%}
+        <h2 class="slap-cta__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.description != blank -%}
+          <p class="slap-cta__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+        <div class="slap-cta__buttons">
+          {%- if section.settings.button_label_1 != blank -%}
+            <a href="{{ section.settings.button_link_1 }}" class="button button--primary slap-cta__btn">
+              {{ section.settings.button_label_1 | escape }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a href="{{ section.settings.button_link_2 }}" class="button button--secondary slap-cta__btn">
+              {{ section.settings.button_label_2 | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="slap-cta__stats">
+          {%- for block in section.blocks -%}
+            <div class="slap-cta__stat" {{ block.shopify_attributes }}>
+              <span class="slap-cta__stat-number">{{ block.settings.number }}</span>
+              <span class="slap-cta__stat-label">{{ block.settings.label }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .slap-cta {
+    background-color: var(--slap-black);
+    color: var(--slap-white);
+    position: relative;
+  }
+
+  .slap-cta__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .slap-cta__label {
+    margin-bottom: 1rem;
+  }
+
+  .slap-cta__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0 0 1.2rem;
+    color: var(--slap-white);
+  }
+
+  .slap-cta__heading em,
+  .slap-cta__heading i {
+    color: var(--slap-neon-green);
+    font-style: normal;
+  }
+
+  .slap-cta__description {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    max-width: 500px;
+    margin: 0 0 2rem;
+  }
+
+  .slap-cta__buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-cta__btn {
+    padding: 1rem 2rem !important;
+  }
+
+  /* Stats */
+  .slap-cta__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .slap-cta__stat {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    border: 3px solid var(--slap-neon-green);
+    background: rgba(57, 255, 20, 0.05);
+  }
+
+  .slap-cta__stat-number {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--slap-neon-green);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .slap-cta__stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-cta__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .slap-cta__stats {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .slap-cta__stat {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP CTA Banner",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "READY TO PRINT?",
+      "label": "Section Label"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "default": "<p>LET'S MAKE<br>SOMETHING <em>LOUD</em></p>",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "default": "Whether you need 50 stickers or 50,000 labels — we've got the press power to deliver. B2B and B2C welcome.",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "default": "GET A QUOTE",
+      "label": "Primary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "default": "CONTACT US",
+      "label": "Secondary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "default": "10K+",
+          "label": "Number/Value"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "default": "Orders Shipped",
+          "label": "Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP CTA Banner",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "Orders Shipped"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "500+",
+            "label": "5-Star Reviews"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

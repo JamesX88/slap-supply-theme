@@ -1,210 +1,227 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "slap_hero": {
+      "type": "slap-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "trust_1": {
+          "type": "trust_badge",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "icon_text": "✓",
+            "badge_text": "Free Shipping on $50+"
           }
         },
-        "text": {
-          "type": "text",
+        "trust_2": {
+          "type": "trust_badge",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "icon_text": "⚡",
+            "badge_text": "3-Day Turnaround"
           }
         },
-        "button": {
-          "type": "buttons",
+        "trust_3": {
+          "type": "trust_badge",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon_text": "★",
+            "badge_text": "Weatherproof & Durable"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+      "block_order": ["trust_1", "trust_2", "trust_3"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "overlay_opacity": 60,
+        "hero_height": 90,
+        "subtitle": "CUSTOM STICKER COMPANY",
+        "heading": "<p>STICK IT.<br><em>YOUR WAY.<\/em><\/p>",
+        "subheading": "Premium custom stickers, labels, and adhesive prints. Built for brands that refuse to blend in.",
+        "button_label_1": "START YOUR ORDER",
+        "button_link_1": "shopify:\/\/collections\/all",
+        "button_label_2": "SEE OUR WORK",
+        "button_link_2": "",
+        "show_trust_badges": true,
+        "show_scroll_indicator": true,
+        "color_scheme": "scheme-3"
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "slap_marquee_1": {
+      "type": "slap-marquee",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "text_1": { "type": "text", "settings": { "text": "STICKERS" } },
+        "text_2": { "type": "text", "settings": { "text": "LABELS" } },
+        "text_3": { "type": "text", "settings": { "text": "ADHESIVES" } },
+        "text_4": { "type": "text", "settings": { "text": "PRINTS" } },
+        "text_5": { "type": "text", "settings": { "text": "CUSTOM ORDERS" } },
+        "text_6": { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
+        "text_7": { "type": "text", "settings": { "text": "3-DAY TURNAROUND" } },
+        "text_8": { "type": "text", "settings": { "text": "WEATHERPROOF" } }
+      },
+      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5", "text_6", "text_7", "text_8"],
+      "settings": {
+        "background_color": "#121212",
+        "text_color": "#39FF14",
+        "border_color": "#39FF14",
+        "separator": "//",
+        "speed": 25,
+        "font_size": 11,
+        "padding": 6,
+        "color_scheme": "scheme-3"
+      }
+    },
+    "slap_categories": {
+      "type": "slap-categories",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "title": "STICKERS",
+            "subtitle": "Die-cut, kiss-cut, vinyl & more",
+            "icon_text": "◆"
           }
         },
-        "text": {
-          "type": "text",
+        "cat_2": {
+          "type": "category",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "title": "LABELS",
+            "subtitle": "Product labels & packaging",
+            "icon_text": "▬"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "ADHESIVES",
+            "subtitle": "Industrial-grade adhesive solutions",
+            "icon_text": "●"
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "PRINTS",
+            "subtitle": "Large format & specialty prints",
+            "icon_text": "■"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "text"
-      ],
+      "block_order": ["cat_1", "cat_2", "cat_3", "cat_4"],
       "settings": {
+        "label_text": "WHAT WE MAKE",
+        "heading": "PRODUCT CATEGORIES",
+        "description": "From die-cut stickers to industrial labels — we print it all. Choose your weapon.",
         "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "slap_featured": {
+      "type": "slap-featured-products",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
+        "label_text": "FROM THE PRESS",
+        "heading": "FEATURED PRODUCTS",
+        "products_to_show": 4,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
+        "image_ratio": "square",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
+        "show_view_all": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "collage": {
-      "type": "collage",
+    "slap_how_it_works": {
+      "type": "slap-how-it-works",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
+        "step_1": {
+          "type": "step",
           "settings": {
-            "collection": ""
+            "icon_text": "📤",
+            "title": "UPLOAD YOUR DESIGN",
+            "text": "Upload your artwork or let us know what you need. We accept all major file formats."
           }
         },
-        "product": {
-          "type": "product",
+        "step_2": {
+          "type": "step",
           "settings": {
-            "product": "",
-            "second_image": false
+            "icon_text": "⚙️",
+            "title": "CHOOSE YOUR SPECS",
+            "text": "Pick your material, size, finish, and quantity. We'll handle the rest."
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "step_3": {
+          "type": "step",
           "settings": {
-            "collection": ""
+            "icon_text": "🖨️",
+            "title": "WE PRINT IT",
+            "text": "Your order hits our press room floor. Premium materials, precision cuts."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon_text": "📦",
+            "title": "FAST DELIVERY",
+            "text": "Shipped to your door in 3-5 business days. Free shipping on orders over $50."
           }
         }
       },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "label_text": "THE PROCESS",
+        "heading": "HOW IT WORKS",
+        "description": "From concept to delivery in 4 simple steps. No BS, no hidden fees.",
+        "button_label": "GET STARTED NOW",
+        "button_link": "shopify:\/\/collections\/all",
+        "color_scheme": "scheme-2",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
+    "slap_cta": {
+      "type": "slap-cta-banner",
       "blocks": {
-        "column1": {
-          "type": "column",
+        "stat_1": {
+          "type": "stat",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "number": "10K+",
+            "label": "Orders Shipped"
           }
         },
-        "column2": {
-          "type": "column",
+        "stat_2": {
+          "type": "stat",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "number": "500+",
+            "label": "5-Star Reviews"
           }
         },
-        "column3": {
-          "type": "column",
+        "stat_3": {
+          "type": "stat",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
           }
         }
       },
-      "block_order": [
-        "column1",
-        "column2",
-        "column3"
-      ],
+      "block_order": ["stat_1", "stat_2", "stat_3"],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "label_text": "READY TO PRINT?",
+        "heading": "<p>LET'S MAKE<br>SOMETHING <em>LOUD<\/em><\/p>",
+        "description": "Whether you need 50 stickers or 50,000 labels — we've got the press power to deliver. B2B and B2C welcome.",
+        "button_label_1": "GET A QUOTE",
+        "button_link_1": "",
+        "button_label_2": "CONTACT US",
+        "button_link_2": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "slap_hero",
+    "slap_marquee_1",
+    "slap_categories",
+    "slap_featured",
+    "slap_how_it_works",
+    "slap_cta"
   ]
 }
