@@ -97,3 +97,47 @@ Ensure that you follow the list of [theme store requirements](https://shopify.de
 ## License
 
 Copyright (c) 2021-present Shopify Inc. See [LICENSE](/LICENSE.md) for further details.
+
+
+---
+
+# SLAP Supply Theme
+
+This repository contains the customized Shopify theme for SLAP Supply, based on the official Shopify Dawn theme.
+
+## Repository Structure
+
+This repository is structured to facilitate ongoing development and customization while allowing for easy updates from the original Dawn theme.
+
+- **main branch**: This branch tracks the upstream `Shopify/dawn` repository. It should be kept clean and used only for pulling in the latest updates from the Dawn theme. No direct customizations should be made on this branch.
+
+- **slap-supply branch**: This is the development branch where all custom code and modifications for the SLAP Supply theme are implemented. All new features, design changes, and bug fixes should be committed to this branch.
+
+## Development Workflow
+
+To keep the theme up-to-date with the latest version of Dawn, follow this workflow:
+
+### 1. Update the `main` branch
+
+Fetch the latest changes from the upstream Dawn repository and merge them into your local `main` branch.
+
+```bash
+git checkout main
+git pull upstream main
+git push origin main
+```
+
+### 2. Merge updates into the `slap-supply` branch
+
+After updating the `main` branch, merge the changes into the `slap-supply` branch to incorporate the latest Dawn theme updates into your custom theme.
+
+```bash
+git checkout slap-supply
+git merge main
+```
+
+Resolve any merge conflicts that may arise during this process. After resolving conflicts, push the changes to the remote `slap-supply` branch.
+
+```bash
+git push origin slap-supply
+```
