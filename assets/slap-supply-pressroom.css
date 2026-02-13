@@ -1,0 +1,699 @@
+/* ============================================================
+   SLAP SUPPLY — THE PRESS ROOM
+   Neo-Brutalist Industrial Design System
+   Custom Sticker Company: Stickers, Labels, Adhesives, Prints
+   ============================================================ */
+
+/* --- Google Fonts: Oswald (headings) + Space Grotesk (body) --- */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  /* Brand Colors */
+  --slap-neon-green: #39FF14;
+  --slap-neon-green-rgb: 57, 255, 20;
+  --slap-black: #121212;
+  --slap-black-rgb: 18, 18, 18;
+  --slap-white: #FFFFFF;
+  --slap-off-white: #F5F5F0;
+  --slap-dark: #1A1A1A;
+  --slap-gray: #2A2A2A;
+  --slap-mid-gray: #888888;
+  --slap-light-gray: #E0E0E0;
+
+  /* Typography */
+  --font-heading-family: 'Oswald', sans-serif;
+  --font-body-family: 'Space Grotesk', sans-serif;
+
+  /* Neo-Brutalist Borders */
+  --slap-border-width: 3px;
+  --slap-border-color: var(--slap-black);
+  --slap-shadow-offset: 4px;
+  --slap-shadow-color: var(--slap-neon-green);
+  --slap-shadow-hover: 6px;
+
+  /* Caution Tape */
+  --caution-stripe-size: 20px;
+  --caution-color-1: var(--slap-neon-green);
+  --caution-color-2: var(--slap-black);
+}
+
+/* ============================================================
+   GLOBAL TYPOGRAPHY OVERRIDES
+   ============================================================ */
+body,
+.shopify-section,
+.template-index,
+.template-product,
+.template-collection,
+.template-cart,
+.template-page {
+  font-family: 'Space Grotesk', var(--font-body-family), sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5,
+.hx,
+.title,
+[class*="heading"],
+.rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6 {
+  font-family: 'Oswald', var(--font-heading-family), sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Heading sizes */
+h1, .h1, .h0 {
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+}
+
+h2, .h2 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+}
+
+h3, .h3 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+p, li, a, span, label, input, textarea, select, button {
+  font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
+}
+
+/* ============================================================
+   CAUTION TAPE DIVIDERS
+   ============================================================ */
+.caution-tape,
+.slap-divider {
+  width: 100%;
+  height: 12px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--caution-color-1),
+    var(--caution-color-1) 10px,
+    var(--caution-color-2) 10px,
+    var(--caution-color-2) 20px
+  );
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.caution-tape--thick {
+  height: 20px;
+}
+
+.caution-tape--thin {
+  height: 6px;
+}
+
+/* Caution tape as section separator */
+.section-divider-caution {
+  position: relative;
+  overflow: hidden;
+  height: 16px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--slap-neon-green),
+    var(--slap-neon-green) 10px,
+    var(--slap-black) 10px,
+    var(--slap-black) 20px
+  );
+}
+
+/* ============================================================
+   NEO-BRUTALIST BUTTONS
+   ============================================================ */
+.button,
+.shopify-payment-button__button,
+button[type="submit"],
+.btn,
+a.button,
+.cart__checkout-button,
+.product-form__submit {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  border: var(--slap-border-width) solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  box-shadow: var(--slap-shadow-offset) var(--slap-shadow-offset) 0 var(--slap-neon-green);
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.button:hover,
+.shopify-payment-button__button:hover,
+button[type="submit"]:hover,
+.btn:hover,
+a.button:hover,
+.cart__checkout-button:hover,
+.product-form__submit:hover {
+  box-shadow: var(--slap-shadow-hover) var(--slap-shadow-hover) 0 var(--slap-neon-green) !important;
+  transform: translate(-2px, -2px);
+}
+
+.button:active,
+button[type="submit"]:active,
+.btn:active,
+a.button:active {
+  box-shadow: 1px 1px 0 var(--slap-neon-green) !important;
+  transform: translate(2px, 2px);
+}
+
+/* Primary button (dark bg, green text) */
+.button--primary,
+.product-form__submit,
+.cart__checkout-button {
+  background-color: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+}
+
+.button--primary:hover,
+.product-form__submit:hover,
+.cart__checkout-button:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* Secondary button (outlined) */
+.button--secondary {
+  background-color: transparent !important;
+  color: var(--slap-black) !important;
+  border: var(--slap-border-width) solid var(--slap-black) !important;
+}
+
+.button--secondary:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* ============================================================
+   NEO-BRUTALIST CARDS
+   ============================================================ */
+.card-wrapper,
+.card,
+.product-card-wrapper,
+.collection-card-wrapper {
+  border: var(--slap-border-width) solid var(--slap-black);
+  border-radius: 0 !important;
+  box-shadow: var(--slap-shadow-offset) var(--slap-shadow-offset) 0 var(--slap-neon-green);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  background: var(--slap-white);
+}
+
+.card-wrapper:hover,
+.card:hover,
+.product-card-wrapper:hover,
+.collection-card-wrapper:hover {
+  box-shadow: var(--slap-shadow-hover) var(--slap-shadow-hover) 0 var(--slap-neon-green);
+  transform: translate(-2px, -2px);
+}
+
+.card__inner {
+  border-radius: 0 !important;
+}
+
+.card__content {
+  padding: 1.2rem;
+}
+
+.card__heading {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ============================================================
+   HEADER / NAVIGATION
+   ============================================================ */
+.header-wrapper {
+  border-bottom: var(--slap-border-width) solid var(--slap-black) !important;
+  background-color: var(--slap-white) !important;
+}
+
+.header {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.header__heading-link {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Navigation links */
+.header__menu-item,
+.header__menu-item span,
+.list-menu__item--link {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 1.4rem;
+}
+
+.header__menu-item:hover {
+  color: var(--slap-neon-green) !important;
+}
+
+/* Announcement bar */
+.announcement-bar {
+  background-color: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+  border-bottom: var(--slap-border-width) solid var(--slap-neon-green);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.announcement-bar__message {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background-color: var(--slap-black) !important;
+  color: var(--slap-white) !important;
+  border-top: var(--slap-border-width) solid var(--slap-neon-green);
+}
+
+.footer::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 12px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--slap-neon-green),
+    var(--slap-neon-green) 10px,
+    var(--slap-black) 10px,
+    var(--slap-black) 20px
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.footer h2,
+.footer .footer__heading {
+  color: var(--slap-neon-green) !important;
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+}
+
+.footer a {
+  color: var(--slap-white) !important;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: var(--slap-neon-green) !important;
+}
+
+/* ============================================================
+   FORMS & INPUTS
+   ============================================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select,
+.field__input {
+  border: var(--slap-border-width) solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  background: var(--slap-white);
+  transition: all 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.field__input:focus {
+  border-color: var(--slap-neon-green) !important;
+  box-shadow: 0 0 0 2px var(--slap-neon-green) !important;
+  outline: none;
+}
+
+/* ============================================================
+   BADGES & TAGS
+   ============================================================ */
+.badge,
+.card__badge,
+.price__badge-sale {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 0 !important;
+  border: 2px solid var(--slap-black);
+}
+
+/* ============================================================
+   PRODUCT GRID
+   ============================================================ */
+.product-grid .grid__item {
+  transition: transform 0.2s ease;
+}
+
+.card-information__text {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.price-item {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+}
+
+/* ============================================================
+   VARIANT PILLS / SELECTORS
+   ============================================================ */
+.product-form__input label,
+.variant-input label {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.product-form__input input[type="radio"] + label {
+  border: var(--slap-border-width) solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.product-form__input input[type="radio"]:checked + label {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  border-color: var(--slap-black) !important;
+  box-shadow: 2px 2px 0 var(--slap-black);
+}
+
+.product-form__input input[type="radio"] + label:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* ============================================================
+   QUANTITY SELECTOR
+   ============================================================ */
+.quantity {
+  border: var(--slap-border-width) solid var(--slap-black) !important;
+  border-radius: 0 !important;
+}
+
+.quantity__button {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  border: none !important;
+  transition: background-color 0.15s ease;
+}
+
+.quantity__button:hover {
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+.quantity__input {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 700;
+  border-left: var(--slap-border-width) solid var(--slap-black) !important;
+  border-right: var(--slap-border-width) solid var(--slap-black) !important;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.slap-bg-black { background-color: var(--slap-black); }
+.slap-bg-green { background-color: var(--slap-neon-green); }
+.slap-bg-white { background-color: var(--slap-white); }
+.slap-bg-dark { background-color: var(--slap-dark); }
+.slap-text-green { color: var(--slap-neon-green); }
+.slap-text-black { color: var(--slap-black); }
+.slap-text-white { color: var(--slap-white); }
+
+.slap-border {
+  border: var(--slap-border-width) solid var(--slap-black);
+}
+
+.slap-shadow {
+  box-shadow: var(--slap-shadow-offset) var(--slap-shadow-offset) 0 var(--slap-neon-green);
+}
+
+.slap-shadow-hover:hover {
+  box-shadow: var(--slap-shadow-hover) var(--slap-shadow-hover) 0 var(--slap-neon-green);
+  transform: translate(-2px, -2px);
+}
+
+/* Industrial label style */
+.slap-label {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 1.2rem;
+  border: var(--slap-border-width) solid var(--slap-black);
+  background: var(--slap-neon-green);
+  color: var(--slap-black);
+  font-size: 0.85rem;
+}
+
+/* Stencil text effect */
+.slap-stencil {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  -webkit-text-stroke: 1px var(--slap-black);
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--slap-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slap-neon-green);
+  border: 2px solid var(--slap-black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2ecc0f;
+}
+
+/* ============================================================
+   SELECTION HIGHLIGHT
+   ============================================================ */
+::selection {
+  background: var(--slap-neon-green);
+  color: var(--slap-black);
+}
+
+::-moz-selection {
+  background: var(--slap-neon-green);
+  color: var(--slap-black);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media screen and (max-width: 749px) {
+  .caution-tape,
+  .slap-divider,
+  .section-divider-caution {
+    height: 8px;
+  }
+
+  .caution-tape--thick {
+    height: 12px;
+  }
+
+  h1, .h1, .h0 {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+  }
+
+  h2, .h2 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+  }
+}
+
+/* ============================================================
+   ANIMATION UTILITIES
+   ============================================================ */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGreen {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(57, 255, 20, 0);
+  }
+}
+
+.slap-animate-in {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.slap-pulse {
+  animation: pulseGreen 2s infinite;
+}
+
+/* ============================================================
+   MARQUEE / TICKER TAPE
+   ============================================================ */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.slap-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--slap-black);
+  color: var(--slap-neon-green);
+  padding: 0.6rem 0;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+  border-top: var(--slap-border-width) solid var(--slap-neon-green);
+  border-bottom: var(--slap-border-width) solid var(--slap-neon-green);
+}
+
+.slap-marquee__inner {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.slap-marquee__inner span {
+  padding: 0 2rem;
+}
+
+/* ============================================================
+   PAGE TRANSITIONS
+   ============================================================ */
+.content-for-layout {
+  opacity: 1;
+}
+
+/* ============================================================
+   LINK STYLES
+   ============================================================ */
+a:not(.button):not(.header__menu-item) {
+  transition: color 0.2s ease;
+}
+
+a:not(.button):not(.header__menu-item):hover {
+  color: var(--slap-neon-green);
+}
+
+/* ============================================================
+   BREADCRUMBS
+   ============================================================ */
+.breadcrumbs {
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.breadcrumbs a {
+  color: var(--slap-mid-gray);
+}
+
+.breadcrumbs a:hover {
+  color: var(--slap-neon-green);
+}
+
+/* ============================================================
+   FACETS / FILTERS
+   ============================================================ */
+.facets__wrapper {
+  border-bottom: var(--slap-border-width) solid var(--slap-black);
+}
+
+.facets__heading {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.facet-checkbox__text {
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+/* Active filter tag */
+.active-facets__button {
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 600;
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+.pagination__item {
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 600;
+}
+
+.pagination__item--current {
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+.pagination__item:hover {
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.loading__spinner circle {
+  stroke: var(--slap-neon-green);
+}
