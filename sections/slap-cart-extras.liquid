@@ -1,0 +1,87 @@
+{{ 'slap-cart-page.css' | asset_url | stylesheet_tag }}
+
+{%- if cart != empty -%}
+<div class="page-width">
+  <div class="slap-cart-extras">
+    <!-- Promo Code -->
+    <div class="slap-promo-code">
+      <div class="slap-promo-code__label">PROMO CODE</div>
+      <div class="slap-promo-code__form">
+        <input type="text" class="slap-promo-code__input" placeholder="Enter discount code" id="slapPromoInput">
+        <button class="slap-promo-code__btn" id="slapPromoBtn" type="button">APPLY</button>
+      </div>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    {%- assign free_shipping_threshold = 5000 -%}
+    {%- assign cart_total = cart.total_price -%}
+    {%- assign remaining = free_shipping_threshold | minus: cart_total -%}
+    {%- assign progress = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
+    {%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
+
+    <div class="slap-shipping-bar">
+      <div class="slap-shipping-bar__text">
+        {%- if remaining > 0 -%}
+          Spend <strong>{{ remaining | money }}</strong> more for FREE SHIPPING
+        {%- else -%}
+          <strong>FREE SHIPPING</strong> UNLOCKED!
+        {%- endif -%}
+      </div>
+      <div class="slap-shipping-bar__track">
+        <div class="slap-shipping-bar__fill" style="width: {{ progress }}%"></div>
+      </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="slap-cart-trust">
+      {%- for block in section.blocks -%}
+        <div class="slap-cart-trust__item" {{ block.shopify_attributes }}>
+          <span class="slap-cart-trust__icon">{{ block.settings.icon }}</span>
+          {{ block.settings.text }}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SLAP Cart Extras",
+  "tag": "section",
+  "class": "section slap-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust Badge",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "default": "🔒",
+          "label": "Icon (emoji)"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "SECURE CHECKOUT",
+          "label": "Badge Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Cart Extras",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "🔒", "text": "SECURE CHECKOUT" } },
+        { "type": "badge", "settings": { "icon": "🚚", "text": "FREE SHIPPING $50+" } },
+        { "type": "badge", "settings": { "icon": "⚡", "text": "3-DAY TURNAROUND" } },
+        { "type": "badge", "settings": { "icon": "🛡️", "text": "QUALITY GUARANTEED" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

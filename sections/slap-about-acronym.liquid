@@ -1,0 +1,267 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-about-acronym color-{{ section.settings.color_scheme }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="slap-about-acronym__header">
+      <div class="slap-about-acronym__label">{{ section.settings.label_text }}</div>
+      <h2 class="slap-about-acronym__heading">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="slap-about-acronym__grid">
+      {%- for block in section.blocks -%}
+        <div class="slap-about-acronym__item" {{ block.shopify_attributes }}>
+          <div class="slap-about-acronym__letter">{{ block.settings.letter }}</div>
+          <div class="slap-about-acronym__content">
+            <h3 class="slap-about-acronym__word">{{ block.settings.word }}</h3>
+            <p class="slap-about-acronym__desc">{{ block.settings.description }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="section-divider-caution"></div>
+</div>
+
+<style>
+  .slap-about-acronym {
+    background-color: var(--slap-off-white);
+  }
+
+  .slap-about-acronym__header {
+    margin-bottom: 3rem;
+  }
+
+  .slap-about-acronym__label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #737373;
+    margin-bottom: 0.8rem;
+  }
+
+  .slap-about-acronym__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .slap-about-acronym__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .slap-about-acronym__item {
+    border: 2px solid var(--slap-black);
+    margin-left: -2px;
+    margin-top: -2px;
+    padding: 2.5rem 2rem;
+    background: var(--slap-white);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .slap-about-acronym__item:first-child {
+    margin-left: 0;
+  }
+
+  .slap-about-acronym__item:hover {
+    background: var(--slap-black);
+    z-index: 1;
+  }
+
+  .slap-about-acronym__item:hover .slap-about-acronym__word {
+    color: var(--slap-white);
+  }
+
+  .slap-about-acronym__item:hover .slap-about-acronym__desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .slap-about-acronym__letter {
+    font-family: 'Oswald', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--slap-neon-green);
+    line-height: 1;
+    margin-bottom: 1rem;
+    -webkit-text-stroke: 2px var(--slap-black);
+    paint-order: stroke fill;
+  }
+
+  .slap-about-acronym__word {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.03em;
+    color: var(--slap-black);
+    transition: color 0.2s ease;
+  }
+
+  .slap-about-acronym__desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: #737373;
+    line-height: 1.5;
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  @media screen and (max-width: 989px) {
+    .slap-about-acronym__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-about-acronym__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-about-acronym__item {
+      margin-left: 0;
+    }
+
+    .slap-about-acronym__letter {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Acronym",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "WHAT SLAP STANDS FOR",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "S.L.A.P.",
+      "label": "Heading"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "letter",
+      "name": "Letter",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "letter",
+          "default": "S",
+          "label": "Letter"
+        },
+        {
+          "type": "text",
+          "id": "word",
+          "default": "STICKERS",
+          "label": "Word"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "default": "Die-cut, kiss-cut, vinyl, holographic — every style you can imagine, built to last.",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Acronym",
+      "blocks": [
+        {
+          "type": "letter",
+          "settings": {
+            "letter": "S",
+            "word": "STICKERS",
+            "description": "Die-cut, kiss-cut, vinyl, holographic — every style you can imagine, built to last."
+          }
+        },
+        {
+          "type": "letter",
+          "settings": {
+            "letter": "L",
+            "word": "LABELS",
+            "description": "Product labels, roll labels, waterproof, freezer-safe — for every surface and condition."
+          }
+        },
+        {
+          "type": "letter",
+          "settings": {
+            "letter": "A",
+            "word": "ADHESIVES",
+            "description": "Wall graphics, floor decals, window clings — large format adhesive prints that stick."
+          }
+        },
+        {
+          "type": "letter",
+          "settings": {
+            "letter": "P",
+            "word": "PRINTS",
+            "description": "Art prints, posters, packaging inserts — premium print quality for every project."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

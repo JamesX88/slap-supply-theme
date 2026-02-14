@@ -7,24 +7,24 @@
         "padding_bottom": 36
       }
     },
+    "cart-extras": {
+      "type": "slap-cart-extras",
+      "blocks": {
+        "badge_1": { "type": "badge", "settings": { "icon": "🔒", "text": "SECURE CHECKOUT" } },
+        "badge_2": { "type": "badge", "settings": { "icon": "🚚", "text": "FREE SHIPPING $50+" } },
+        "badge_3": { "type": "badge", "settings": { "icon": "⚡", "text": "3-DAY TURNAROUND" } },
+        "badge_4": { "type": "badge", "settings": { "icon": "🛡️", "text": "QUALITY GUARANTEED" } }
+      },
+      "block_order": ["badge_1", "badge_2", "badge_3", "badge_4"],
+      "settings": {}
+    },
     "cart-footer": {
       "type": "main-cart-footer",
       "blocks": {
-        "subtotal": {
-          "type": "subtotal",
-          "settings": {
-          }
-        },
-        "buttons": {
-          "type": "buttons",
-          "settings": {
-          }
-        }
+        "subtotal": { "type": "subtotal", "settings": {} },
+        "buttons": { "type": "buttons", "settings": {} }
       },
-      "block_order": [
-        "subtotal",
-        "buttons"
-      ]
+      "block_order": ["subtotal", "buttons"]
     },
     "slap_featured": {
       "type": "slap-featured-products",
@@ -46,27 +46,9 @@
     "slap_cta": {
       "type": "slap-cta-banner",
       "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "number": "10K+",
-            "label": "Orders Shipped"
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "number": "$50+",
-            "label": "Free Shipping"
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "number": "3 DAY",
-            "label": "Avg. Turnaround"
-          }
-        }
+        "stat_1": { "type": "stat", "settings": { "number": "10K+", "label": "Orders Shipped" } },
+        "stat_2": { "type": "stat", "settings": { "number": "$50+", "label": "Free Shipping" } },
+        "stat_3": { "type": "stat", "settings": { "number": "3 DAY", "label": "Avg. Turnaround" } }
       },
       "block_order": ["stat_1", "stat_2", "stat_3"],
       "settings": {
@@ -85,6 +67,7 @@
   },
   "order": [
     "cart-items",
+    "cart-extras",
     "cart-footer",
     "slap_featured",
     "slap_cta"

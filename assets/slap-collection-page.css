@@ -7,9 +7,21 @@
 .collection-hero {
   background-color: var(--slap-black) !important;
   color: var(--slap-white) !important;
-  border-bottom: 3px solid var(--slap-neon-green);
-  padding: 3rem 0;
+  border-bottom: none;
+  padding: 3rem 0 3.5rem;
   position: relative;
+  overflow: hidden;
+}
+
+.collection-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
 }
 
 .collection-hero::after {
@@ -27,16 +39,22 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 1;
+}
+
+.collection-hero__inner {
+  position: relative;
+  z-index: 1;
 }
 
 .collection-hero__title {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 900;
   font-size: clamp(2.4rem, 5vw, 4.5rem);
   line-height: 1;
   color: var(--slap-white) !important;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
 }
 
 .collection-hero__description {
@@ -48,18 +66,18 @@
   margin-top: 1rem;
 }
 
-/* --- Collection Label --- */
+/* --- Collection Station Label --- */
 .slap-collection-label {
   display: inline-block;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Space Mono', monospace;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 3px;
   padding: 0.3rem 1rem;
   border: 2px solid var(--slap-neon-green);
   background: transparent;
   color: var(--slap-neon-green);
-  font-size: 0.75rem;
+  font-size: 10px;
   margin-bottom: 0.8rem;
 }
 
@@ -89,7 +107,7 @@
   border: none;
   border-bottom: 3px solid transparent;
   background: transparent;
-  color: var(--slap-mid-gray);
+  color: #737373;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
@@ -156,7 +174,7 @@
 
 /* Sort dropdown */
 .facet-filters__sort,
-.select__select {
+.collection .select__select {
   border: 3px solid var(--slap-black) !important;
   border-radius: 0 !important;
   font-family: 'Space Grotesk', sans-serif !important;
@@ -197,11 +215,11 @@
 
 /* --- Product Count --- */
 .product-count__text {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.85rem;
-  color: var(--slap-mid-gray);
+  font-family: 'Space Mono', monospace !important;
+  font-size: 10px;
+  color: #737373;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 2px;
 }
 
 /* --- Product Grid --- */
@@ -213,7 +231,7 @@
 .collection .grid__item .card {
   border: 3px solid var(--slap-black);
   border-radius: 0 !important;
-  box-shadow: 4px 4px 0 var(--slap-neon-green);
+  box-shadow: none;
   transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
   background: var(--slap-white);
@@ -221,12 +239,17 @@
 
 .collection .grid__item .card-wrapper:hover,
 .collection .grid__item .card:hover {
-  box-shadow: 6px 6px 0 var(--slap-neon-green);
+  box-shadow: 4px 4px 0 var(--slap-neon-green);
   transform: translate(-2px, -2px);
 }
 
 .collection .card__inner {
   border-radius: 0 !important;
+}
+
+.collection .card__content {
+  padding: 1rem 1.2rem;
+  border-top: 2px solid var(--slap-black);
 }
 
 .collection .card__heading {
@@ -253,6 +276,27 @@
   font-size: 1.05rem;
 }
 
+/* Product card badge */
+.collection .card__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.collection .card__badge .badge {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  border: 2px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  padding: 4px 10px;
+}
+
 /* Quick add button in grid */
 .quick-add__submit {
   border: 3px solid var(--slap-black) !important;
@@ -261,23 +305,28 @@
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.05em;
-  background: var(--slap-black) !important;
-  color: var(--slap-neon-green) !important;
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  transition: all 0.15s ease;
 }
 
 .quick-add__submit:hover {
-  background: var(--slap-neon-green) !important;
-  color: var(--slap-black) !important;
+  background: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+  box-shadow: 3px 3px 0 var(--slap-neon-green);
+  transform: translate(-1px, -1px);
 }
 
 /* --- Pagination --- */
 .pagination {
   margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 3px solid var(--slap-black);
 }
 
 .pagination__list {
   display: flex;
-  gap: 0.5rem;
+  gap: 0;
   justify-content: center;
 }
 
@@ -293,6 +342,11 @@
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
+  margin-left: -2px;
+}
+
+.pagination__item:first-child {
+  margin-left: 0;
 }
 
 .pagination__item--current,
@@ -300,10 +354,13 @@
   background: var(--slap-neon-green) !important;
   color: var(--slap-black) !important;
   border-color: var(--slap-black) !important;
+  position: relative;
+  z-index: 1;
 }
 
 .pagination__item:hover:not(.pagination__item--current) {
   background: rgba(57, 255, 20, 0.15) !important;
+  z-index: 1;
 }
 
 .pagination__item a {
@@ -316,6 +373,16 @@
   height: 100%;
 }
 
+/* Pagination prev/next */
+.pagination__item--prev,
+.pagination__item--next {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0 1rem;
+}
+
 /* --- Empty Collection State --- */
 .collection--empty {
   text-align: center;
@@ -325,7 +392,7 @@
 .collection--empty p {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.1rem;
-  color: var(--slap-mid-gray);
+  color: #737373;
 }
 
 /* --- Vertical Filters (Sidebar) --- */
@@ -339,13 +406,13 @@
 }
 
 .facets-vertical .facets__disclosure {
-  border-bottom: 1px solid var(--slap-light-gray);
+  border-bottom: 1px solid #d4d4d4;
 }
 
 /* --- Responsive --- */
 @media screen and (max-width: 749px) {
   .collection-hero {
-    padding: 2rem 0;
+    padding: 2rem 0 2.5rem;
   }
 
   .collection-hero__title {
@@ -358,5 +425,11 @@
 
   .collection .grid {
     gap: 1rem;
+  }
+
+  .pagination__item {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
   }
 }

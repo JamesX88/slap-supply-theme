@@ -20,23 +20,24 @@
 .product__title h2 {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
   font-size: clamp(2rem, 4vw, 3.2rem);
   color: var(--slap-black);
 }
 
 /* --- Product Vendor/Brand Label --- */
 .product__text.caption-with-letter-spacing {
-  font-family: 'Oswald', sans-serif !important;
+  font-family: 'Space Mono', monospace !important;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-weight: 600;
+  letter-spacing: 3px;
+  font-weight: 700;
   color: var(--slap-neon-green);
-  font-size: 0.85rem;
+  font-size: 10px;
   -webkit-text-stroke: 0.3px var(--slap-black);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 /* --- Price Styling --- */
@@ -67,7 +68,7 @@
 .product-form__input {
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 2px dashed var(--slap-light-gray);
+  border-bottom: 2px dashed #d4d4d4;
 }
 
 .product-form__input:last-of-type {
@@ -118,6 +119,7 @@ variant-radios label {
   border-color: var(--slap-black) !important;
   box-shadow: 3px 3px 0 var(--slap-black);
   transform: translate(-1px, -1px);
+  font-weight: 700;
 }
 
 .product-form__input input[type="radio"] + label:hover {
@@ -131,6 +133,19 @@ variant-radios label {
   opacity: 0.3;
   cursor: not-allowed;
   text-decoration: line-through;
+}
+
+/* Swatch inputs */
+.swatch-input__label {
+  border: 3px solid var(--slap-black) !important;
+  border-radius: 0 !important;
+  transition: all 0.15s ease;
+}
+
+.swatch-input input:checked + .swatch-input__label {
+  border-color: var(--slap-neon-green) !important;
+  box-shadow: 3px 3px 0 var(--slap-neon-green);
+  transform: translate(-1px, -1px);
 }
 
 /* Select dropdown variant */
@@ -213,20 +228,33 @@ variant-radios label {
   letter-spacing: 0.1em;
   font-size: 1.2rem;
   padding: 1.4rem 2rem !important;
-  background-color: var(--slap-black) !important;
-  color: var(--slap-neon-green) !important;
+  background-color: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
   border: 3px solid var(--slap-black) !important;
   border-radius: 0 !important;
-  box-shadow: 4px 4px 0 var(--slap-neon-green);
+  box-shadow: 4px 4px 0 var(--slap-black);
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-form__submit::after {
+  content: '→';
+  margin-left: 0.5rem;
+  font-size: 1.3rem;
+  transition: transform 0.2s ease;
 }
 
 .product-form__submit:hover {
-  background-color: var(--slap-neon-green) !important;
-  color: var(--slap-black) !important;
-  box-shadow: 6px 6px 0 var(--slap-black) !important;
+  background-color: var(--slap-black) !important;
+  color: var(--slap-neon-green) !important;
+  box-shadow: 6px 6px 0 var(--slap-neon-green) !important;
   transform: translate(-2px, -2px);
+}
+
+.product-form__submit:hover::after {
+  transform: translateX(4px);
 }
 
 .product-form__submit:active {
@@ -261,17 +289,29 @@ variant-radios label {
 
 /* --- Accordion / Collapsible Tabs --- */
 .product__accordion {
-  border-bottom: 2px solid var(--slap-black) !important;
+  border-top: 3px solid var(--slap-black) !important;
+  border-bottom: none !important;
+}
+
+.product__accordion + .product__accordion {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.product__accordion:last-child {
+  border-bottom: 3px solid var(--slap-black) !important;
 }
 
 .product__accordion summary {
   padding: 1.2rem 0;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .product__accordion summary:hover {
   background-color: rgba(57, 255, 20, 0.05);
+  padding-left: 0.5rem;
 }
 
 .product__accordion .accordion__title {
@@ -288,6 +328,18 @@ variant-radios label {
   line-height: 1.6;
 }
 
+.product__accordion[open] summary {
+  border-bottom-color: var(--slap-neon-green);
+}
+
+.product__accordion .icon-accordion {
+  transition: transform 0.2s ease;
+}
+
+.product__accordion[open] .icon-accordion {
+  transform: rotate(45deg);
+}
+
 /* --- Product Media / Gallery --- */
 .product__media-wrapper {
   position: relative;
@@ -297,17 +349,36 @@ variant-radios label {
   border: 3px solid var(--slap-black);
   border-radius: 0 !important;
   overflow: hidden;
+  transition: box-shadow 0.2s ease;
 }
 
 .product__media-item:hover {
   box-shadow: 4px 4px 0 var(--slap-neon-green);
 }
 
+/* Thumbnail navigation */
+.thumbnail-list .thumbnail {
+  border: 2px solid #d4d4d4 !important;
+  border-radius: 0 !important;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.thumbnail-list .thumbnail.is-active,
+.thumbnail-list .thumbnail[aria-current="true"] {
+  border-color: var(--slap-neon-green) !important;
+  box-shadow: 2px 2px 0 var(--slap-neon-green);
+}
+
+.thumbnail-list .thumbnail:hover {
+  border-color: var(--slap-black) !important;
+}
+
 /* --- Tax/Shipping Notice --- */
 .product__tax {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.8rem;
-  color: var(--slap-mid-gray);
+  color: #737373;
   margin-top: 0.5rem;
 }
 
@@ -320,10 +391,10 @@ variant-radios label {
 
 /* --- SKU Display --- */
 .product__sku {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
-  color: var(--slap-mid-gray);
-  letter-spacing: 0.1em;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: #737373;
+  letter-spacing: 2px;
 }
 
 /* --- Inventory Status --- */
@@ -337,7 +408,7 @@ variant-radios label {
 .related-products .title {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 /* --- Volume Pricing --- */
@@ -360,15 +431,15 @@ variant-radios label {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
+  letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .slap-product-breadcrumb a {
-  color: var(--slap-mid-gray);
+  color: #737373;
   text-decoration: none;
 }
 
@@ -377,7 +448,7 @@ variant-radios label {
 }
 
 .slap-product-breadcrumb__separator {
-  color: var(--slap-light-gray);
+  color: #d4d4d4;
 }
 
 .slap-product-breadcrumb__current {
@@ -393,7 +464,7 @@ variant-radios label {
 }
 
 .slap-specs-table tr {
-  border-bottom: 1px solid var(--slap-light-gray);
+  border-bottom: 1px solid #d4d4d4;
 }
 
 .slap-specs-table td {
@@ -406,13 +477,40 @@ variant-radios label {
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
-  color: var(--slap-mid-gray);
+  color: #737373;
   width: 40%;
 }
 
 .slap-specs-table td:last-child {
   font-weight: 500;
   color: var(--slap-black);
+}
+
+/* --- Product Trust Badges --- */
+.slap-product-trust {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #d4d4d4;
+}
+
+.slap-product-trust__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #737373;
+}
+
+.slap-product-trust__icon {
+  font-size: 1rem;
+  color: var(--slap-neon-green);
 }
 
 /* --- Responsive --- */
@@ -431,5 +529,9 @@ variant-radios label {
   .product-form__submit {
     font-size: 1rem;
     padding: 1.2rem 1.5rem !important;
+  }
+
+  .slap-product-trust {
+    grid-template-columns: 1fr;
   }
 }

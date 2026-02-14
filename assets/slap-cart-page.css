@@ -15,9 +15,9 @@
 cart-items .title {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 900;
   font-size: clamp(2rem, 4vw, 3.2rem);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
   line-height: 1;
   padding-bottom: 1.5rem;
   border-bottom: 3px solid var(--slap-black, #121212);
@@ -26,19 +26,19 @@ cart-items .title {
 
 /* --- Cart Header Row --- */
 .cart-items thead th {
-  font-family: 'Oswald', sans-serif !important;
+  font-family: 'Space Mono', monospace !important;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  color: var(--slap-mid-gray, #6B6B6B);
+  letter-spacing: 2px;
+  font-size: 9px;
+  color: #737373;
   border-bottom: 3px solid var(--slap-black, #121212);
   padding: 1rem 0;
 }
 
 /* --- Cart Item Rows --- */
 .cart-item {
-  border-bottom: 2px solid var(--slap-light-gray, #E0E0E0);
+  border-bottom: 2px solid #d4d4d4;
   padding: 1.5rem 0;
   transition: background-color 0.15s ease;
 }
@@ -52,6 +52,11 @@ cart-items .title {
   border: 3px solid var(--slap-black, #121212) !important;
   border-radius: 0 !important;
   overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.cart-item:hover .cart-item__media {
+  box-shadow: 3px 3px 0 var(--slap-neon-green, #39FF14);
 }
 
 .cart-item__image {
@@ -87,7 +92,7 @@ cart-items .title {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--slap-mid-gray, #6B6B6B);
+  color: #737373;
 }
 
 .cart-item__details dd {
@@ -121,6 +126,7 @@ cart-items .title {
   background: transparent;
   cursor: pointer;
   transition: background-color 0.15s ease;
+  font-weight: 700;
 }
 
 .cart-item .quantity__button:hover {
@@ -147,7 +153,7 @@ cart-remove-button .button {
   letter-spacing: 0.05em;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--slap-mid-gray, #6B6B6B);
+  color: #737373;
   text-decoration: underline;
 }
 
@@ -189,6 +195,7 @@ cart-remove-button .button:hover {
 .cart__note textarea:focus {
   border-color: var(--slap-neon-green, #39FF14) !important;
   box-shadow: 3px 3px 0 var(--slap-neon-green, #39FF14);
+  outline: none;
 }
 
 /* Subtotal */
@@ -206,17 +213,17 @@ cart-remove-button .button:hover {
 
 .totals__subtotal-value {
   font-family: 'Oswald', sans-serif !important;
-  font-weight: 700;
-  font-size: 1.8rem;
+  font-weight: 900;
+  font-size: 2rem;
 }
 
 .tax-note {
   font-family: 'Space Grotesk', sans-serif !important;
   font-size: 0.8rem;
-  color: var(--slap-mid-gray, #6B6B6B);
+  color: #737373;
 }
 
-/* --- Checkout Button --- */
+/* --- Checkout Button with Green Shadow Animation --- */
 .cart__ctas button[name="checkout"],
 .cart__ctas .cart__checkout-button {
   font-family: 'Oswald', sans-serif !important;
@@ -225,27 +232,59 @@ cart-remove-button .button:hover {
   letter-spacing: 0.1em;
   font-size: 1.2rem;
   padding: 1.4rem 2rem !important;
-  background-color: var(--slap-black, #121212) !important;
-  color: var(--slap-neon-green, #39FF14) !important;
+  background-color: var(--slap-neon-green, #39FF14) !important;
+  color: var(--slap-black, #121212) !important;
   border: 3px solid var(--slap-black, #121212) !important;
   border-radius: 0 !important;
-  box-shadow: 4px 4px 0 var(--slap-neon-green, #39FF14);
+  box-shadow: 4px 4px 0 var(--slap-black, #121212);
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cart__ctas button[name="checkout"]::after,
+.cart__ctas .cart__checkout-button::after {
+  content: '→';
+  margin-left: 0.5rem;
+  font-size: 1.3rem;
+  transition: transform 0.2s ease;
+  display: inline-block;
 }
 
 .cart__ctas button[name="checkout"]:hover,
 .cart__ctas .cart__checkout-button:hover {
-  background-color: var(--slap-neon-green, #39FF14) !important;
-  color: var(--slap-black, #121212) !important;
-  box-shadow: 6px 6px 0 var(--slap-black, #121212) !important;
+  background-color: var(--slap-black, #121212) !important;
+  color: var(--slap-neon-green, #39FF14) !important;
+  box-shadow: 6px 6px 0 var(--slap-neon-green, #39FF14) !important;
   transform: translate(-2px, -2px);
+}
+
+.cart__ctas button[name="checkout"]:hover::after,
+.cart__ctas .cart__checkout-button:hover::after {
+  transform: translateX(4px);
 }
 
 .cart__ctas button[name="checkout"]:active,
 .cart__ctas .cart__checkout-button:active {
   box-shadow: 1px 1px 0 var(--slap-neon-green, #39FF14) !important;
   transform: translate(2px, 2px);
+}
+
+/* Pulsing green shadow animation on idle */
+@keyframes slap-shadow-pulse {
+  0%, 100% { box-shadow: 4px 4px 0 var(--slap-black, #121212); }
+  50% { box-shadow: 6px 6px 0 var(--slap-neon-green, #39FF14); }
+}
+
+.cart__ctas button[name="checkout"],
+.cart__ctas .cart__checkout-button {
+  animation: slap-shadow-pulse 2.5s ease-in-out infinite;
+}
+
+.cart__ctas button[name="checkout"]:hover,
+.cart__ctas .cart__checkout-button:hover {
+  animation: none;
 }
 
 /* Dynamic checkout buttons */
@@ -267,12 +306,26 @@ cart-remove-button .button:hover {
   padding: 0.8rem;
 }
 
+.cart__discount input:focus {
+  border-color: var(--slap-neon-green, #39FF14) !important;
+  box-shadow: 3px 3px 0 var(--slap-neon-green, #39FF14);
+  outline: none;
+}
+
 .cart__discount button {
   border: 3px solid var(--slap-black, #121212) !important;
   border-radius: 0 !important;
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
+  background: var(--slap-black, #121212) !important;
+  color: var(--slap-neon-green, #39FF14) !important;
+  transition: all 0.15s ease;
+}
+
+.cart__discount button:hover {
+  background: var(--slap-neon-green, #39FF14) !important;
+  color: var(--slap-black, #121212) !important;
 }
 
 /* --- Empty Cart State --- */
@@ -290,7 +343,7 @@ cart-remove-button .button:hover {
 
 .cart--empty p {
   font-family: 'Space Grotesk', sans-serif;
-  color: var(--slap-mid-gray, #6B6B6B);
+  color: #737373;
 }
 
 .cart--empty a.button {
@@ -304,6 +357,7 @@ cart-remove-button .button:hover {
   color: var(--slap-black, #121212) !important;
   box-shadow: 4px 4px 0 var(--slap-black, #121212);
   padding: 1rem 2rem;
+  transition: all 0.15s ease;
 }
 
 .cart--empty a.button:hover {
@@ -335,7 +389,7 @@ cart-remove-button .button:hover {
 
 .slap-shipping-bar__track {
   height: 8px;
-  background: var(--slap-light-gray, #E0E0E0);
+  background: #d4d4d4;
   border: 2px solid var(--slap-black, #121212);
   position: relative;
   overflow: hidden;
@@ -353,7 +407,7 @@ cart-remove-button .button:hover {
   gap: 1.5rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 2px dashed var(--slap-light-gray, #E0E0E0);
+  border-top: 2px dashed #d4d4d4;
   flex-wrap: wrap;
 }
 
@@ -366,11 +420,85 @@ cart-remove-button .button:hover {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--slap-mid-gray, #6B6B6B);
+  color: #737373;
 }
 
 .slap-cart-trust__icon {
   font-size: 1.2rem;
+  color: var(--slap-neon-green, #39FF14);
+}
+
+/* --- Promo Code Section (custom) --- */
+.slap-promo-code {
+  border: 3px solid var(--slap-black, #121212);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--slap-white, #ffffff);
+}
+
+.slap-promo-code__label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.slap-promo-code__label::before {
+  content: '▸';
+  color: var(--slap-neon-green, #39FF14);
+}
+
+.slap-promo-code__form {
+  display: flex;
+  gap: 0;
+}
+
+.slap-promo-code__input {
+  flex: 1;
+  border: 3px solid var(--slap-black, #121212) !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.slap-promo-code__input:focus {
+  outline: none;
+  border-color: var(--slap-neon-green, #39FF14) !important;
+}
+
+.slap-promo-code__input::placeholder {
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.slap-promo-code__btn {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.8rem 1.5rem;
+  background: var(--slap-black, #121212);
+  color: var(--slap-neon-green, #39FF14);
+  border: 3px solid var(--slap-black, #121212);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.slap-promo-code__btn:hover {
+  background: var(--slap-neon-green, #39FF14);
+  color: var(--slap-black, #121212);
 }
 
 /* --- Responsive --- */
@@ -390,5 +518,15 @@ cart-remove-button .button:hover {
   .slap-cart-trust {
     flex-direction: column;
     gap: 0.8rem;
+  }
+
+  .slap-promo-code__form {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .slap-promo-code__input {
+    border-right: 3px solid var(--slap-black, #121212) !important;
+    border-bottom: none !important;
   }
 }

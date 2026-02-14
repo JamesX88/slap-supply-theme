@@ -1,0 +1,543 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+{{ 'slap-customizer-page.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-customizer color-{{ section.settings.color_scheme }}">
+  <!-- Hero Banner -->
+  <div class="slap-customizer__hero">
+    <div class="page-width">
+      <div class="slap-customizer__hero-label">{{ section.settings.label_text }}</div>
+      <h1 class="slap-customizer__hero-heading">{{ section.settings.heading }}</h1>
+      <p class="slap-customizer__hero-sub">{{ section.settings.subheading }}</p>
+    </div>
+    <div class="section-divider-caution"></div>
+  </div>
+
+  <!-- Step Progress Bar -->
+  <div class="slap-customizer__progress">
+    <div class="page-width">
+      <div class="slap-customizer__steps">
+        <button class="slap-customizer__step slap-customizer__step--active" data-step="1">
+          <span class="slap-customizer__step-num">01</span>
+          <span class="slap-customizer__step-label">UPLOAD</span>
+        </button>
+        <div class="slap-customizer__step-line"></div>
+        <button class="slap-customizer__step" data-step="2">
+          <span class="slap-customizer__step-num">02</span>
+          <span class="slap-customizer__step-label">SPECS</span>
+        </button>
+        <div class="slap-customizer__step-line"></div>
+        <button class="slap-customizer__step" data-step="3">
+          <span class="slap-customizer__step-num">03</span>
+          <span class="slap-customizer__step-label">REVIEW</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="slap-customizer__layout">
+      <!-- Left: Configuration Panel -->
+      <div class="slap-customizer__config">
+
+        <!-- Step 1: Upload -->
+        <div class="slap-customizer__panel slap-customizer__panel--active" data-panel="1">
+          <div class="slap-customizer__panel-header">
+            <h2 class="slap-customizer__panel-title">UPLOAD YOUR ARTWORK</h2>
+            <p class="slap-customizer__panel-desc">Drag & drop your design file or click to browse. We accept PNG, JPG, SVG, AI, PDF, and EPS files.</p>
+          </div>
+
+          <div class="slap-customizer__upload-zone" id="slapUploadZone">
+            <div class="slap-customizer__upload-inner">
+              <div class="slap-customizer__upload-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 32V16M24 16L18 22M24 16L30 22" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                  <path d="M8 32V36C8 38.2091 9.79086 40 12 40H36C38.2091 40 40 38.2091 40 36V32" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                </svg>
+              </div>
+              <p class="slap-customizer__upload-text">DROP YOUR FILE HERE</p>
+              <p class="slap-customizer__upload-sub">or click to browse</p>
+              <input type="file" id="slapFileInput" accept=".png,.jpg,.jpeg,.svg,.ai,.pdf,.eps" hidden>
+            </div>
+          </div>
+
+          <div class="slap-customizer__upload-info">
+            <div class="slap-customizer__upload-info-item">
+              <span class="slap-customizer__upload-info-icon">✓</span>
+              Max file size: 50MB
+            </div>
+            <div class="slap-customizer__upload-info-item">
+              <span class="slap-customizer__upload-info-icon">✓</span>
+              300 DPI recommended
+            </div>
+            <div class="slap-customizer__upload-info-item">
+              <span class="slap-customizer__upload-info-icon">✓</span>
+              CMYK or RGB accepted
+            </div>
+          </div>
+
+          <div class="slap-customizer__upload-preview" id="slapUploadPreview" style="display:none;">
+            <div class="slap-customizer__upload-preview-img">
+              <img id="slapPreviewImg" src="" alt="Preview">
+            </div>
+            <div class="slap-customizer__upload-preview-info">
+              <p class="slap-customizer__upload-preview-name" id="slapFileName"></p>
+              <button class="slap-customizer__upload-remove" id="slapRemoveFile">REMOVE</button>
+            </div>
+          </div>
+
+          <button class="slap-customizer__btn-next" data-goto="2">
+            NEXT: CHOOSE SPECS →
+          </button>
+        </div>
+
+        <!-- Step 2: Specs -->
+        <div class="slap-customizer__panel" data-panel="2">
+          <div class="slap-customizer__panel-header">
+            <h2 class="slap-customizer__panel-title">CHOOSE YOUR SPECS</h2>
+            <p class="slap-customizer__panel-desc">Configure your sticker's material, size, finish, and quantity.</p>
+          </div>
+
+          <!-- Material -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ MATERIAL</label>
+            <div class="slap-customizer__option-buttons">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'material' -%}
+                  <button class="slap-customizer__option-btn{% if forloop.first %} slap-customizer__option-btn--active{% endif %}" data-option="material" data-value="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+                    {{ block.settings.label }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Size -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ SIZE</label>
+            <div class="slap-customizer__option-buttons">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'size' -%}
+                  <button class="slap-customizer__option-btn{% if forloop.first %} slap-customizer__option-btn--active{% endif %}" data-option="size" data-value="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+                    {{ block.settings.label }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Finish -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ FINISH</label>
+            <div class="slap-customizer__option-buttons">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'finish' -%}
+                  <button class="slap-customizer__option-btn{% if forloop.first %} slap-customizer__option-btn--active{% endif %}" data-option="finish" data-value="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+                    {{ block.settings.label }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Shape -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ SHAPE</label>
+            <div class="slap-customizer__option-buttons">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'shape' -%}
+                  <button class="slap-customizer__option-btn{% if forloop.first %} slap-customizer__option-btn--active{% endif %}" data-option="shape" data-value="{{ block.settings.value }}" {{ block.shopify_attributes }}>
+                    {{ block.settings.label }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ QUANTITY</label>
+            <div class="slap-customizer__quantity-wrap">
+              <button class="slap-customizer__qty-btn" data-action="decrease">−</button>
+              <input type="number" class="slap-customizer__qty-input" id="slapQtyInput" value="50" min="10" step="10">
+              <button class="slap-customizer__qty-btn" data-action="increase">+</button>
+            </div>
+            <div class="slap-customizer__qty-presets">
+              <button class="slap-customizer__qty-preset" data-qty="50">50</button>
+              <button class="slap-customizer__qty-preset" data-qty="100">100</button>
+              <button class="slap-customizer__qty-preset" data-qty="250">250</button>
+              <button class="slap-customizer__qty-preset" data-qty="500">500</button>
+              <button class="slap-customizer__qty-preset" data-qty="1000">1,000</button>
+            </div>
+          </div>
+
+          <div class="slap-customizer__btn-row">
+            <button class="slap-customizer__btn-back" data-goto="1">← BACK</button>
+            <button class="slap-customizer__btn-next" data-goto="3">NEXT: REVIEW →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Review -->
+        <div class="slap-customizer__panel" data-panel="3">
+          <div class="slap-customizer__panel-header">
+            <h2 class="slap-customizer__panel-title">REVIEW YOUR ORDER</h2>
+            <p class="slap-customizer__panel-desc">Double-check your specs before adding to cart.</p>
+          </div>
+
+          <div class="slap-customizer__summary">
+            <div class="slap-customizer__summary-row">
+              <span class="slap-customizer__summary-label">Material</span>
+              <span class="slap-customizer__summary-value" id="summaryMaterial">—</span>
+            </div>
+            <div class="slap-customizer__summary-row">
+              <span class="slap-customizer__summary-label">Size</span>
+              <span class="slap-customizer__summary-value" id="summarySize">—</span>
+            </div>
+            <div class="slap-customizer__summary-row">
+              <span class="slap-customizer__summary-label">Finish</span>
+              <span class="slap-customizer__summary-value" id="summaryFinish">—</span>
+            </div>
+            <div class="slap-customizer__summary-row">
+              <span class="slap-customizer__summary-label">Shape</span>
+              <span class="slap-customizer__summary-value" id="summaryShape">—</span>
+            </div>
+            <div class="slap-customizer__summary-row">
+              <span class="slap-customizer__summary-label">Quantity</span>
+              <span class="slap-customizer__summary-value" id="summaryQty">—</span>
+            </div>
+            <div class="slap-customizer__summary-row slap-customizer__summary-row--total">
+              <span class="slap-customizer__summary-label">Estimated Total</span>
+              <span class="slap-customizer__summary-value" id="summaryTotal">—</span>
+            </div>
+          </div>
+
+          <!-- Special Instructions -->
+          <div class="slap-customizer__option-group">
+            <label class="slap-customizer__option-label">▸ SPECIAL INSTRUCTIONS (OPTIONAL)</label>
+            <textarea class="slap-customizer__textarea" id="slapInstructions" placeholder="Any notes about your order..."></textarea>
+          </div>
+
+          <div class="slap-customizer__btn-row">
+            <button class="slap-customizer__btn-back" data-goto="2">← BACK</button>
+            <button class="slap-customizer__btn-submit">
+              ADD TO CART →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Live Preview Panel -->
+      <div class="slap-customizer__preview">
+        <div class="slap-customizer__preview-sticky">
+          <div class="slap-customizer__preview-label">LIVE PREVIEW</div>
+          <div class="slap-customizer__preview-box" id="slapPreviewBox">
+            <div class="slap-customizer__preview-placeholder" id="slapPreviewPlaceholder">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="48" height="48" rx="0" stroke="#d4d4d4" stroke-width="2" stroke-dasharray="4 4"/>
+                <path d="M24 40L30 30L36 36L40 32L48 40H24Z" fill="#e5e5e5"/>
+                <circle cx="26" cy="24" r="4" fill="#e5e5e5"/>
+              </svg>
+              <p>Upload artwork to see preview</p>
+            </div>
+            <img id="slapLivePreview" src="" alt="Live preview" style="display:none;">
+          </div>
+
+          <div class="slap-customizer__preview-specs">
+            <div class="slap-customizer__preview-spec">
+              <span class="slap-customizer__preview-spec-label">SIZE</span>
+              <span class="slap-customizer__preview-spec-value" id="previewSize">—</span>
+            </div>
+            <div class="slap-customizer__preview-spec">
+              <span class="slap-customizer__preview-spec-label">MATERIAL</span>
+              <span class="slap-customizer__preview-spec-value" id="previewMaterial">—</span>
+            </div>
+            <div class="slap-customizer__preview-spec">
+              <span class="slap-customizer__preview-spec-label">FINISH</span>
+              <span class="slap-customizer__preview-spec-value" id="previewFinish">—</span>
+            </div>
+            <div class="slap-customizer__preview-spec">
+              <span class="slap-customizer__preview-spec-label">QTY</span>
+              <span class="slap-customizer__preview-spec-value" id="previewQty">50</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Step navigation
+  const steps = document.querySelectorAll('.slap-customizer__step');
+  const panels = document.querySelectorAll('.slap-customizer__panel');
+  const nextBtns = document.querySelectorAll('.slap-customizer__btn-next, .slap-customizer__btn-back');
+
+  function goToStep(num) {
+    steps.forEach(s => s.classList.remove('slap-customizer__step--active', 'slap-customizer__step--done'));
+    panels.forEach(p => p.classList.remove('slap-customizer__panel--active'));
+    steps.forEach(s => {
+      const sNum = parseInt(s.dataset.step);
+      if (sNum < num) s.classList.add('slap-customizer__step--done');
+      if (sNum === num) s.classList.add('slap-customizer__step--active');
+    });
+    document.querySelector('[data-panel="' + num + '"]').classList.add('slap-customizer__panel--active');
+    if (num === 3) updateSummary();
+  }
+
+  nextBtns.forEach(btn => {
+    btn.addEventListener('click', () => goToStep(parseInt(btn.dataset.goto)));
+  });
+
+  steps.forEach(s => {
+    s.addEventListener('click', () => goToStep(parseInt(s.dataset.step)));
+  });
+
+  // File upload
+  const uploadZone = document.getElementById('slapUploadZone');
+  const fileInput = document.getElementById('slapFileInput');
+  const previewSection = document.getElementById('slapUploadPreview');
+  const previewImg = document.getElementById('slapPreviewImg');
+  const fileName = document.getElementById('slapFileName');
+  const removeBtn = document.getElementById('slapRemoveFile');
+  const livePreview = document.getElementById('slapLivePreview');
+  const placeholder = document.getElementById('slapPreviewPlaceholder');
+
+  if (uploadZone) {
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('slap-customizer__upload-zone--drag'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('slap-customizer__upload-zone--drag'));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('slap-customizer__upload-zone--drag');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+  }
+
+  function handleFile(file) {
+    fileName.textContent = file.name;
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImg.src = e.target.result;
+        livePreview.src = e.target.result;
+        livePreview.style.display = 'block';
+        placeholder.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+    uploadZone.style.display = 'none';
+    previewSection.style.display = 'flex';
+  }
+
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      uploadZone.style.display = 'block';
+      previewSection.style.display = 'none';
+      livePreview.style.display = 'none';
+      placeholder.style.display = 'flex';
+    });
+  }
+
+  // Option buttons
+  document.querySelectorAll('.slap-customizer__option-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const group = this.dataset.option;
+      document.querySelectorAll('.slap-customizer__option-btn[data-option="' + group + '"]')
+        .forEach(b => b.classList.remove('slap-customizer__option-btn--active'));
+      this.classList.add('slap-customizer__option-btn--active');
+      updatePreviewSpecs();
+    });
+  });
+
+  // Quantity
+  const qtyInput = document.getElementById('slapQtyInput');
+  document.querySelectorAll('.slap-customizer__qty-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      let val = parseInt(qtyInput.value) || 50;
+      if (this.dataset.action === 'increase') val += 10;
+      else val = Math.max(10, val - 10);
+      qtyInput.value = val;
+      updatePreviewSpecs();
+    });
+  });
+
+  document.querySelectorAll('.slap-customizer__qty-preset').forEach(btn => {
+    btn.addEventListener('click', function() {
+      qtyInput.value = this.dataset.qty;
+      updatePreviewSpecs();
+    });
+  });
+
+  function getSelectedValue(option) {
+    const active = document.querySelector('.slap-customizer__option-btn--active[data-option="' + option + '"]');
+    return active ? active.textContent.trim() : '—';
+  }
+
+  function updatePreviewSpecs() {
+    const ps = document.getElementById('previewSize');
+    const pm = document.getElementById('previewMaterial');
+    const pf = document.getElementById('previewFinish');
+    const pq = document.getElementById('previewQty');
+    if (ps) ps.textContent = getSelectedValue('size');
+    if (pm) pm.textContent = getSelectedValue('material');
+    if (pf) pf.textContent = getSelectedValue('finish');
+    if (pq) pq.textContent = qtyInput ? qtyInput.value : '50';
+  }
+
+  function updateSummary() {
+    const sm = document.getElementById('summaryMaterial');
+    const ss = document.getElementById('summarySize');
+    const sf = document.getElementById('summaryFinish');
+    const sh = document.getElementById('summaryShape');
+    const sq = document.getElementById('summaryQty');
+    const st = document.getElementById('summaryTotal');
+    if (sm) sm.textContent = getSelectedValue('material');
+    if (ss) ss.textContent = getSelectedValue('size');
+    if (sf) sf.textContent = getSelectedValue('finish');
+    if (sh) sh.textContent = getSelectedValue('shape');
+    if (sq) sq.textContent = qtyInput ? qtyInput.value : '50';
+    // Simple price estimate
+    const qty = parseInt(qtyInput ? qtyInput.value : 50);
+    const pricePerUnit = 0.35;
+    const total = (qty * pricePerUnit).toFixed(2);
+    if (st) st.textContent = '$' + total;
+  }
+
+  updatePreviewSpecs();
+});
+</script>
+
+{% schema %}
+{
+  "name": "SLAP Customizer",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "CUSTOM ORDERS",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "BUILD YOUR CUSTOM STICKERS",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Upload your artwork, choose your specs, and we'll handle the rest. Premium quality, fast turnaround.",
+      "label": "Subheading"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "material",
+      "name": "Material Option",
+      "settings": [
+        { "type": "text", "id": "label", "default": "VINYL", "label": "Label" },
+        { "type": "text", "id": "value", "default": "vinyl", "label": "Value" }
+      ]
+    },
+    {
+      "type": "size",
+      "name": "Size Option",
+      "settings": [
+        { "type": "text", "id": "label", "default": "3\"", "label": "Label" },
+        { "type": "text", "id": "value", "default": "3in", "label": "Value" }
+      ]
+    },
+    {
+      "type": "finish",
+      "name": "Finish Option",
+      "settings": [
+        { "type": "text", "id": "label", "default": "GLOSS", "label": "Label" },
+        { "type": "text", "id": "value", "default": "gloss", "label": "Value" }
+      ]
+    },
+    {
+      "type": "shape",
+      "name": "Shape Option",
+      "settings": [
+        { "type": "text", "id": "label", "default": "DIE CUT", "label": "Label" },
+        { "type": "text", "id": "value", "default": "die-cut", "label": "Value" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Customizer",
+      "blocks": [
+        { "type": "material", "settings": { "label": "VINYL", "value": "vinyl" } },
+        { "type": "material", "settings": { "label": "PAPER", "value": "paper" } },
+        { "type": "material", "settings": { "label": "CLEAR", "value": "clear" } },
+        { "type": "material", "settings": { "label": "HOLOGRAPHIC", "value": "holographic" } },
+        { "type": "size", "settings": { "label": "2\"", "value": "2in" } },
+        { "type": "size", "settings": { "label": "3\"", "value": "3in" } },
+        { "type": "size", "settings": { "label": "4\"", "value": "4in" } },
+        { "type": "size", "settings": { "label": "5\"", "value": "5in" } },
+        { "type": "size", "settings": { "label": "6\"", "value": "6in" } },
+        { "type": "finish", "settings": { "label": "GLOSS", "value": "gloss" } },
+        { "type": "finish", "settings": { "label": "MATTE", "value": "matte" } },
+        { "type": "finish", "settings": { "label": "SATIN", "value": "satin" } },
+        { "type": "finish", "settings": { "label": "UNCOATED", "value": "uncoated" } },
+        { "type": "shape", "settings": { "label": "DIE CUT", "value": "die-cut" } },
+        { "type": "shape", "settings": { "label": "KISS CUT", "value": "kiss-cut" } },
+        { "type": "shape", "settings": { "label": "CIRCLE", "value": "circle" } },
+        { "type": "shape", "settings": { "label": "SQUARE", "value": "square" } },
+        { "type": "shape", "settings": { "label": "RECTANGLE", "value": "rectangle" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
