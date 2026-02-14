@@ -5,10 +5,12 @@
       "settings": {
         "label_text": "ABOUT US",
         "heading": "<p>WE ARE<br><em>SLAP SUPPLY</em></p>",
-        "subheading": "Born in the press room. Built for brands that refuse to blend in. We're a custom sticker company that believes every surface is a canvas.",
+        "subheading": "Born in the press room. Built for brands that refuse to blend in. Premium custom stickers, labels, adhesives, and prints — made for those who demand more.",
         "color_scheme": "scheme-3",
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "button_label": "SHOP NOW",
+        "button_link": "shopify://collections/all"
       }
     },
     "about_acronym": {
@@ -19,7 +21,7 @@
           "settings": {
             "letter": "S",
             "word": "STICKERS",
-            "description": "Die-cut, kiss-cut, vinyl, holographic \u2014 every style you can imagine, built to last."
+            "description": "Die-cut, kiss-cut, vinyl, holographic — every style you can imagine, built to last."
           }
         },
         "l": {
@@ -27,7 +29,7 @@
           "settings": {
             "letter": "L",
             "word": "LABELS",
-            "description": "Product labels, roll labels, waterproof, freezer-safe \u2014 for every surface and condition."
+            "description": "Product labels, roll labels, waterproof, freezer-safe — for every surface and condition."
           }
         },
         "a": {
@@ -35,7 +37,7 @@
           "settings": {
             "letter": "A",
             "word": "ADHESIVES",
-            "description": "Wall graphics, floor decals, window clings \u2014 large format adhesive prints that stick."
+            "description": "Wall graphics, floor decals, window clings — large format adhesive prints that stick."
           }
         },
         "p": {
@@ -43,7 +45,7 @@
           "settings": {
             "letter": "P",
             "word": "PRINTS",
-            "description": "Art prints, posters, packaging inserts \u2014 premium print quality for every project."
+            "description": "Art prints, posters, packaging inserts — premium print quality for every project."
           }
         }
       },
@@ -58,7 +60,8 @@
         "heading": "S.L.A.P.",
         "color_scheme": "scheme-1",
         "padding_top": 60,
-        "padding_bottom": 0
+        "padding_bottom": 0,
+        "subheading": "Four letters. Four pillars. One mission: make your brand impossible to ignore."
       }
     },
     "about_story": {
@@ -68,7 +71,7 @@
           "type": "value",
           "settings": {
             "title": "QUALITY FIRST",
-            "text": "Premium materials, precision cuts, and colors that pop. We don't cut corners \u2014 we cut stickers."
+            "text": "Premium materials, precision cuts, and colors that pop. We don't cut corners — we cut stickers."
           }
         },
         "value_2": {
@@ -89,7 +92,7 @@
           "type": "value",
           "settings": {
             "title": "B2B + B2C",
-            "text": "From indie creators to enterprise brands \u2014 we serve everyone. Volume discounts and dedicated accounts available."
+            "text": "From indie creators to enterprise brands — we serve everyone. Volume discounts and dedicated accounts available."
           }
         }
       },
@@ -102,11 +105,13 @@
       "settings": {
         "label_text": "OUR STORY",
         "heading": "BORN IN THE PRESS ROOM",
-        "text": "<p>SLAP Supply started with a simple idea: stickers should be as bold as the brands that use them. We're not your average print shop \u2014 we're a crew of designers, printers, and adhesive nerds who believe every surface is a canvas.</p><p>From our press room floor, we produce premium custom stickers, labels, adhesives, and prints for brands, businesses, and creators who refuse to blend in. Whether you need 50 die-cuts for your laptop or 50,000 labels for your product line \u2014 we've got you covered.</p>",
+        "text": "<p>SLAP Supply started with a simple idea: stickers should be as bold as the brands that use them. We're not your average print shop — we're a crew of designers, printers, and adhesive nerds who believe every surface is a canvas.</p><p>From our press room floor, we produce premium custom stickers, labels, adhesives, and prints for brands, businesses, and creators who refuse to blend in. Whether you need 50 die-cuts for your laptop or 50,000 labels for your product line — we've got you covered.</p><p>Every product is printed in-house with state-of-the-art equipment, inspected by hand, and shipped fast. No middlemen, no outsourcing, no compromises.</p>",
         "values_heading": "WHAT WE STAND FOR",
         "color_scheme": "scheme-1",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "button_label": "VIEW OUR PRODUCTS",
+        "button_link": "shopify://collections/all"
       }
     },
     "about_facility": {
@@ -143,7 +148,7 @@
         "cap_1": {
           "type": "capability",
           "settings": {
-            "icon": "\ud83d\udda8\ufe0f",
+            "icon": "🖨️",
             "title": "DIGITAL PRINTING",
             "text": "High-resolution digital printing for vibrant, photo-quality results on any material."
           }
@@ -151,7 +156,7 @@
         "cap_2": {
           "type": "capability",
           "settings": {
-            "icon": "\u2702\ufe0f",
+            "icon": "✂️",
             "title": "DIE CUTTING",
             "text": "Precision die-cut and kiss-cut capabilities for any shape or size you can imagine."
           }
@@ -159,7 +164,7 @@
         "cap_3": {
           "type": "capability",
           "settings": {
-            "icon": "\ud83d\udee1\ufe0f",
+            "icon": "🛡️",
             "title": "LAMINATION",
             "text": "UV-resistant, waterproof lamination options to protect your prints from the elements."
           }
@@ -167,7 +172,7 @@
         "cap_4": {
           "type": "capability",
           "settings": {
-            "icon": "\ud83d\udce6",
+            "icon": "📦",
             "title": "FULFILLMENT",
             "text": "In-house packaging and shipping. We handle the logistics so you can focus on your brand."
           }
@@ -175,7 +180,7 @@
         "cap_5": {
           "type": "capability",
           "settings": {
-            "icon": "\ud83c\udfa8",
+            "icon": "🎨",
             "title": "DESIGN SERVICES",
             "text": "Need help with your artwork? Our design team can create or refine your vision."
           }
@@ -183,7 +188,7 @@
         "cap_6": {
           "type": "capability",
           "settings": {
-            "icon": "\ud83d\udd2c",
+            "icon": "🔬",
             "title": "QUALITY CONTROL",
             "text": "Every order inspected before shipping. We don't let anything leave that isn't perfect."
           }
@@ -204,7 +209,7 @@
       "settings": {
         "label_text": "THE PRESS ROOM",
         "heading": "OUR FACILITY",
-        "description": "State-of-the-art printing equipment, quality control at every step, and a team that obsesses over the details. Every order gets the same attention \u2014 whether it's 50 stickers or 50,000.",
+        "description": "State-of-the-art printing equipment, quality control at every step, and a team that obsesses over the details. Every order gets the same attention — whether it's 50 stickers or 50,000.",
         "capabilities_heading": "OUR CAPABILITIES",
         "color_scheme": "scheme-1",
         "padding_top": 60,
@@ -217,7 +222,7 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "icon_text": "\ud83d\udce4",
+            "icon_text": "📤",
             "title": "UPLOAD YOUR DESIGN",
             "text": "Upload your artwork or let us know what you need. We accept all major file formats."
           }
@@ -225,7 +230,7 @@
         "step_2": {
           "type": "step",
           "settings": {
-            "icon_text": "\u2699\ufe0f",
+            "icon_text": "⚙️",
             "title": "CHOOSE YOUR SPECS",
             "text": "Pick your material, size, finish, and quantity. We'll handle the rest."
           }
@@ -233,7 +238,7 @@
         "step_3": {
           "type": "step",
           "settings": {
-            "icon_text": "\ud83d\udda8\ufe0f",
+            "icon_text": "🖨️",
             "title": "WE PRINT IT",
             "text": "Your order hits our press room floor. Premium materials, precision cuts."
           }
@@ -241,7 +246,7 @@
         "step_4": {
           "type": "step",
           "settings": {
-            "icon_text": "\ud83d\udce6",
+            "icon_text": "📦",
             "title": "FAST DELIVERY",
             "text": "Shipped to your door in 3-5 business days. Free shipping on orders over $50."
           }
@@ -297,7 +302,7 @@
       "settings": {
         "label_text": "LET'S WORK TOGETHER",
         "heading": "<p>READY TO<br><em>SLAP</em> SOMETHING?</p>",
-        "description": "Whether you're a startup, a Fortune 500, or just someone who loves stickers \u2014 we're here for it.",
+        "description": "Whether you're a startup, a Fortune 500, or just someone who loves stickers — we're here for it.",
         "button_label_1": "GET A QUOTE",
         "button_link_1": "",
         "button_label_2": "SHOP NOW",

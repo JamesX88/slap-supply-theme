@@ -18,16 +18,27 @@
     <div class="slap-about-acronym__header">
       <div class="slap-about-acronym__label">{{ section.settings.label_text }}</div>
       <h2 class="slap-about-acronym__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="slap-about-acronym__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
     </div>
 
     <div class="slap-about-acronym__grid">
       {%- for block in section.blocks -%}
         <div class="slap-about-acronym__item" {{ block.shopify_attributes }}>
-          <div class="slap-about-acronym__letter">{{ block.settings.letter }}</div>
+          <div class="slap-about-acronym__letter-wrap">
+            <div class="slap-about-acronym__letter">{{ block.settings.letter }}</div>
+            <div class="slap-about-acronym__letter-bg">{{ block.settings.letter }}</div>
+          </div>
           <div class="slap-about-acronym__content">
             <h3 class="slap-about-acronym__word">{{ block.settings.word }}</h3>
             <p class="slap-about-acronym__desc">{{ block.settings.description }}</p>
           </div>
+          {%- if block.settings.image != blank -%}
+            <div class="slap-about-acronym__item-image">
+              {{ block.settings.image | image_url: width: 400 | image_tag: class: 'slap-about-acronym__img', sizes: '(min-width: 750px) 25vw, 50vw', widths: '200, 300, 400', loading: 'lazy' }}
+            </div>
+          {%- endif -%}
         </div>
       {%- endfor -%}
     </div>
@@ -42,11 +53,12 @@
 
   .slap-about-acronym__header {
     margin-bottom: 3rem;
+    text-align: center;
   }
 
   .slap-about-acronym__label {
     font-family: 'Space Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -56,12 +68,21 @@
 
   .slap-about-acronym__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 900;
     text-transform: uppercase;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin: 0;
+    margin: 0 0 1rem;
+  }
+
+  .slap-about-acronym__subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    color: #737373;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   .slap-about-acronym__grid {
@@ -76,8 +97,9 @@
     margin-top: -2px;
     padding: 2.5rem 2rem;
     background: var(--slap-white);
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     position: relative;
+    overflow: hidden;
   }
 
   .slap-about-acronym__item:first-child {
@@ -87,6 +109,7 @@
   .slap-about-acronym__item:hover {
     background: var(--slap-black);
     z-index: 1;
+    box-shadow: 0 0 30px rgba(57, 255, 20, 0.2);
   }
 
   .slap-about-acronym__item:hover .slap-about-acronym__word {
@@ -97,20 +120,46 @@
     color: rgba(255, 255, 255, 0.7);
   }
 
+  .slap-about-acronym__item:hover .slap-about-acronym__letter-bg {
+    opacity: 0.08;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .slap-about-acronym__letter-wrap {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
   .slap-about-acronym__letter {
     font-family: 'Oswald', sans-serif;
     font-size: 5rem;
     font-weight: 900;
     color: var(--slap-neon-green);
     line-height: 1;
-    margin-bottom: 1rem;
     -webkit-text-stroke: 2px var(--slap-black);
     paint-order: stroke fill;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slap-about-acronym__letter-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Oswald', sans-serif;
+    font-size: 12rem;
+    font-weight: 900;
+    color: var(--slap-black);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    transition: all 0.3s ease;
   }
 
   .slap-about-acronym__word {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     text-transform: uppercase;
     margin: 0 0 0.5rem;
@@ -121,11 +170,28 @@
 
   .slap-about-acronym__desc {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #737373;
-    line-height: 1.5;
+    line-height: 1.55;
     margin: 0;
     transition: color 0.2s ease;
+  }
+
+  .slap-about-acronym__item-image {
+    margin-top: 1.5rem;
+    overflow: hidden;
+    border: 2px solid var(--slap-black);
+  }
+
+  .slap-about-acronym__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .slap-about-acronym__item:hover .slap-about-acronym__img {
+    transform: scale(1.05);
   }
 
   @media screen and (max-width: 989px) {
@@ -169,6 +235,12 @@
       "id": "heading",
       "default": "S.L.A.P.",
       "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Four letters. Four pillars. One mission: make your brand impossible to ignore.",
+      "label": "Subheading"
     },
     {
       "type": "color_scheme",
@@ -220,6 +292,11 @@
           "id": "description",
           "default": "Die-cut, kiss-cut, vinyl, holographic — every style you can imagine, built to last.",
           "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optional)"
         }
       ]
     }

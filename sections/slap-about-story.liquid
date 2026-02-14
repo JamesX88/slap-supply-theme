@@ -24,6 +24,11 @@
         <div class="slap-about-story__text rte">
           {{ section.settings.text }}
         </div>
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link }}" class="slap-about-story__btn">
+            {{ section.settings.button_label }} →
+          </a>
+        {%- endif -%}
       </div>
       <div class="slap-about-story__image-wrapper">
         {%- if section.settings.image != blank -%}
@@ -37,8 +42,7 @@
           }}
         {%- else -%}
           <div class="slap-about-story__image-placeholder">
-            <div class="slap-about-story__placeholder-grid"></div>
-            <span class="slap-about-story__placeholder-text">SLAP<br>SUPPLY</span>
+            <img src="{{ 'about-pressroom.jpg' | asset_url }}" alt="SLAP Supply Press Room" class="slap-about-story__image" loading="lazy">
           </div>
         {%- endif -%}
       </div>
@@ -82,7 +86,7 @@
 
   .slap-about-story__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
     font-weight: 700;
     text-transform: uppercase;
     line-height: 1;
@@ -91,13 +95,37 @@
 
   .slap-about-story__text {
     font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 1.1rem;
+    line-height: 1.75;
     color: rgba(18, 18, 18, 0.8);
   }
 
   .slap-about-story__text p {
     margin-bottom: 1rem;
+  }
+
+  .slap-about-story__btn {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.9rem 2rem;
+    background: var(--slap-neon-green);
+    color: var(--slap-black);
+    border: 3px solid var(--slap-black);
+    box-shadow: 3px 3px 0 var(--slap-black);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    margin-top: 1.5rem;
+  }
+
+  .slap-about-story__btn:hover {
+    background: var(--slap-black);
+    color: var(--slap-neon-green);
+    box-shadow: 5px 5px 0 var(--slap-neon-green);
+    transform: translate(-2px, -2px);
   }
 
   .slap-about-story__image-wrapper {
@@ -109,39 +137,12 @@
     height: auto;
     border: 3px solid var(--slap-black);
     box-shadow: 8px 8px 0 var(--slap-neon-green);
+    display: block;
   }
 
   .slap-about-story__image-placeholder {
-    aspect-ratio: 4/3;
-    background: var(--slap-black);
-    border: 3px solid var(--slap-black);
-    box-shadow: 8px 8px 0 var(--slap-neon-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     overflow: hidden;
-  }
-
-  .slap-about-story__placeholder-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(57, 255, 20, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(57, 255, 20, 0.08) 1px, transparent 1px);
-    background-size: 30px 30px;
-  }
-
-  .slap-about-story__placeholder-text {
-    font-family: 'Oswald', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--slap-neon-green);
-    text-align: center;
-    line-height: 1;
-    position: relative;
-    z-index: 1;
-    opacity: 0.3;
   }
 
   /* Values */
@@ -199,7 +200,7 @@
 
   .slap-about-value__text {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--slap-mid-gray);
     line-height: 1.5;
     margin: 0;
@@ -248,6 +249,17 @@
       "type": "image_picker",
       "id": "image",
       "label": "Story Image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "VIEW OUR PRODUCTS",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     },
     {
       "type": "text",

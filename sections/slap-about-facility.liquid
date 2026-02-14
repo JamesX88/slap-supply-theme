@@ -24,6 +24,39 @@
       {%- endif -%}
     </div>
 
+    <!-- Image Gallery Row -->
+    <div class="slap-about-facility__gallery">
+      {%- if section.settings.image_1 != blank -%}
+        <div class="slap-about-facility__gallery-item slap-about-facility__gallery-item--large">
+          {{ section.settings.image_1 | image_url: width: 900 | image_tag: class: 'slap-about-facility__gallery-img', sizes: '(min-width: 750px) 55vw, 100vw', widths: '400, 600, 900', loading: 'lazy' }}
+        </div>
+      {%- else -%}
+        <div class="slap-about-facility__gallery-item slap-about-facility__gallery-item--large">
+          <img src="{{ 'about-facility.jpg' | asset_url }}" alt="SLAP Supply Printing Facility" class="slap-about-facility__gallery-img" loading="lazy">
+        </div>
+      {%- endif -%}
+      <div class="slap-about-facility__gallery-stack">
+        {%- if section.settings.image_2 != blank -%}
+          <div class="slap-about-facility__gallery-item">
+            {{ section.settings.image_2 | image_url: width: 600 | image_tag: class: 'slap-about-facility__gallery-img', sizes: '(min-width: 750px) 35vw, 100vw', widths: '300, 450, 600', loading: 'lazy' }}
+          </div>
+        {%- else -%}
+          <div class="slap-about-facility__gallery-item">
+            <img src="{{ 'about-team.jpg' | asset_url }}" alt="SLAP Supply Team" class="slap-about-facility__gallery-img" loading="lazy">
+          </div>
+        {%- endif -%}
+        {%- if section.settings.image_3 != blank -%}
+          <div class="slap-about-facility__gallery-item">
+            {{ section.settings.image_3 | image_url: width: 600 | image_tag: class: 'slap-about-facility__gallery-img', sizes: '(min-width: 750px) 35vw, 100vw', widths: '300, 450, 600', loading: 'lazy' }}
+          </div>
+        {%- else -%}
+          <div class="slap-about-facility__gallery-item">
+            <img src="{{ 'about-stickers.jpg' | asset_url }}" alt="Custom Die-Cut Stickers" class="slap-about-facility__gallery-img" loading="lazy">
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
     <!-- Stats Row -->
     {%- assign stats = section.blocks | where: 'type', 'stat' -%}
     {%- if stats.size > 0 -%}
@@ -69,7 +102,7 @@
 
   .slap-about-facility__label {
     font-family: 'Space Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -79,7 +112,7 @@
 
   .slap-about-facility__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
     font-weight: 900;
     text-transform: uppercase;
     line-height: 1;
@@ -89,10 +122,50 @@
 
   .slap-about-facility__desc {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     color: #737373;
-    line-height: 1.6;
+    line-height: 1.65;
     margin: 0;
+  }
+
+  /* Gallery */
+  .slap-about-facility__gallery {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .slap-about-facility__gallery-stack {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .slap-about-facility__gallery-item {
+    overflow: hidden;
+    border: 3px solid var(--slap-black);
+    position: relative;
+  }
+
+  .slap-about-facility__gallery-item--large {
+    min-height: 350px;
+  }
+
+  .slap-about-facility__gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .slap-about-facility__gallery-item:hover .slap-about-facility__gallery-img {
+    transform: scale(1.03);
+  }
+
+  .slap-about-facility__gallery-item:hover {
+    box-shadow: 5px 5px 0 var(--slap-neon-green);
   }
 
   /* Stats */
@@ -185,7 +258,6 @@
   .slap-about-facility__cap-icon {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    opacity: 0.6;
   }
 
   .slap-about-facility__cap-title {
@@ -199,7 +271,7 @@
 
   .slap-about-facility__cap-text {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #737373;
     line-height: 1.5;
     margin: 0;
@@ -212,6 +284,18 @@
   }
 
   @media screen and (max-width: 749px) {
+    .slap-about-facility__gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-about-facility__gallery-item--large {
+      min-height: 250px;
+    }
+
+    .slap-about-facility__gallery-stack {
+      grid-template-columns: 1fr 1fr;
+    }
+
     .slap-about-facility__stats {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -262,6 +346,21 @@
       "id": "description",
       "default": "State-of-the-art printing equipment, quality control at every step, and a team that obsesses over the details. Every order gets the same attention — whether it's 50 stickers or 50,000.",
       "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Gallery Image 1 (Large)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Gallery Image 2 (Top Right)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Gallery Image 3 (Bottom Right)"
     },
     {
       "type": "text",
