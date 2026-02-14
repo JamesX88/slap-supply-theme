@@ -622,7 +622,7 @@ select:focus,
 
 .slap-marquee__inner {
   display: inline-block;
-  animation: marquee 60s linear infinite;
+  animation: marquee 90s linear infinite;
 }
 
 .slap-marquee__inner span {
