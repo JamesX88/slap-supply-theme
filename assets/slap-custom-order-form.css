@@ -1,0 +1,400 @@
+/* ============================================================
+   SLAP SUPPLY — CUSTOM ORDER INTAKE FORM
+   Press Room Neo-Brutalist Styling
+   ============================================================ */
+
+/* --- Hero Header --- */
+.slap-custom-order__hero {
+  background-color: var(--slap-black, #1a1a1a);
+  color: var(--slap-white, #ffffff);
+  padding: 4rem 0 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slap-custom-order__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+.slap-custom-order__hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.slap-custom-order__hero-stripe {
+  width: 100%;
+  height: 12px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--slap-neon-green, #39FF14),
+    var(--slap-neon-green, #39FF14) 10px,
+    var(--slap-black, #1a1a1a) 10px,
+    var(--slap-black, #1a1a1a) 20px
+  );
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.slap-custom-order__heading {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1;
+  color: var(--slap-white, #ffffff) !important;
+  letter-spacing: -0.02em;
+  margin-top: 0.8rem;
+}
+
+.slap-custom-order__subheading {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 650px;
+  margin-top: 1rem;
+}
+
+/* --- Station Label (reused from Press Room) --- */
+.slap-custom-order .slap-station-label {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 0.3rem 1rem;
+  border: 2px solid var(--slap-neon-green, #39FF14);
+  background: transparent;
+  color: var(--slap-neon-green, #39FF14);
+  font-size: 10px;
+}
+
+/* --- Form Wrapper --- */
+.slap-custom-order__form-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 0;
+}
+
+.slap-custom-order__form-header {
+  margin-bottom: 2.5rem;
+}
+
+.slap-custom-order__form-header .slap-station-label {
+  color: var(--slap-neon-green, #39FF14);
+  border-color: var(--slap-neon-green, #39FF14);
+}
+
+.slap-custom-order__form-title {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--slap-black, #1a1a1a);
+  margin-top: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.slap-custom-order__form-desc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* --- Fieldsets --- */
+.slap-form__fieldset {
+  border: 3px solid var(--slap-black, #1a1a1a);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background: var(--slap-white, #ffffff);
+  position: relative;
+}
+
+.slap-form__legend {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--slap-black, #1a1a1a);
+  padding: 0 0.8rem;
+  background: var(--slap-neon-green, #39FF14);
+  display: inline-block;
+}
+
+/* --- Form Grid --- */
+.slap-form__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.slap-form__grid--2col {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 749px) {
+  .slap-form__grid--2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Form Fields --- */
+.slap-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.slap-form__label {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--slap-black, #1a1a1a);
+  margin-bottom: 0.5rem;
+}
+
+.slap-form__required {
+  color: var(--slap-neon-green, #39FF14);
+  -webkit-text-stroke: 0.3px var(--slap-black, #1a1a1a);
+}
+
+.slap-form__input,
+.slap-form__select,
+.slap-form__textarea {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--slap-black, #1a1a1a) !important;
+  border-radius: 0 !important;
+  background: var(--slap-white, #ffffff);
+  color: var(--slap-black, #1a1a1a);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.slap-form__input:focus,
+.slap-form__select:focus,
+.slap-form__textarea:focus {
+  outline: none;
+  border-color: var(--slap-neon-green, #39FF14) !important;
+  box-shadow: 3px 3px 0 var(--slap-neon-green, #39FF14);
+}
+
+.slap-form__input::placeholder,
+.slap-form__textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.slap-form__select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1a1a' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.slap-form__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.slap-form__help-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.8rem;
+}
+
+/* --- Checkbox Group --- */
+.slap-form__checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.slap-form__checkbox-label {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--slap-black, #1a1a1a);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.slap-form__checkbox-label:hover {
+  background: rgba(57, 255, 20, 0.1);
+}
+
+.slap-form__checkbox-label:has(:checked) {
+  background: var(--slap-neon-green, #39FF14);
+  color: var(--slap-black, #1a1a1a);
+  font-weight: 600;
+}
+
+.slap-form__checkbox {
+  accent-color: var(--slap-neon-green, #39FF14);
+  width: 16px;
+  height: 16px;
+}
+
+/* --- File Upload --- */
+.slap-form__file-upload {
+  position: relative;
+  border: 3px dashed var(--slap-black, #1a1a1a);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: rgba(57, 255, 20, 0.03);
+}
+
+.slap-form__file-upload:hover {
+  border-color: var(--slap-neon-green, #39FF14);
+  background: rgba(57, 255, 20, 0.08);
+}
+
+.slap-form__file-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.slap-form__file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.slap-form__file-icon {
+  font-size: 2rem;
+}
+
+.slap-form__file-text {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--slap-black, #1a1a1a);
+}
+
+.slap-form__file-subtext {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* --- Submit Button --- */
+.slap-form__submit-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.slap-form__submit {
+  font-family: 'Oswald', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 1.3rem;
+  padding: 1.5rem 3rem;
+  background-color: var(--slap-neon-green, #39FF14) !important;
+  color: var(--slap-black, #1a1a1a) !important;
+  border: 3px solid var(--slap-black, #1a1a1a) !important;
+  border-radius: 0 !important;
+  box-shadow: 5px 5px 0 var(--slap-black, #1a1a1a);
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.slap-form__submit:hover {
+  background-color: var(--slap-black, #1a1a1a) !important;
+  color: var(--slap-neon-green, #39FF14) !important;
+  box-shadow: 7px 7px 0 var(--slap-neon-green, #39FF14);
+  transform: translate(-2px, -2px);
+}
+
+.slap-form__submit:active {
+  box-shadow: 1px 1px 0 var(--slap-neon-green, #39FF14);
+  transform: translate(2px, 2px);
+}
+
+.slap-form__submit::before,
+.slap-form__submit::after {
+  box-shadow: none !important;
+}
+
+.slap-form__submit-arrow {
+  font-size: 1.4rem;
+  transition: transform 0.2s ease;
+}
+
+.slap-form__submit:hover .slap-form__submit-arrow {
+  transform: translateX(4px);
+}
+
+.slap-form__submit-note {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 1rem;
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 749px) {
+  .slap-custom-order__hero {
+    padding: 2.5rem 0 2rem;
+  }
+
+  .slap-custom-order__heading {
+    font-size: 2.2rem;
+  }
+
+  .slap-form__fieldset {
+    padding: 1.2rem;
+  }
+
+  .slap-form__submit {
+    font-size: 1.1rem;
+    padding: 1.2rem 2rem;
+  }
+
+  .slap-form__checkbox-group {
+    gap: 0.5rem;
+  }
+
+  .slap-form__checkbox-label {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

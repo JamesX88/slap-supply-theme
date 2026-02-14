@@ -1,0 +1,261 @@
+{{ 'slap-custom-order-form.css' | asset_url | stylesheet_tag }}
+
+<div class="slap-custom-order color-{{ section.settings.color_scheme }}" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <!-- Hero Header -->
+  <div class="slap-custom-order__hero">
+    <div class="page-width">
+      <div class="slap-custom-order__hero-inner">
+        {% if section.settings.label_text != blank %}
+          <span class="slap-station-label">{{ section.settings.label_text }}</span>
+        {% endif %}
+        <h1 class="slap-custom-order__heading">{{ section.settings.heading }}</h1>
+        {% if section.settings.subheading != blank %}
+          <p class="slap-custom-order__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="slap-custom-order__hero-stripe"></div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="page-width">
+    <div class="slap-custom-order__form-wrapper">
+      <div class="slap-custom-order__form-header">
+        <span class="slap-station-label">{{ section.settings.form_label | default: 'ORDER DETAILS' }}</span>
+        <h2 class="slap-custom-order__form-title">{{ section.settings.form_heading | default: 'TELL US WHAT YOU NEED' }}</h2>
+        <p class="slap-custom-order__form-desc">{{ section.settings.form_description | default: 'Fill out the form below and our team will get back to you within 24 hours with a quote.' }}</p>
+      </div>
+
+      <form method="post" action="/contact#custom-order-form" id="custom-order-form" class="slap-custom-order__form" accept-charset="UTF-8" enctype="multipart/form-data">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="custom-order">
+
+        <!-- Contact Info Section -->
+        <fieldset class="slap-form__fieldset">
+          <legend class="slap-form__legend">CONTACT INFORMATION</legend>
+          <div class="slap-form__grid slap-form__grid--2col">
+            <div class="slap-form__field">
+              <label for="custom-order-name" class="slap-form__label">FULL NAME <span class="slap-form__required">*</span></label>
+              <input type="text" id="custom-order-name" name="contact[name]" required class="slap-form__input" placeholder="Your full name">
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-email" class="slap-form__label">EMAIL <span class="slap-form__required">*</span></label>
+              <input type="email" id="custom-order-email" name="contact[email]" required class="slap-form__input" placeholder="your@email.com">
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-phone" class="slap-form__label">PHONE</label>
+              <input type="tel" id="custom-order-phone" name="contact[phone]" class="slap-form__input" placeholder="(555) 123-4567">
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-company" class="slap-form__label">COMPANY / BRAND</label>
+              <input type="text" id="custom-order-company" name="contact[company]" class="slap-form__input" placeholder="Your company or brand name">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Product Details Section -->
+        <fieldset class="slap-form__fieldset">
+          <legend class="slap-form__legend">PRODUCT DETAILS</legend>
+          <div class="slap-form__grid slap-form__grid--2col">
+            <div class="slap-form__field">
+              <label for="custom-order-product-type" class="slap-form__label">PRODUCT TYPE <span class="slap-form__required">*</span></label>
+              <select id="custom-order-product-type" name="contact[product_type]" required class="slap-form__select">
+                <option value="" disabled selected>Select product type</option>
+                <option value="Die-Cut Stickers">Die-Cut Stickers</option>
+                <option value="Kiss-Cut Stickers">Kiss-Cut Stickers</option>
+                <option value="Vinyl Stickers">Vinyl Stickers</option>
+                <option value="Holographic Stickers">Holographic Stickers</option>
+                <option value="Clear Stickers">Clear Stickers</option>
+                <option value="Bumper Stickers">Bumper Stickers</option>
+                <option value="Product Labels">Product Labels</option>
+                <option value="Roll Labels">Roll Labels</option>
+                <option value="Adhesive Prints">Adhesive Prints</option>
+                <option value="Wall Graphics">Wall Graphics</option>
+                <option value="Floor Decals">Floor Decals</option>
+                <option value="Art Prints / Posters">Art Prints / Posters</option>
+                <option value="Canvas Prints">Canvas Prints</option>
+                <option value="Banners">Banners</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-quantity" class="slap-form__label">QUANTITY <span class="slap-form__required">*</span></label>
+              <select id="custom-order-quantity" name="contact[quantity]" required class="slap-form__select">
+                <option value="" disabled selected>Select quantity range</option>
+                <option value="1-50">1 – 50</option>
+                <option value="50-100">50 – 100</option>
+                <option value="100-250">100 – 250</option>
+                <option value="250-500">250 – 500</option>
+                <option value="500-1000">500 – 1,000</option>
+                <option value="1000-5000">1,000 – 5,000</option>
+                <option value="5000-10000">5,000 – 10,000</option>
+                <option value="10000+">10,000+</option>
+              </select>
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-size" class="slap-form__label">SIZE</label>
+              <input type="text" id="custom-order-size" name="contact[size]" class="slap-form__input" placeholder='e.g., 3" x 3", 4" x 6", custom'>
+            </div>
+            <div class="slap-form__field">
+              <label for="custom-order-material" class="slap-form__label">MATERIAL PREFERENCE</label>
+              <select id="custom-order-material" name="contact[material]" class="slap-form__select">
+                <option value="" disabled selected>Select material</option>
+                <option value="White Vinyl">White Vinyl</option>
+                <option value="Clear Vinyl">Clear Vinyl</option>
+                <option value="Holographic">Holographic</option>
+                <option value="Metallic / Brushed Aluminum">Metallic / Brushed Aluminum</option>
+                <option value="Matte">Matte</option>
+                <option value="Glossy">Glossy</option>
+                <option value="Kraft / Brown Paper">Kraft / Brown Paper</option>
+                <option value="Waterproof / Outdoor">Waterproof / Outdoor</option>
+                <option value="Not Sure - Need Recommendation">Not Sure — Need Recommendation</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="slap-form__field">
+            <label for="custom-order-finish" class="slap-form__label">FINISH</label>
+            <div class="slap-form__checkbox-group">
+              <label class="slap-form__checkbox-label">
+                <input type="checkbox" name="contact[finish_gloss]" value="Gloss" class="slap-form__checkbox"> Gloss
+              </label>
+              <label class="slap-form__checkbox-label">
+                <input type="checkbox" name="contact[finish_matte]" value="Matte" class="slap-form__checkbox"> Matte
+              </label>
+              <label class="slap-form__checkbox-label">
+                <input type="checkbox" name="contact[finish_satin]" value="Satin" class="slap-form__checkbox"> Satin
+              </label>
+              <label class="slap-form__checkbox-label">
+                <input type="checkbox" name="contact[finish_uncoated]" value="Uncoated" class="slap-form__checkbox"> Uncoated
+              </label>
+              <label class="slap-form__checkbox-label">
+                <input type="checkbox" name="contact[finish_soft_touch]" value="Soft Touch" class="slap-form__checkbox"> Soft Touch
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Artwork Section -->
+        <fieldset class="slap-form__fieldset">
+          <legend class="slap-form__legend">ARTWORK</legend>
+          <div class="slap-form__field">
+            <label for="custom-order-artwork" class="slap-form__label">UPLOAD YOUR ARTWORK</label>
+            <p class="slap-form__help-text">Accepted formats: PNG, JPG, PDF, AI, EPS, SVG. Max 10MB per file.</p>
+            <div class="slap-form__file-upload">
+              <input type="file" id="custom-order-artwork" name="contact[artwork]" class="slap-form__file-input" accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg" multiple>
+              <div class="slap-form__file-label">
+                <span class="slap-form__file-icon">📤</span>
+                <span class="slap-form__file-text">DRAG & DROP OR CLICK TO UPLOAD</span>
+                <span class="slap-form__file-subtext">PNG, JPG, PDF, AI, EPS, SVG</span>
+              </div>
+            </div>
+          </div>
+          <div class="slap-form__field">
+            <label for="custom-order-artwork-notes" class="slap-form__label">ARTWORK NOTES</label>
+            <textarea id="custom-order-artwork-notes" name="contact[artwork_notes]" class="slap-form__textarea" rows="3" placeholder="Any notes about your artwork — colors, fonts, adjustments needed, etc."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Special Instructions -->
+        <fieldset class="slap-form__fieldset">
+          <legend class="slap-form__legend">ADDITIONAL DETAILS</legend>
+          <div class="slap-form__field">
+            <label for="custom-order-deadline" class="slap-form__label">DEADLINE / NEED-BY DATE</label>
+            <input type="date" id="custom-order-deadline" name="contact[deadline]" class="slap-form__input">
+          </div>
+          <div class="slap-form__field">
+            <label for="custom-order-instructions" class="slap-form__label">SPECIAL INSTRUCTIONS</label>
+            <textarea id="custom-order-instructions" name="contact[body]" class="slap-form__textarea" rows="4" placeholder="Tell us anything else we should know — special packaging, shipping requirements, repeat order details, etc."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Submit -->
+        <div class="slap-form__submit-wrapper">
+          <button type="submit" class="slap-form__submit">
+            SUBMIT CUSTOM ORDER REQUEST
+            <span class="slap-form__submit-arrow">→</span>
+          </button>
+          <p class="slap-form__submit-note">We'll review your request and get back to you within 24 hours with a quote.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Order Form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label Text",
+      "default": "CUSTOM ORDERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "CUSTOM ORDER REQUEST"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Need something specific? Tell us what you need and we'll make it happen. Custom stickers, labels, prints — any size, any material, any quantity."
+    },
+    {
+      "type": "text",
+      "id": "form_label",
+      "label": "Form Section Label",
+      "default": "ORDER DETAILS"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Heading",
+      "default": "TELL US WHAT YOU NEED"
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form Description",
+      "default": "Fill out the form below and our team will get back to you within 24 hours with a quote."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Order Form"
+    }
+  ]
+}
+{% endschema %}

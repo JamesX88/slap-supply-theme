@@ -202,10 +202,13 @@ variant-radios label {
   border-radius: 0 !important;
   display: inline-flex;
   align-items: center;
+  width: auto !important;
+  min-width: 170px;
 }
 
 .product-form__quantity .quantity__button {
   width: 48px;
+  min-width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
@@ -216,6 +219,8 @@ variant-radios label {
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.15s ease;
+  flex-shrink: 0;
+  overflow: visible;
 }
 
 .product-form__quantity .quantity__button:hover {
@@ -224,7 +229,8 @@ variant-radios label {
 }
 
 .product-form__quantity .quantity__input {
-  width: 65px;
+  width: 55px;
+  min-width: 55px;
   text-align: center;
   font-family: 'Oswald', sans-serif !important;
   font-weight: 700;
@@ -234,6 +240,7 @@ variant-radios label {
   border-top: none !important;
   border-bottom: none !important;
   border-radius: 0 !important;
+  flex-shrink: 0;
 }
 
 /* --- Buy Buttons (CRO: large, high-contrast, prominent) --- */
@@ -257,9 +264,13 @@ variant-radios label {
 
 .product-form__submit::after {
   content: '→';
+  position: static !important;
   margin-left: 0.5rem;
   font-size: 1.4rem;
   transition: transform 0.2s ease;
+  box-shadow: none !important;
+  inset: auto !important;
+  z-index: auto !important;
 }
 
 .product-form__submit:hover {

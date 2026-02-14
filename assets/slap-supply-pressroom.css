@@ -165,6 +165,28 @@ a.button,
   position: relative;
 }
 
+/* Neutralize Dawn's default button ::before shadow box (prevents overlap/double-shadow) */
+.button::before,
+.shopify-payment-button__button::before,
+button[type="submit"]::before,
+.btn::before,
+a.button::before,
+.cart__checkout-button::before,
+.product-form__submit::before {
+  box-shadow: none !important;
+}
+
+/* Neutralize Dawn's default button ::after border overlay (prevents overlap boxes) */
+.button::after,
+.shopify-payment-button__button::after,
+button[type="submit"]::after,
+.btn::after,
+a.button::after,
+.cart__checkout-button::after,
+.product-form__submit::after {
+  box-shadow: none !important;
+}
+
 .button:hover,
 .shopify-payment-button__button:hover,
 button[type="submit"]:hover,

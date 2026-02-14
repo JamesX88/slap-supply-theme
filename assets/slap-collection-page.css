@@ -214,6 +214,12 @@
   width: 16px !important;
   height: 16px !important;
   accent-color: var(--slap-neon-green);
+  position: relative !important;
+  z-index: 1 !important;
+  opacity: 1 !important;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  margin-right: 0.5rem;
 }
 
 .facets-vertical .facet-checkbox input[type="checkbox"]:checked {
@@ -329,7 +335,15 @@
 }
 
 /* Product cards — neo-brutalist */
-.collection .grid__item .card-wrapper,
+.collection .grid__item .card-wrapper {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  overflow: visible;
+  background: transparent !important;
+}
+
 .collection .grid__item .card {
   border: 3px solid var(--slap-black) !important;
   border-radius: 0 !important;
@@ -339,14 +353,14 @@
   background: var(--slap-white) !important;
 }
 
-.collection .grid__item .card-wrapper:hover,
-.collection .grid__item .card:hover {
+.collection .grid__item .card-wrapper:hover .card {
   box-shadow: 6px 6px 0 var(--slap-neon-green) !important;
   transform: translate(-3px, -3px) !important;
 }
 
 .collection .card__inner {
   border-radius: 0 !important;
+  border: none !important;
 }
 
 /* Card image — larger and more prominent */
@@ -362,11 +376,17 @@
   transform: scale(1.03);
 }
 
-/* Card content area */
-.collection .card__content {
+/* Card content area — only style the OUTER card__content (below card__inner) */
+.collection .card > .card__content {
   padding: 1.2rem 1.4rem 1.4rem !important;
   border-top: 3px solid var(--slap-black) !important;
   background: var(--slap-white);
+}
+
+/* Ensure the card__content INSIDE card__inner is transparent so images show through */
+.collection .card__inner .card__content {
+  background: transparent !important;
+  border-top: none !important;
 }
 
 /* Product title */
