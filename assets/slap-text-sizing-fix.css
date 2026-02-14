@@ -329,49 +329,49 @@ cart-remove-button .button {
    ABOUT PAGE TEXT
    ============================================================ */
 .slap-about-hero__subheading {
-  font-size: 1.3rem !important;
+  font-size: 1.5rem !important;
   line-height: 1.65 !important;
 }
 
 .slap-about-acronym__subheading {
-  font-size: 1.15rem !important;
+  font-size: 1.25rem !important;
   line-height: 1.65 !important;
 }
 
 .slap-about-acronym__desc {
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   line-height: 1.6 !important;
 }
 
 .slap-about-acronym__word {
-  font-size: 1.5rem !important;
+  font-size: 1.6rem !important;
 }
 
 .slap-about-story__text {
-  font-size: 1.15rem !important;
-  line-height: 1.75 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.8 !important;
 }
 
 .slap-about-value__text {
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   line-height: 1.6 !important;
 }
 
 .slap-about-value__title {
-  font-size: 1.25rem !important;
+  font-size: 1.35rem !important;
 }
 
 .slap-about-facility__desc {
-  font-size: 1.15rem !important;
-  line-height: 1.65 !important;
+  font-size: 1.25rem !important;
+  line-height: 1.7 !important;
 }
 
 .slap-about-facility__cap-title {
-  font-size: 1.15rem !important;
+  font-size: 1.25rem !important;
 }
 
 .slap-about-facility__cap-text {
-  font-size: 0.95rem !important;
+  font-size: 1.05rem !important;
   line-height: 1.6 !important;
 }
 
@@ -513,8 +513,8 @@ a.button {
   /* About page text */
   .slap-about-story__text,
   .slap-about-story__text p {
-    font-size: 16px !important;
-    line-height: 1.7 !important;
+    font-size: 17px !important;
+    line-height: 1.75 !important;
   }
 
   .slap-about-acronym__desc {
@@ -523,8 +523,8 @@ a.button {
   }
 
   .slap-about-facility__desc {
-    font-size: 16px !important;
-    line-height: 1.6 !important;
+    font-size: 17px !important;
+    line-height: 1.65 !important;
   }
 
   .slap-about-facility__cap-text {
@@ -538,12 +538,12 @@ a.button {
   }
 
   .slap-about-hero__subheading {
-    font-size: 1.15rem !important;
+    font-size: 1.2rem !important;
     line-height: 1.6 !important;
   }
 
   .slap-about-acronym__subheading {
-    font-size: 16px !important;
+    font-size: 17px !important;
   }
 
   /* How it works */

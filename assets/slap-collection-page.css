@@ -202,6 +202,9 @@
   padding: 0.6rem 0 !important;
   color: #555;
   transition: color 0.15s ease;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
 }
 
 .facets-vertical .facet-checkbox:hover {
@@ -213,13 +216,18 @@
   border-radius: 0 !important;
   width: 16px !important;
   height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
   accent-color: var(--slap-neon-green);
   position: relative !important;
   z-index: 1 !important;
   opacity: 1 !important;
   appearance: auto !important;
   -webkit-appearance: auto !important;
-  margin-right: 0.5rem;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  top: auto !important;
+  left: auto !important;
 }
 
 .facets-vertical .facet-checkbox input[type="checkbox"]:checked {
@@ -231,6 +239,15 @@
 .facets-vertical .facet-checkbox > svg,
 .facets-vertical .facet-checkbox > .svg-wrapper {
   display: none !important;
+}
+
+/* Ensure checkbox text label is properly aligned */
+.facets-vertical .facet-checkbox .facet-checkbox__text {
+  display: inline-flex !important;
+  align-items: center !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Active filter pills */
@@ -331,13 +348,43 @@
 }
 
 /* ============================================================
-   PRODUCT GRID — 3 COLUMNS, LARGER CARDS
+   PRODUCT GRID — 3 COLUMNS DESKTOP, 2 COLUMNS MOBILE
    ============================================================ */
 
 /* Grid spacing */
 .collection .grid,
 .facets-vertical .collection .grid {
   gap: 2rem !important;
+}
+
+/* === Desktop: Enforce exactly 3 product columns (990px+) === */
+@media screen and (min-width: 990px) {
+  .facets-vertical .product-grid-container .product-grid .grid__item,
+  .collection .product-grid .grid__item {
+    width: calc(33.333% - 2rem * 2 / 3) !important;
+    max-width: calc(33.333% - 2rem * 2 / 3) !important;
+    flex-grow: 0 !important;
+  }
+}
+
+/* === Tablet: 2 columns (750px - 989px) === */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .facets-vertical .product-grid-container .product-grid .grid__item,
+  .collection .product-grid .grid__item {
+    width: calc(50% - 2rem / 2) !important;
+    max-width: calc(50% - 2rem / 2) !important;
+    flex-grow: 0 !important;
+  }
+}
+
+/* === Mobile: 2 columns (below 750px) === */
+@media screen and (max-width: 749px) {
+  .facets-vertical .product-grid-container .product-grid .grid__item,
+  .collection .product-grid .grid__item {
+    width: calc(50% - 1rem / 2) !important;
+    max-width: calc(50% - 1rem / 2) !important;
+    flex-grow: 0 !important;
+  }
 }
 
 /* Product cards — neo-brutalist */
