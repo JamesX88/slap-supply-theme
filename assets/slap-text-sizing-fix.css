@@ -1,0 +1,679 @@
+/* ============================================================
+   SLAP SUPPLY — TEXT SIZING FIX
+   Ensures readable text across all pages, especially mobile.
+   Mobile body text minimum: 16px
+   Desktop body text: comfortable reading size
+   ============================================================ */
+
+/* ============================================================
+   GLOBAL BASE TEXT SIZING
+   ============================================================ */
+body,
+.shopify-section,
+.template-index,
+.template-product,
+.template-collection,
+.template-cart,
+.template-page {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* Global body text elements */
+p, li, dd, td, th, blockquote {
+  font-size: 1rem; /* 16px base */
+  line-height: 1.65;
+}
+
+/* RTE (Rich Text Editor) content */
+.rte {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.rte p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.rte li {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ============================================================
+   GLOBAL HEADING SIZES — Increase from current small values
+   ============================================================ */
+h1, .h1, .h0 {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -1px;
+}
+
+h2, .h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.5px;
+}
+
+h3, .h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem) !important;
+  line-height: 1.2 !important;
+}
+
+h4, .h4 {
+  font-size: clamp(1.15rem, 2vw, 1.5rem) !important;
+  line-height: 1.3 !important;
+}
+
+h5, .h5 {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   HEADER / NAVIGATION TEXT
+   ============================================================ */
+.header__menu-item,
+.header__menu-item span,
+.list-menu__item--link {
+  font-size: 13px !important;
+}
+
+.header__heading-link .h2,
+.header__heading-link span {
+  font-size: 28px !important;
+}
+
+/* Mobile drawer menu */
+.menu-drawer__menu-item {
+  font-size: 18px !important;
+  padding: 12px 0 !important;
+}
+
+/* ============================================================
+   ANNOUNCEMENT BAR
+   ============================================================ */
+.slap-announcement-bar__item,
+.slap-announcement-bar__sep {
+  font-size: 12px !important;
+}
+
+/* ============================================================
+   HERO SECTION TEXT
+   ============================================================ */
+.slap-hero-v2__subheading {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+
+.slap-hero-v2__btn {
+  font-size: 15px !important;
+  padding: 16px 32px !important;
+}
+
+/* ============================================================
+   CATEGORY CARDS TEXT
+   ============================================================ */
+.slap-cat-card__title {
+  font-size: 20px !important;
+  line-height: 1.3 !important;
+}
+
+.slap-cat-card__subtitle {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.slap-cat-card__configure {
+  font-size: 13px !important;
+}
+
+.slap-cat-card__badge {
+  font-size: 10px !important;
+}
+
+/* ============================================================
+   HOW IT WORKS SECTION TEXT
+   ============================================================ */
+.slap-hiw-v2__step-title,
+.slap-hiw__step-title {
+  font-size: 22px !important;
+  line-height: 1.3 !important;
+}
+
+.slap-hiw-v2__step-text,
+.slap-hiw__step-text {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+/* ============================================================
+   CTA BANNER TEXT
+   ============================================================ */
+.slap-cta-v2__description,
+.slap-cta__description {
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+}
+
+/* ============================================================
+   PRODUCT PAGE TEXT
+   ============================================================ */
+.product__description {
+  font-size: 1.1rem !important;
+  line-height: 1.75 !important;
+}
+
+.product__description p {
+  font-size: 1.1rem !important;
+  line-height: 1.75 !important;
+}
+
+.product__description li {
+  font-size: 1.05rem !important;
+  line-height: 1.65 !important;
+}
+
+.product__accordion .accordion__content {
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+}
+
+.product__accordion .accordion__title {
+  font-size: 1.15rem !important;
+}
+
+.product-form__input .form__label {
+  font-size: 1.05rem !important;
+}
+
+.product-form__input input[type="radio"] + label,
+variant-radios label {
+  font-size: 1rem !important;
+}
+
+.product__tax {
+  font-size: 0.9rem !important;
+}
+
+.slap-product-trust__item {
+  font-size: 0.9rem !important;
+}
+
+.slap-value-props__item {
+  font-size: 0.9rem !important;
+}
+
+.slap-guarantee__desc {
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
+
+.slap-social-proof {
+  font-size: 0.95rem !important;
+}
+
+.slap-specs-table {
+  font-size: 1rem !important;
+}
+
+.slap-specs-table td:first-child {
+  font-size: 0.95rem !important;
+}
+
+/* ============================================================
+   COLLECTION PAGE TEXT
+   ============================================================ */
+.collection-hero__description {
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+}
+
+.collection .card__heading {
+  font-size: 1.05rem !important;
+}
+
+.collection .price-item {
+  font-size: 1.1rem !important;
+}
+
+.collection .card__badge .badge {
+  font-size: 10px !important;
+}
+
+.slap-collection-label {
+  font-size: 11px !important;
+}
+
+.slap-category-tab {
+  font-size: 1rem !important;
+}
+
+.product-count__text {
+  font-size: 11px !important;
+}
+
+.facets__heading,
+.facet-filters__label label,
+.facet-filters__label {
+  font-size: 0.95rem !important;
+}
+
+/* ============================================================
+   CART PAGE TEXT
+   ============================================================ */
+.cart-items thead th {
+  font-size: 10px !important;
+}
+
+.cart-item__name {
+  font-size: 1.15rem !important;
+}
+
+.cart-item__details dt {
+  font-size: 0.85rem !important;
+}
+
+.cart-item__details dd {
+  font-size: 0.9rem !important;
+}
+
+.cart-item .price {
+  font-size: 1.15rem !important;
+}
+
+.cart-item__totals .price {
+  font-size: 1.25rem !important;
+}
+
+cart-remove-button .button {
+  font-size: 0.8rem !important;
+}
+
+.totals__subtotal {
+  font-size: 1.05rem !important;
+}
+
+.totals__subtotal-value {
+  font-size: 2.2rem !important;
+}
+
+.tax-note {
+  font-size: 0.85rem !important;
+}
+
+.cart__note label {
+  font-size: 0.95rem !important;
+}
+
+.slap-shipping-bar__text {
+  font-size: 0.95rem !important;
+}
+
+.slap-cart-trust__item {
+  font-size: 0.85rem !important;
+}
+
+.slap-promo-code__label {
+  font-size: 0.95rem !important;
+}
+
+.slap-promo-code__input {
+  font-size: 0.95rem !important;
+}
+
+/* ============================================================
+   ABOUT PAGE TEXT
+   ============================================================ */
+.slap-about-hero__subheading {
+  font-size: 1.3rem !important;
+  line-height: 1.65 !important;
+}
+
+.slap-about-acronym__subheading {
+  font-size: 1.15rem !important;
+  line-height: 1.65 !important;
+}
+
+.slap-about-acronym__desc {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+.slap-about-acronym__word {
+  font-size: 1.5rem !important;
+}
+
+.slap-about-story__text {
+  font-size: 1.15rem !important;
+  line-height: 1.75 !important;
+}
+
+.slap-about-value__text {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+.slap-about-value__title {
+  font-size: 1.25rem !important;
+}
+
+.slap-about-facility__desc {
+  font-size: 1.15rem !important;
+  line-height: 1.65 !important;
+}
+
+.slap-about-facility__cap-title {
+  font-size: 1.15rem !important;
+}
+
+.slap-about-facility__cap-text {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.slap-about-facility__stat-label {
+  font-size: 11px !important;
+}
+
+/* ============================================================
+   FOOTER TEXT
+   ============================================================ */
+.slap-footer-v2__tagline {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.slap-footer-v2__heading {
+  font-size: 14px !important;
+}
+
+.slap-footer-v2__links a {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.slap-footer-v2__contact p {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.slap-footer-v2__copyright,
+.slap-footer-v2__concept {
+  font-size: 11px !important;
+}
+
+.slap-footer-v2__social-icon {
+  font-size: 11px !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+/* ============================================================
+   CUSTOMIZER PAGE TEXT
+   ============================================================ */
+.slap-customizer__hero-label {
+  font-size: 11px !important;
+}
+
+/* ============================================================
+   FORM ELEMENTS — Ensure readable input text
+   ============================================================ */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select,
+.field__input {
+  font-size: 16px !important; /* Prevents iOS zoom on focus */
+}
+
+label,
+.field__label {
+  font-size: 0.95rem !important;
+}
+
+/* Buttons */
+.button,
+.shopify-payment-button__button,
+button[type="submit"],
+.btn,
+a.button {
+  font-size: 1rem !important;
+}
+
+/* ============================================================
+   STATION LABELS — Slightly increase for readability
+   ============================================================ */
+.slap-hero-v2__station-label,
+.slap-categories-v2__station-label,
+.slap-hiw-v2__station-label,
+.slap-hiw__label {
+  font-size: 11px !important;
+}
+
+.slap-about-acronym__label,
+.slap-about-facility__label {
+  font-size: 12px !important;
+}
+
+/* ============================================================
+   SLAP LABEL BADGES
+   ============================================================ */
+.slap-label {
+  font-size: 11px !important;
+}
+
+/* ============================================================
+   MARQUEE / CAUTION DIVIDER TEXT
+   ============================================================ */
+.slap-caution-divider__text-overlay span {
+  font-size: 11px !important;
+}
+
+/* ============================================================
+   MOBILE-SPECIFIC OVERRIDES (max-width: 749px)
+   Ensure minimum 16px body text on mobile
+   ============================================================ */
+@media screen and (max-width: 749px) {
+  body {
+    font-size: 16px !important;
+  }
+
+  /* Body text minimum 16px on mobile */
+  p, li, dd, td, th, blockquote,
+  .rte p, .rte li {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  /* Product description */
+  .product__description,
+  .product__description p,
+  .product__description li {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+
+  .product__accordion .accordion__content {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  .product__accordion .accordion__title {
+    font-size: 1.1rem !important;
+  }
+
+  /* About page text */
+  .slap-about-story__text,
+  .slap-about-story__text p {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+
+  .slap-about-acronym__desc {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-about-facility__desc {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-about-facility__cap-text {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-about-value__text {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-about-hero__subheading {
+    font-size: 1.15rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-about-acronym__subheading {
+    font-size: 16px !important;
+  }
+
+  /* How it works */
+  .slap-hiw-v2__step-text,
+  .slap-hiw__step-text {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* CTA */
+  .slap-cta-v2__description,
+  .slap-cta__description {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Category cards */
+  .slap-cat-card__subtitle {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .slap-cat-card__title {
+    font-size: 18px !important;
+  }
+
+  /* Cart page */
+  .cart-item__name {
+    font-size: 1.1rem !important;
+  }
+
+  .cart-item__details dt {
+    font-size: 0.85rem !important;
+  }
+
+  .cart-item__details dd {
+    font-size: 16px !important;
+  }
+
+  .cart-item .price,
+  .cart-item__totals .price {
+    font-size: 1.1rem !important;
+  }
+
+  /* Collection page */
+  .collection-hero__description {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .collection .card__heading {
+    font-size: 1rem !important;
+  }
+
+  /* Hero */
+  .slap-hero-v2__subheading {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .slap-hero-v2__btn {
+    font-size: 15px !important;
+    padding: 14px 24px !important;
+  }
+
+  /* Footer */
+  .slap-footer-v2__tagline,
+  .slap-footer-v2__links a,
+  .slap-footer-v2__contact p {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  .slap-footer-v2__heading {
+    font-size: 14px !important;
+  }
+
+  /* Trust/value props */
+  .slap-product-trust__item,
+  .slap-value-props__item {
+    font-size: 0.9rem !important;
+  }
+
+  .slap-guarantee__desc {
+    font-size: 16px !important;
+  }
+
+  /* Buttons on mobile */
+  .button,
+  .shopify-payment-button__button,
+  button[type="submit"],
+  .btn,
+  a.button {
+    font-size: 1rem !important;
+    padding: 12px 20px !important;
+  }
+
+  /* Don't override specific button padding */
+  .product-form__submit {
+    padding: 1.4rem 1.5rem !important;
+  }
+
+  .cart__ctas button[name="checkout"],
+  .cart__ctas .cart__checkout-button {
+    padding: 1.2rem 1.5rem !important;
+  }
+
+  /* Mobile drawer menu */
+  .menu-drawer__menu-item {
+    font-size: 20px !important;
+    padding: 14px 0 !important;
+  }
+}
+
+/* ============================================================
+   TABLET OVERRIDES (750px - 989px)
+   ============================================================ */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  p, li, dd {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .product__description,
+  .product__description p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .slap-about-story__text {
+    font-size: 1.1rem;
+  }
+}

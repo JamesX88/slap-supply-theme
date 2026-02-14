@@ -1,5 +1,6 @@
 {% comment %}
   Renders a header drawer menu for mobile and desktop.
+  Updated with hardcoded SLAP Supply navigation links matching the mockup.
 
   Usage:
   {% render 'header-drawer' %}
@@ -21,6 +22,55 @@
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
+              {%- comment -%} Hardcoded SLAP Supply nav links for mobile drawer {%- endcomment -%}
+              <li>
+                <a
+                  id="HeaderDrawer-products"
+                  href="/collections/all"
+                  class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                >
+                  Products
+                </a>
+              </li>
+              <li>
+                <a
+                  id="HeaderDrawer-custom-order"
+                  href="/pages/custom-order"
+                  class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                >
+                  Custom Order
+                </a>
+              </li>
+              <li>
+                <a
+                  id="HeaderDrawer-bulk-b2b"
+                  href="/pages/bulk-b2b"
+                  class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                >
+                  Bulk / B2B
+                </a>
+              </li>
+              <li>
+                <a
+                  id="HeaderDrawer-about"
+                  href="/pages/about"
+                  class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  id="HeaderDrawer-start-order"
+                  href="/pages/contact"
+                  class="menu-drawer__menu-item list-menu__item link link--text focus-inset"
+                  style="color: #39FF14 !important; font-weight: 700;"
+                >
+                  Start Order
+                </a>
+              </li>
+
+              {%- comment -%} Also render any dynamic Shopify menu links below {%- endcomment -%}
               {%- for link in section.settings.menu.links -%}
                 <li>
                   {%- if link.links != blank -%}

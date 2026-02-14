@@ -70,6 +70,131 @@
       padding-top: 0.5rem;
     }
   }
+
+  /* ============================================================
+     SLAP SUPPLY CUSTOM HEADER STYLES
+     ============================================================ */
+
+  /* Custom Logo: SLAP.SUPPLY with green dot */
+  .slap-header-logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none !important;
+    line-height: 1;
+  }
+
+  .slap-header-logo__brand {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: -1px;
+    color: #1a1a1a !important;
+    text-transform: uppercase;
+    line-height: 1;
+    text-decoration: none !important;
+  }
+
+  .slap-header-logo__dot {
+    color: #39FF14 !important;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .slap-header-logo__tagline {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #737373 !important;
+    margin-top: 3px;
+    line-height: 1;
+    text-decoration: none !important;
+  }
+
+  /* Hardcoded Navigation */
+  .slap-header-nav {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    gap: 0;
+  }
+
+  @media screen and (min-width: 990px) {
+    .slap-header-nav {
+      display: flex;
+    }
+  }
+
+  .slap-header-nav__item {
+    display: flex;
+    align-items: center;
+  }
+
+  .slap-header-nav__link {
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    font-size: 13px;
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+    padding: 0.5rem 1.2rem;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .slap-header-nav__link:hover {
+    color: #39FF14 !important;
+  }
+
+  /* START ORDER CTA button */
+  .slap-header-nav__cta {
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    font-size: 13px;
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+    padding: 10px 20px;
+    background: #39FF14;
+    border: 2px solid #1a1a1a;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    margin-left: 0.5rem;
+  }
+
+  .slap-header-nav__cta:hover {
+    background: #1a1a1a;
+    color: #39FF14 !important;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #39FF14;
+  }
+
+  /* Override the default header layout for our custom structure */
+  .header--middle-left.header--has-menu .slap-header-nav-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  /* Mobile: hide START ORDER in mobile drawer, show in header icons area */
+  @media screen and (max-width: 989px) {
+    .slap-header-nav {
+      display: none !important;
+    }
+    .slap-header-logo__brand {
+      font-size: 24px;
+    }
+    .slap-header-logo__tagline {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+    }
+  }
 </style>
 
 {%- style -%}
@@ -128,6 +253,8 @@
     endif
   -%}
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+
+    {%- comment -%} Mobile hamburger drawer {%- endcomment -%}
     {%- liquid
       if section.settings.menu != blank
         render 'header-drawer'
@@ -138,70 +265,59 @@
       endif
     -%}
 
+    {%- comment -%}
+      CUSTOM SLAP.SUPPLY LOGO with green dot and tagline
+      This replaces the default Dawn logo rendering
+    {%- endcomment -%}
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo motion-reduce',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset slap-header-logo">
+            <span class="slap-header-logo__brand">SLAP<span class="slap-header-logo__dot">.</span>SUPPLY</span>
+            <span class="slap-header-logo__tagline">Stickers // Labels // Adhesives // Prints</span>
           </a>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
     {%- endif -%}
 
-    {%- liquid
-      if section.settings.menu != blank
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
-        endif
-      endif
-    %}
+    {%- comment -%}
+      HARDCODED NAVIGATION matching the mockup exactly:
+      PRODUCTS | CUSTOM ORDER | BULK / B2B | ABOUT | [START ORDER button]
+      This replaces the dynamic Shopify menu navigation on desktop.
+      The mobile drawer still uses the Shopify menu for mobile nav.
+    {%- endcomment -%}
+    <div class="slap-header-nav-wrapper">
+      <nav class="header__inline-menu" aria-label="Main navigation">
+        <ul class="slap-header-nav" role="list">
+          <li class="slap-header-nav__item">
+            <a href="/collections/all" class="slap-header-nav__link">Products</a>
+          </li>
+          <li class="slap-header-nav__item">
+            <a href="/pages/custom-order" class="slap-header-nav__link">Custom Order</a>
+          </li>
+          <li class="slap-header-nav__item">
+            <a href="/pages/bulk-b2b" class="slap-header-nav__link">Bulk / B2B</a>
+          </li>
+          <li class="slap-header-nav__item">
+            <a href="/pages/about" class="slap-header-nav__link">About</a>
+          </li>
+          <li class="slap-header-nav__item">
+            <a href="/pages/contact" class="slap-header-nav__cta">Start Order</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
+    {%- comment -%} Middle-center logo position variant {%- endcomment -%}
     {%- if section.settings.logo_position == 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
-              <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
-                  class: 'header__heading-logo',
-                  widths: widths,
-                  height: logo_height,
-                  width: settings.logo_width,
-                  alt: logo_alt,
-                  sizes: sizes,
-                  preload: true
-                }}
-              </div>
-            {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
-            {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset slap-header-logo">
+            <span class="slap-header-logo__brand">SLAP<span class="slap-header-logo__dot">.</span>SUPPLY</span>
+            <span class="slap-header-logo__tagline">Stickers // Labels // Adhesives // Prints</span>
           </a>
       {%- if request.page_type == 'index' -%}
         </h1>
