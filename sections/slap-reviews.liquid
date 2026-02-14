@@ -1,0 +1,462 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-reviews" id="SlapReviews-{{ section.id }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <!-- Section Header -->
+    <div class="slap-reviews__header">
+      {%- if section.settings.label_text != blank -%}
+        <div class="slap-reviews__label">{{ section.settings.label_text }}</div>
+      {%- endif -%}
+      <h2 class="slap-reviews__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="slap-reviews__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <!-- Aggregate Rating -->
+      <div class="slap-reviews__aggregate">
+        <div class="slap-reviews__stars-large">
+          {%- for i in (1..5) -%}
+            <span class="slap-reviews__star slap-reviews__star--filled">★</span>
+          {%- endfor -%}
+        </div>
+        <span class="slap-reviews__rating-text">{{ section.settings.rating_text }}</span>
+      </div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="slap-reviews__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <div class="slap-reviews__card" {{ block.shopify_attributes }}>
+            <div class="slap-reviews__card-inner">
+              <!-- Stars -->
+              <div class="slap-reviews__card-stars">
+                {%- assign stars = block.settings.stars | default: 5 -%}
+                {%- for i in (1..5) -%}
+                  {%- if i <= stars -%}
+                    <span class="slap-reviews__star slap-reviews__star--filled">★</span>
+                  {%- else -%}
+                    <span class="slap-reviews__star">★</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              <!-- Review Title -->
+              {%- if block.settings.title != blank -%}
+                <h4 class="slap-reviews__card-title">{{ block.settings.title }}</h4>
+              {%- endif -%}
+
+              <!-- Review Text -->
+              <p class="slap-reviews__card-text">"{{ block.settings.text }}"</p>
+
+              <!-- Reviewer Info -->
+              <div class="slap-reviews__card-author">
+                <div class="slap-reviews__card-avatar">
+                  {{ block.settings.name | slice: 0 }}
+                </div>
+                <div class="slap-reviews__card-info">
+                  <span class="slap-reviews__card-name">{{ block.settings.name }}</span>
+                  {%- if block.settings.product != blank -%}
+                    <span class="slap-reviews__card-product">{{ block.settings.product }}</span>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.verified -%}
+                  <span class="slap-reviews__card-verified">✓ VERIFIED</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .slap-reviews {
+    background-color: #F5F5F0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slap-reviews__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .slap-reviews__label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #737373;
+    margin-bottom: 1rem;
+  }
+
+  .slap-reviews__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+  }
+
+  .slap-reviews__subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.5;
+  }
+
+  .slap-reviews__aggregate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .slap-reviews__stars-large {
+    display: flex;
+    gap: 2px;
+  }
+
+  .slap-reviews__star {
+    font-size: 18px;
+    color: #d4d4d4;
+    line-height: 1;
+  }
+
+  .slap-reviews__star--filled {
+    color: #39FF14;
+  }
+
+  .slap-reviews__rating-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #737373;
+    text-transform: uppercase;
+  }
+
+  .slap-reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .slap-reviews__card {
+    background: #fff;
+    border: 3px solid #1a1a1a;
+    border-radius: 0;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .slap-reviews__card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #39FF14;
+  }
+
+  .slap-reviews__card-inner {
+    padding: 1.75rem;
+  }
+
+  .slap-reviews__card-stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .slap-reviews__card-title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+  }
+
+  .slap-reviews__card-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    font-style: normal;
+  }
+
+  .slap-reviews__card-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .slap-reviews__card-avatar {
+    width: 36px;
+    height: 36px;
+    background: #1a1a1a;
+    color: #39FF14;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .slap-reviews__card-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .slap-reviews__card-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1a1a1a;
+  }
+
+  .slap-reviews__card-product {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+  }
+
+  .slap-reviews__card-verified {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #39FF14;
+    background: #1a1a1a;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .slap-reviews__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-reviews__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-reviews__heading {
+      font-size: 36px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Reviews",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "STATION 05 — SOCIAL PROOF",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "WHAT THEY'RE SAYING",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Real reviews from real customers who trust SLAP Supply for their custom sticker and print needs.",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "default": "4.9 / 5.0 — 500+ REVIEWS",
+      "label": "Rating Summary Text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Star Rating"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Incredible Quality",
+          "label": "Review Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "These stickers are amazing! The colors are vibrant and the adhesive is super strong.",
+          "label": "Review Text"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "default": "Sarah M.",
+          "label": "Reviewer Name"
+        },
+        {
+          "type": "text",
+          "id": "product",
+          "default": "Custom Die-Cut Stickers",
+          "label": "Product Purchased"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "default": true,
+          "label": "Verified Purchase"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Exceeded All Expectations",
+            "text": "Ordered 500 die-cut stickers for our product launch and they came out PERFECT. Colors matched our Pantone specs exactly, the kiss-cut was clean, and the vinyl is seriously durable. Already reordering.",
+            "name": "Marcus T.",
+            "product": "Custom Die-Cut Vinyl Stickers",
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Best Label Supplier We've Found",
+            "text": "We switched to SLAP Supply for our candle labels 6 months ago and haven't looked back. Waterproof, heat-resistant, and the print quality is insane. Our customers always comment on the packaging.",
+            "name": "Jessica R.",
+            "product": "Waterproof Product Labels",
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "3-Day Turnaround Is Real",
+            "text": "Needed a rush order of 1,000 holographic stickers for a trade show. SLAP delivered in 3 days and the quality was flawless. The holographic finish catches light beautifully. Will definitely be back.",
+            "name": "David K.",
+            "product": "Holographic Stickers",
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Perfect for Our Food Truck",
+            "text": "The freezer-safe labels have been a game changer for our packaged goods. They survive the freezer, microwave, and dishwasher without peeling or fading. Exactly what we needed for food-safe labeling.",
+            "name": "Ana L.",
+            "product": "Freezer-Safe Labels",
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "title": "Great Wall Graphics",
+            "text": "Used their adhesive prints for our office rebrand — wall graphics, window clings, the works. Installation was easy and the print quality is sharp. Only wish they had more textured finish options.",
+            "name": "Chris P.",
+            "product": "Adhesive Wall Graphics",
+            "verified": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Bulk Pricing Can't Be Beat",
+            "text": "We order 10,000+ stickers monthly for our e-commerce inserts. The bulk pricing is extremely competitive and the consistency batch-to-batch is outstanding. Our dedicated account rep makes reordering a breeze.",
+            "name": "Ryan W.",
+            "product": "Bulk Custom Stickers",
+            "verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

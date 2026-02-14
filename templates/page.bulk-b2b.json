@@ -1,0 +1,153 @@
+{
+  "sections": {
+    "b2b_content": {
+      "type": "slap-bulk-b2b",
+      "blocks": {
+        "stat_1": {
+          "type": "hero_stat",
+          "settings": {
+            "number": "50M+",
+            "label": "Stickers Printed"
+          }
+        },
+        "stat_2": {
+          "type": "hero_stat",
+          "settings": {
+            "number": "2,000+",
+            "label": "B2B Clients"
+          }
+        },
+        "stat_3": {
+          "type": "hero_stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        },
+        "stat_4": {
+          "type": "hero_stat",
+          "settings": {
+            "number": "99.8%",
+            "label": "On-Time Delivery"
+          }
+        },
+        "tier_1": {
+          "type": "pricing_tier",
+          "settings": {
+            "name": "STARTER",
+            "quantity": "250 – 499 UNITS",
+            "price_per_unit": "$0.35",
+            "savings": "SAVE 15%",
+            "badge": "",
+            "featured": false,
+            "features": "Free digital proof|Standard 5-day turnaround|All materials available|Email support"
+          }
+        },
+        "tier_2": {
+          "type": "pricing_tier",
+          "settings": {
+            "name": "GROWTH",
+            "quantity": "500 – 2,499 UNITS",
+            "price_per_unit": "$0.22",
+            "savings": "SAVE 30%",
+            "badge": "POPULAR",
+            "featured": true,
+            "features": "Free digital proof|Priority 3-day turnaround|All materials + finishes|Dedicated account rep|Reorder discounts"
+          }
+        },
+        "tier_3": {
+          "type": "pricing_tier",
+          "settings": {
+            "name": "SCALE",
+            "quantity": "2,500 – 9,999 UNITS",
+            "price_per_unit": "$0.14",
+            "savings": "SAVE 45%",
+            "badge": "BEST VALUE",
+            "featured": false,
+            "features": "Free digital proof|Rush 2-day available|Premium materials included|Dedicated account rep|NET 30 terms available|Free shipping"
+          }
+        },
+        "tier_4": {
+          "type": "pricing_tier",
+          "settings": {
+            "name": "ENTERPRISE",
+            "quantity": "10,000+ UNITS",
+            "price_per_unit": "$0.08",
+            "savings": "SAVE 60%+",
+            "badge": "",
+            "featured": false,
+            "features": "Custom pricing|Priority production|All premium options|Dedicated account team|NET 30/60 terms|Free shipping|Recurring order scheduling"
+          }
+        },
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "💰",
+            "title": "MASSIVE SAVINGS",
+            "text": "Per-unit costs drop up to 60% at higher volumes. The more you order, the more you save on every single sticker, label, or print."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🔄",
+            "title": "RECURRING ORDERS",
+            "text": "Set up automatic reorders on your schedule. Lock in pricing, set quantities, and never worry about running out of inventory again."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "👤",
+            "title": "DEDICATED SUPPORT",
+            "text": "Every B2B account gets a dedicated account representative who knows your brand, your specs, and your timeline inside and out."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "⚡",
+            "title": "PRIORITY PRODUCTION",
+            "text": "Bulk orders get priority scheduling in our production queue. Rush turnaround options available for time-sensitive projects."
+          }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": {
+            "icon": "📋",
+            "title": "NET 30/60 TERMS",
+            "text": "Qualified businesses can access NET 30 or NET 60 payment terms. We also accept purchase orders for orders over $500."
+          }
+        },
+        "benefit_6": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✅",
+            "title": "CONSISTENT QUALITY",
+            "text": "Batch-to-batch color consistency guaranteed. We maintain strict quality control across every production run, no matter the volume."
+          }
+        }
+      },
+      "block_order": [
+        "stat_1", "stat_2", "stat_3", "stat_4",
+        "tier_1", "tier_2", "tier_3", "tier_4",
+        "benefit_1", "benefit_2", "benefit_3", "benefit_4", "benefit_5", "benefit_6"
+      ],
+      "settings": {
+        "hero_label": "STATION B2B — BULK ORDERS",
+        "hero_heading": "BULK ORDERS.\nBIGGER SAVINGS.",
+        "hero_subheading": "Scale your sticker and label game with volume pricing that makes sense. From 250 to 100,000+ units — we've got the capacity, quality, and pricing to fuel your brand.",
+        "pricing_heading": "VOLUME PRICING TIERS",
+        "pricing_subheading": "The more you order, the more you save. All tiers include free proofing, quality inspection, and dedicated support.",
+        "benefits_heading": "BENEFITS OF BULK ORDERING",
+        "form_heading": "GET A CUSTOM QUOTE",
+        "form_subheading": "Tell us about your project and we'll put together a custom quote within 1 business day.",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "b2b_content"
+  ]
+}

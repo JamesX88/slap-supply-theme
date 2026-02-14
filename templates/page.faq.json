@@ -1,0 +1,206 @@
+{
+  "sections": {
+    "faq_hero": {
+      "type": "slap-cta-banner",
+      "settings": {
+        "label_text": "HELP CENTER",
+        "heading": "<p>FREQUENTLY ASKED<br><em>QUESTIONS</em></p>",
+        "description": "Everything you need to know about ordering custom stickers, labels, and prints from SLAP Supply.",
+        "button_label_1": "",
+        "button_link_1": "",
+        "button_label_2": "",
+        "button_link_2": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "faq_content": {
+      "type": "slap-faq",
+      "blocks": {
+        "cat_1": {
+          "type": "category_heading",
+          "settings": {
+            "title": "ORDERING & TURNAROUND",
+            "description": "Questions about placing orders and delivery timelines"
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the standard turnaround time?",
+            "answer": "<p>Standard turnaround is <strong>3–5 business days</strong> from proof approval. This includes printing, cutting, and quality inspection. Rush orders with 1–2 day turnaround are available for an additional fee.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a minimum order quantity?",
+            "answer": "<p><strong>No minimum orders.</strong> You can order as few as 1 sticker or as many as 100,000+. However, per-unit pricing decreases significantly with larger quantities. Check our bulk pricing tiers for the best value.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer <strong>free standard shipping on all orders over $75</strong> within the continental United States. Orders under $75 ship for a flat rate of $4.99. Expedited and international shipping options are available at checkout.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I get a proof before my order is printed?",
+            "answer": "<p>Absolutely. Every order includes a <strong>free digital proof</strong> that you can review and approve before we print. You can request unlimited revisions to your proof at no extra charge. We won't print until you're 100% satisfied.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major credit cards (Visa, Mastercard, Amex, Discover), <strong>PayPal, Apple Pay, Google Pay, and Shop Pay</strong>. For B2B orders over $500, we also offer NET 30 payment terms with approved credit.</p>"
+          }
+        },
+        "cat_2": {
+          "type": "category_heading",
+          "settings": {
+            "title": "FILE REQUIREMENTS",
+            "description": "Artwork specifications and file format guidelines"
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What file formats do you accept?",
+            "answer": "<p>We accept <strong>PNG, PDF, AI, EPS, SVG, and PSD</strong> files. For best results, we recommend vector files (AI, EPS, SVG) as they scale to any size without quality loss. Raster files (PNG, PSD) should be at least 300 DPI at the final print size.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What DPI/resolution should my artwork be?",
+            "answer": "<p>For optimal print quality, your artwork should be <strong>300 DPI (dots per inch) minimum</strong> at the actual print size. For large format prints (wall graphics, banners), 150 DPI is acceptable. Vector files are always preferred as they are resolution-independent.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need to add bleed to my files?",
+            "answer": "<p>We recommend adding <strong>1/8\" (0.125\") bleed</strong> on all sides of your artwork. This ensures no white edges appear after cutting. If your file doesn't include bleed, our design team will add it during the proofing process and confirm with you before printing.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help me design my stickers?",
+            "answer": "<p>Yes! We offer <strong>basic design assistance</strong> included with every order. Our team can help with file cleanup, color matching, and layout adjustments. For full custom design work, we offer design services starting at $25. Use our online builder to get started or upload your own artwork.</p>"
+          }
+        },
+        "cat_3": {
+          "type": "category_heading",
+          "settings": {
+            "title": "MATERIALS & QUALITY",
+            "description": "Information about our printing materials and durability"
+          }
+        },
+        "faq_10": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What materials are your stickers made from?",
+            "answer": "<p>We offer a range of premium materials including <strong>white vinyl, clear vinyl, holographic, kraft paper, BOPP (for labels), and specialty materials</strong> like glow-in-the-dark and reflective. All vinyl stickers are waterproof, UV-resistant, and rated for 3–5 years of outdoor durability.</p>"
+          }
+        },
+        "faq_11": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your stickers waterproof and dishwasher-safe?",
+            "answer": "<p>Yes! Our vinyl stickers and BOPP labels are <strong>fully waterproof, dishwasher-safe, and microwave-safe</strong>. They're printed with UV-resistant inks and coated with a protective laminate. Perfect for water bottles, food containers, outdoor use, and product labeling.</p>"
+          }
+        },
+        "faq_12": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What finishes are available?",
+            "answer": "<p>We offer <strong>glossy, matte, and soft-touch matte</strong> laminate finishes. Glossy provides vibrant, eye-catching colors. Matte gives a premium, non-reflective look. Soft-touch matte adds a velvety texture. Specialty finishes like spot UV and embossing are available for bulk orders.</p>"
+          }
+        },
+        "faq_13": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What types of sticker cuts do you offer?",
+            "answer": "<p>We offer <strong>die-cut, kiss-cut, circle, square, rectangle, and custom shape</strong> cutting options. Die-cut stickers are cut to the exact shape of your design. Kiss-cut stickers are cut through the vinyl but not the backing, making them easy to peel. Custom shapes are available at no extra cost.</p>"
+          }
+        },
+        "cat_4": {
+          "type": "category_heading",
+          "settings": {
+            "title": "SHIPPING & RETURNS",
+            "description": "Delivery options and our satisfaction guarantee"
+          }
+        },
+        "faq_14": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where do you ship?",
+            "answer": "<p>We ship <strong>worldwide</strong>. US orders typically arrive in 5–7 business days with standard shipping, or 2–3 days with expedited. International orders take 7–14 business days. All orders include tracking information sent via email.</p>"
+          }
+        },
+        "faq_15": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return/reprint policy?",
+            "answer": "<p>We stand behind our work with a <strong>100% satisfaction guarantee</strong>. If your order arrives damaged, defective, or doesn't match your approved proof, we'll reprint it at no charge or issue a full refund. Contact us within 14 days of delivery with photos of any issues.</p>"
+          }
+        },
+        "cat_5": {
+          "type": "category_heading",
+          "settings": {
+            "title": "BULK & B2B ORDERS",
+            "description": "Information for businesses and large-volume orders"
+          }
+        },
+        "faq_16": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer volume discounts for bulk orders?",
+            "answer": "<p>Yes! We offer <strong>significant volume discounts</strong> starting at 250+ units. The more you order, the lower your per-unit cost. For orders over 5,000 units, contact our B2B team for custom pricing. We also offer dedicated account management for recurring orders.</p>"
+          }
+        },
+        "faq_17": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I set up recurring/subscription orders?",
+            "answer": "<p>Absolutely. Our B2B program includes <strong>recurring order scheduling</strong> with locked-in pricing. Set your quantity, frequency, and we'll handle the rest — including automatic reorders, inventory alerts, and priority production scheduling. Contact our B2B team to get started.</p>"
+          }
+        },
+        "faq_18": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer NET 30 or purchase order terms?",
+            "answer": "<p>Yes, for qualified businesses. We offer <strong>NET 30 payment terms</strong> for B2B accounts with approved credit. We also accept purchase orders for orders over $500. Apply for a B2B account through our bulk ordering page or contact our sales team directly.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1", "faq_1", "faq_2", "faq_3", "faq_4", "faq_5",
+        "cat_2", "faq_6", "faq_7", "faq_8", "faq_9",
+        "cat_3", "faq_10", "faq_11", "faq_12", "faq_13",
+        "cat_4", "faq_14", "faq_15",
+        "cat_5", "faq_16", "faq_17", "faq_18"
+      ],
+      "settings": {
+        "label_text": "",
+        "heading": "",
+        "subheading": "",
+        "cta_text": "Still have questions? Our team is here to help with anything from file setup to bulk pricing.",
+        "cta_button_label": "CONTACT US",
+        "cta_button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "faq_hero",
+    "faq_content"
+  ]
+}

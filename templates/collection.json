@@ -1,7 +1,15 @@
 {
   "sections": {
+    "slap_collection_banner": {
+      "type": "slap-collection-banner",
+      "settings": {
+        "show_description": true,
+        "show_stats": true
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
         "show_collection_description": true,
         "show_collection_image": false,
@@ -71,6 +79,7 @@
     }
   },
   "order": [
+    "slap_collection_banner",
     "banner",
     "product-grid",
     "slap_cta_collection"

@@ -8,9 +8,23 @@
         "tagline": "Industrial-grade custom stickers, labels, adhesives, and prints. Built for creators and businesses.",
         "color_scheme": "scheme-1"
       }
+    },
+    "slap-email-popup": {
+      "type": "slap-email-popup",
+      "settings": {
+        "badge_text": "FIRST ORDER DEAL",
+        "heading": "GET 10% OFF",
+        "subheading": "Join the SLAP Supply mailing list and get 10% off your first order. Plus early access to new products and exclusive deals.",
+        "discount_code": "SLAP10",
+        "button_label": "CLAIM DEAL",
+        "note_text": "No spam, ever. Unsubscribe anytime.",
+        "delay_seconds": 5,
+        "dismiss_days": 7
+      }
     }
   },
   "order": [
-    "slap-footer"
+    "slap-footer",
+    "slap-email-popup"
   ]
 }

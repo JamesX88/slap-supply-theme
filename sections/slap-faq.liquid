@@ -1,0 +1,535 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-faq" id="SlapFaq-{{ section.id }}">
+  <div class="page-width section-{{ section.id }}-padding">
+    <!-- Section Header -->
+    <div class="slap-faq__header">
+      {%- if section.settings.label_text != blank -%}
+        <div class="slap-faq__label">{{ section.settings.label_text }}</div>
+      {%- endif -%}
+      <h2 class="slap-faq__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="slap-faq__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- FAQ Categories -->
+    <div class="slap-faq__content">
+      {%- assign current_category = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category_heading' -%}
+          {%- if current_category != '' -%}
+            </div><!-- close previous category -->
+          {%- endif -%}
+          <div class="slap-faq__category" {{ block.shopify_attributes }}>
+            <div class="slap-faq__category-header">
+              <h3 class="slap-faq__category-title">{{ block.settings.title }}</h3>
+              {%- if block.settings.description != blank -%}
+                <p class="slap-faq__category-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          {%- assign current_category = block.settings.title -%}
+        {%- elsif block.type == 'faq_item' -%}
+          <details class="slap-faq__item" {{ block.shopify_attributes }}>
+            <summary class="slap-faq__question">
+              <span class="slap-faq__question-text">{{ block.settings.question }}</span>
+              <span class="slap-faq__toggle">
+                <span class="slap-faq__toggle-icon">+</span>
+              </span>
+            </summary>
+            <div class="slap-faq__answer">
+              <div class="slap-faq__answer-inner">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if current_category != '' -%}
+        </div><!-- close last category -->
+      {%- endif -%}
+    </div>
+
+    <!-- CTA -->
+    {%- if section.settings.cta_text != blank -%}
+      <div class="slap-faq__cta">
+        <div class="slap-faq__cta-inner">
+          <p class="slap-faq__cta-text">{{ section.settings.cta_text }}</p>
+          {%- if section.settings.cta_button_label != blank -%}
+            <a href="{{ section.settings.cta_button_link }}" class="slap-faq__cta-btn">
+              {{ section.settings.cta_button_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .slap-faq {
+    background-color: #fff;
+    position: relative;
+  }
+
+  .slap-faq__header {
+    margin-bottom: 3rem;
+  }
+
+  .slap-faq__label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #737373;
+    margin-bottom: 1rem;
+  }
+
+  .slap-faq__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+  }
+
+  .slap-faq__subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    max-width: 600px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Category */
+  .slap-faq__category {
+    margin-bottom: 2.5rem;
+  }
+
+  .slap-faq__category-header {
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+    border-bottom: 3px solid #1a1a1a;
+  }
+
+  .slap-faq__category-title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: #1a1a1a;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .slap-faq__category-desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #737373;
+    margin: 0.5rem 0 0;
+  }
+
+  /* FAQ Item Accordion */
+  .slap-faq__item {
+    border-bottom: 1px solid #d4d4d4;
+  }
+
+  .slap-faq__item[open] {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .slap-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .slap-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .slap-faq__question::marker {
+    display: none;
+    content: '';
+  }
+
+  .slap-faq__question-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .slap-faq__toggle {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .slap-faq__toggle-icon {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+    transition: transform 0.2s ease;
+  }
+
+  .slap-faq__item[open] .slap-faq__toggle {
+    background: #39FF14;
+    border-color: #1a1a1a;
+  }
+
+  .slap-faq__item[open] .slap-faq__toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .slap-faq__question:hover .slap-faq__toggle {
+    background: #39FF14;
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
+
+  .slap-faq__answer {
+    overflow: hidden;
+  }
+
+  .slap-faq__answer-inner {
+    padding: 0 0 1.5rem 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+    max-width: 700px;
+  }
+
+  .slap-faq__answer-inner p {
+    margin: 0 0 0.75rem;
+  }
+
+  .slap-faq__answer-inner p:last-child {
+    margin-bottom: 0;
+  }
+
+  .slap-faq__answer-inner strong {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  /* CTA */
+  .slap-faq__cta {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #1a1a1a;
+    border: 3px solid #1a1a1a;
+  }
+
+  .slap-faq__cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-faq__cta-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: #a3a3a3;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .slap-faq__cta-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    text-decoration: none;
+    background: #39FF14;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .slap-faq__cta-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.4);
+    text-decoration: none;
+    color: #000;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-faq__heading {
+      font-size: 36px;
+    }
+
+    .slap-faq__cta-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP FAQ",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "STATION 06 — FAQ",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "FREQUENTLY ASKED QUESTIONS",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Everything you need to know about ordering custom stickers, labels, and prints from SLAP Supply.",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "default": "Still have questions? Our team is here to help with anything from file setup to bulk pricing.",
+      "label": "CTA Text"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_label",
+      "default": "CONTACT US",
+      "label": "CTA Button Label"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_heading",
+      "name": "Category Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "General",
+          "label": "Category Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Category Description (optional)"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "default": "What is the turnaround time?",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "default": "<p>Standard turnaround is 3-5 business days from proof approval. Rush options are available for 1-2 day turnaround.</p>",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP FAQ",
+      "blocks": [
+        {
+          "type": "category_heading",
+          "settings": {
+            "title": "ORDERING & TURNAROUND",
+            "description": "Questions about placing orders and delivery timelines"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the standard turnaround time?",
+            "answer": "<p>Standard turnaround is <strong>3–5 business days</strong> from proof approval. This includes printing, cutting, and quality inspection. Rush orders with 1–2 day turnaround are available for an additional fee.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a minimum order quantity?",
+            "answer": "<p><strong>No minimum orders.</strong> You can order as few as 1 sticker or as many as 100,000+. However, per-unit pricing decreases significantly with larger quantities. Check our bulk pricing tiers for the best value.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer <strong>free standard shipping on all orders over $75</strong> within the continental United States. Orders under $75 ship for a flat rate of $4.99. Expedited and international shipping options are available at checkout.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I get a proof before my order is printed?",
+            "answer": "<p>Absolutely. Every order includes a <strong>free digital proof</strong> that you can review and approve before we print. You can request unlimited revisions to your proof at no extra charge. We won't print until you're 100% satisfied.</p>"
+          }
+        },
+        {
+          "type": "category_heading",
+          "settings": {
+            "title": "FILE REQUIREMENTS",
+            "description": "Artwork specifications and file format guidelines"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What file formats do you accept?",
+            "answer": "<p>We accept <strong>PNG, PDF, AI, EPS, SVG, and PSD</strong> files. For best results, we recommend vector files (AI, EPS, SVG) as they scale to any size without quality loss. Raster files (PNG, PSD) should be at least 300 DPI at the final print size.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What DPI/resolution should my artwork be?",
+            "answer": "<p>For optimal print quality, your artwork should be <strong>300 DPI (dots per inch) minimum</strong> at the actual print size. For large format prints (wall graphics, banners), 150 DPI is acceptable. Vector files are always preferred as they are resolution-independent.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need to add bleed to my files?",
+            "answer": "<p>We recommend adding <strong>1/8\" (0.125\") bleed</strong> on all sides of your artwork. This ensures no white edges appear after cutting. If your file doesn't include bleed, our design team will add it during the proofing process and confirm with you before printing.</p>"
+          }
+        },
+        {
+          "type": "category_heading",
+          "settings": {
+            "title": "MATERIALS & QUALITY",
+            "description": "Information about our printing materials and durability"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What materials are your stickers made from?",
+            "answer": "<p>We offer a range of premium materials including <strong>white vinyl, clear vinyl, holographic, kraft paper, BOPP (for labels), and specialty materials</strong> like glow-in-the-dark and reflective. All vinyl stickers are waterproof, UV-resistant, and rated for 3–5 years of outdoor durability.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your stickers waterproof and dishwasher-safe?",
+            "answer": "<p>Yes! Our vinyl stickers and BOPP labels are <strong>fully waterproof, dishwasher-safe, and microwave-safe</strong>. They're printed with UV-resistant inks and coated with a protective laminate. Perfect for water bottles, food containers, outdoor use, and product labeling.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What finishes are available?",
+            "answer": "<p>We offer <strong>glossy, matte, and soft-touch matte</strong> laminate finishes. Glossy provides vibrant, eye-catching colors. Matte gives a premium, non-reflective look. Soft-touch matte adds a velvety texture. Specialty finishes like spot UV and embossing are available for bulk orders.</p>"
+          }
+        },
+        {
+          "type": "category_heading",
+          "settings": {
+            "title": "BULK & B2B ORDERS",
+            "description": "Information for businesses and large-volume orders"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you offer volume discounts for bulk orders?",
+            "answer": "<p>Yes! We offer <strong>significant volume discounts</strong> starting at 250+ units. The more you order, the lower your per-unit cost. For orders over 5,000 units, contact our B2B team for custom pricing. We also offer dedicated account management for recurring orders.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I set up recurring/subscription orders?",
+            "answer": "<p>Absolutely. Our B2B program includes <strong>recurring order scheduling</strong> with locked-in pricing. Set your quantity, frequency, and we'll handle the rest — including automatic reorders, inventory alerts, and priority production scheduling. Contact our B2B team to get started.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

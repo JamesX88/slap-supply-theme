@@ -109,6 +109,93 @@
         "padding_bottom": 80
       }
     },
+    "slap_marquee_reviews": {
+      "type": "slap-marquee",
+      "settings": {
+        "overlay_text": "CUSTOMER REVIEWS",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "slap_reviews": {
+      "type": "slap-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Exceeded All Expectations",
+            "text": "Ordered 500 die-cut stickers for our product launch and they came out PERFECT. Colors matched our Pantone specs exactly, the kiss-cut was clean, and the vinyl is seriously durable. Already reordering.",
+            "name": "Marcus T.",
+            "product": "Custom Die-Cut Vinyl Stickers",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Best Label Supplier We've Found",
+            "text": "We switched to SLAP Supply for our candle labels 6 months ago and haven't looked back. Waterproof, heat-resistant, and the print quality is insane. Our customers always comment on the packaging.",
+            "name": "Jessica R.",
+            "product": "Waterproof Product Labels",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "3-Day Turnaround Is Real",
+            "text": "Needed a rush order of 1,000 holographic stickers for a trade show. SLAP delivered in 3 days and the quality was flawless. The holographic finish catches light beautifully. Will definitely be back.",
+            "name": "David K.",
+            "product": "Holographic Stickers",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Perfect for Our Food Truck",
+            "text": "The freezer-safe labels have been a game changer for our packaged goods. They survive the freezer, microwave, and dishwasher without peeling or fading. Exactly what we needed for food-safe labeling.",
+            "name": "Ana L.",
+            "product": "Freezer-Safe Labels",
+            "verified": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "title": "Great Wall Graphics",
+            "text": "Used their adhesive prints for our office rebrand — wall graphics, window clings, the works. Installation was easy and the print quality is sharp. Only wish they had more textured finish options.",
+            "name": "Chris P.",
+            "product": "Adhesive Wall Graphics",
+            "verified": true
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Bulk Pricing Can't Be Beat",
+            "text": "We order 10,000+ stickers monthly for our e-commerce inserts. The bulk pricing is extremely competitive and the consistency batch-to-batch is outstanding. Our dedicated account rep makes reordering a breeze.",
+            "name": "Ryan W.",
+            "product": "Bulk Custom Stickers",
+            "verified": true
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3", "review_4", "review_5", "review_6"],
+      "settings": {
+        "label_text": "STATION 05 — SOCIAL PROOF",
+        "heading": "WHAT THEY'RE SAYING",
+        "subheading": "Real reviews from real customers who trust SLAP Supply for their custom sticker and print needs.",
+        "rating_text": "4.9 / 5.0 — 500+ REVIEWS",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "slap_cta": {
       "type": "slap-cta-banner",
       "settings": {
@@ -130,6 +217,8 @@
     "slap_marquee_1",
     "slap_categories",
     "slap_how_it_works",
+    "slap_marquee_reviews",
+    "slap_reviews",
     "slap_cta"
   ]
 }

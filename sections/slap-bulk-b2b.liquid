@@ -1,0 +1,901 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="slap-b2b" id="SlapB2B-{{ section.id }}">
+  <!-- Hero Section -->
+  <div class="slap-b2b__hero">
+    <div class="slap-b2b__hero-pattern"></div>
+    <div class="slap-b2b__hero-stripe-overlay"></div>
+    <div class="page-width slap-b2b__hero-inner">
+      <div class="slap-b2b__hero-content">
+        <div class="slap-b2b__hero-label">{{ section.settings.hero_label }}</div>
+        <h1 class="slap-b2b__hero-heading">{{ section.settings.hero_heading }}</h1>
+        <p class="slap-b2b__hero-subheading">{{ section.settings.hero_subheading }}</p>
+        <div class="slap-b2b__hero-stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'hero_stat' -%}
+              <div class="slap-b2b__hero-stat" {{ block.shopify_attributes }}>
+                <span class="slap-b2b__hero-stat-number">{{ block.settings.number }}</span>
+                <span class="slap-b2b__hero-stat-label">{{ block.settings.label }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    <div class="slap-b2b__hero-caution"></div>
+  </div>
+
+  <!-- Volume Pricing Section -->
+  <div class="slap-b2b__pricing section-{{ section.id }}-padding">
+    <div class="page-width">
+      <div class="slap-b2b__section-header">
+        <div class="slap-b2b__section-label">VOLUME PRICING</div>
+        <h2 class="slap-b2b__section-heading">{{ section.settings.pricing_heading }}</h2>
+        <p class="slap-b2b__section-subheading">{{ section.settings.pricing_subheading }}</p>
+      </div>
+
+      <div class="slap-b2b__pricing-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pricing_tier' -%}
+            <div class="slap-b2b__tier{% if block.settings.featured %} slap-b2b__tier--featured{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.badge != blank -%}
+                <div class="slap-b2b__tier-badge">{{ block.settings.badge }}</div>
+              {%- endif -%}
+              <div class="slap-b2b__tier-inner">
+                <h3 class="slap-b2b__tier-name">{{ block.settings.name }}</h3>
+                <div class="slap-b2b__tier-quantity">{{ block.settings.quantity }}</div>
+                <div class="slap-b2b__tier-price">
+                  <span class="slap-b2b__tier-price-from">FROM</span>
+                  <span class="slap-b2b__tier-price-amount">{{ block.settings.price_per_unit }}</span>
+                  <span class="slap-b2b__tier-price-unit">/ unit</span>
+                </div>
+                <div class="slap-b2b__tier-savings">{{ block.settings.savings }}</div>
+                <ul class="slap-b2b__tier-features">
+                  {%- assign features = block.settings.features | split: '|' -%}
+                  {%- for feature in features -%}
+                    <li>{{ feature | strip }}</li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="slap-b2b__benefits">
+    <div class="page-width">
+      <div class="slap-b2b__section-header">
+        <div class="slap-b2b__section-label">WHY GO BULK?</div>
+        <h2 class="slap-b2b__section-heading">{{ section.settings.benefits_heading }}</h2>
+      </div>
+
+      <div class="slap-b2b__benefits-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'benefit' -%}
+            <div class="slap-b2b__benefit" {{ block.shopify_attributes }}>
+              <div class="slap-b2b__benefit-icon">{{ block.settings.icon }}</div>
+              <h4 class="slap-b2b__benefit-title">{{ block.settings.title }}</h4>
+              <p class="slap-b2b__benefit-text">{{ block.settings.text }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote Request Form -->
+  <div class="slap-b2b__form-section">
+    <div class="slap-b2b__form-caution"></div>
+    <div class="page-width slap-b2b__form-wrapper">
+      <div class="slap-b2b__form-header">
+        <div class="slap-b2b__section-label slap-b2b__section-label--light">REQUEST A QUOTE</div>
+        <h2 class="slap-b2b__section-heading slap-b2b__section-heading--light">{{ section.settings.form_heading }}</h2>
+        <p class="slap-b2b__section-subheading slap-b2b__section-subheading--light">{{ section.settings.form_subheading }}</p>
+      </div>
+
+      <form class="slap-b2b__form" action="/contact#contact_form" method="post">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[subject]" value="B2B / Bulk Order Quote Request">
+
+        <div class="slap-b2b__form-grid">
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-name">FULL NAME *</label>
+            <input class="slap-b2b__form-input" type="text" id="b2b-name" name="contact[name]" required placeholder="Your name">
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-company">COMPANY NAME</label>
+            <input class="slap-b2b__form-input" type="text" id="b2b-company" name="contact[company]" placeholder="Your company">
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-email">EMAIL ADDRESS *</label>
+            <input class="slap-b2b__form-input" type="email" id="b2b-email" name="contact[email]" required placeholder="you@company.com">
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-phone">PHONE NUMBER</label>
+            <input class="slap-b2b__form-input" type="tel" id="b2b-phone" name="contact[phone]" placeholder="(555) 000-0000">
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-product">PRODUCT TYPE *</label>
+            <select class="slap-b2b__form-select" id="b2b-product" name="contact[product_type]" required>
+              <option value="">Select a product type</option>
+              <option value="Custom Stickers">Custom Stickers</option>
+              <option value="Product Labels">Product Labels</option>
+              <option value="Adhesive Prints">Adhesive Prints</option>
+              <option value="Custom Prints">Custom Prints</option>
+              <option value="Multiple Products">Multiple Products</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-quantity">ESTIMATED QUANTITY *</label>
+            <select class="slap-b2b__form-select" id="b2b-quantity" name="contact[quantity]" required>
+              <option value="">Select quantity range</option>
+              <option value="250-499">250 – 499 units</option>
+              <option value="500-999">500 – 999 units</option>
+              <option value="1000-4999">1,000 – 4,999 units</option>
+              <option value="5000-9999">5,000 – 9,999 units</option>
+              <option value="10000+">10,000+ units</option>
+            </select>
+          </div>
+
+          <div class="slap-b2b__form-group slap-b2b__form-group--full">
+            <label class="slap-b2b__form-label" for="b2b-details">PROJECT DETAILS</label>
+            <textarea class="slap-b2b__form-textarea" id="b2b-details" name="contact[body]" rows="5" placeholder="Tell us about your project — size, material preferences, timeline, recurring needs, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="slap-b2b__form-submit">
+          <button type="submit" class="slap-b2b__form-btn">
+            GET MY QUOTE <span class="slap-b2b__form-btn-arrow">→</span>
+          </button>
+          <p class="slap-b2b__form-note">We'll respond within 1 business day with a custom quote.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .slap-b2b {
+    background: #fff;
+  }
+
+  /* Hero */
+  .slap-b2b__hero {
+    background: #1a1a1a;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slap-b2b__hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  .slap-b2b__hero-stripe-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 40px,
+      #39FF14 40px,
+      #39FF14 42px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slap-b2b__hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .slap-b2b__hero-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-b2b__hero-heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(3rem, 6vw, 72px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #fff;
+    margin: 0 0 1.5rem;
+  }
+
+  .slap-b2b__hero-subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    color: #a3a3a3;
+    max-width: 600px;
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+  }
+
+  .slap-b2b__hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-b2b__hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .slap-b2b__hero-stat-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #39FF14;
+    line-height: 1;
+  }
+
+  .slap-b2b__hero-stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+  }
+
+  .slap-b2b__hero-caution {
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(
+      135deg,
+      #39FF14,
+      #39FF14 10px,
+      #1a1a1a 10px,
+      #1a1a1a 20px
+    );
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Headers */
+  .slap-b2b__section-header {
+    margin-bottom: 3rem;
+  }
+
+  .slap-b2b__section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #737373;
+    margin-bottom: 1rem;
+  }
+
+  .slap-b2b__section-label--light {
+    color: #a3a3a3;
+  }
+
+  .slap-b2b__section-heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1.2px;
+    color: #1a1a1a;
+    margin: 0 0 0.75rem;
+  }
+
+  .slap-b2b__section-heading--light {
+    color: #fff;
+  }
+
+  .slap-b2b__section-subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    max-width: 600px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .slap-b2b__section-subheading--light {
+    color: #a3a3a3;
+  }
+
+  /* Pricing Grid */
+  .slap-b2b__pricing {
+    background: #F5F5F0;
+  }
+
+  .slap-b2b__pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .slap-b2b__tier {
+    background: #fff;
+    border: 3px solid #1a1a1a;
+    border-radius: 0;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .slap-b2b__tier:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #39FF14;
+  }
+
+  .slap-b2b__tier--featured {
+    border-color: #39FF14;
+    box-shadow: 0 0 0 1px #39FF14;
+  }
+
+  .slap-b2b__tier--featured:hover {
+    box-shadow: 4px 4px 0 #1a1a1a;
+  }
+
+  .slap-b2b__tier-badge {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: #39FF14;
+    color: #000;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 2px solid #1a1a1a;
+  }
+
+  .slap-b2b__tier-inner {
+    padding: 2rem 1.5rem;
+  }
+
+  .slap-b2b__tier-name {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+    margin: 0 0 0.25rem;
+    line-height: 1.2;
+  }
+
+  .slap-b2b__tier-quantity {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-b2b__tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .slap-b2b__tier-price-from {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #a3a3a3;
+  }
+
+  .slap-b2b__tier-price-amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #39FF14;
+    line-height: 1;
+  }
+
+  .slap-b2b__tier-price-unit {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #737373;
+  }
+
+  .slap-b2b__tier-savings {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #39FF14;
+    background: #1a1a1a;
+    display: inline-block;
+    padding: 3px 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-b2b__tier-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 1rem;
+  }
+
+  .slap-b2b__tier-features li {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+    padding: 0.4rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .slap-b2b__tier-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #39FF14;
+    font-weight: 700;
+  }
+
+  /* Benefits */
+  .slap-b2b__benefits {
+    padding: 80px 0;
+    background: #fff;
+  }
+
+  .slap-b2b__benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .slap-b2b__benefit {
+    padding: 2rem;
+    border: 3px solid #1a1a1a;
+    background: #fff;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .slap-b2b__benefit:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #39FF14;
+  }
+
+  .slap-b2b__benefit-icon {
+    font-size: 32px;
+    margin-bottom: 1rem;
+    width: 56px;
+    height: 56px;
+    border: 2px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F5F5F0;
+  }
+
+  .slap-b2b__benefit-title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+
+  .slap-b2b__benefit-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Form Section */
+  .slap-b2b__form-section {
+    background: #1a1a1a;
+    position: relative;
+  }
+
+  .slap-b2b__form-caution {
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(
+      135deg,
+      #39FF14,
+      #39FF14 10px,
+      #1a1a1a 10px,
+      #1a1a1a 20px
+    );
+  }
+
+  .slap-b2b__form-wrapper {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .slap-b2b__form-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .slap-b2b__form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .slap-b2b__form-group--full {
+    grid-column: 1 / -1;
+  }
+
+  .slap-b2b__form-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin-bottom: 0.5rem;
+  }
+
+  .slap-b2b__form-input,
+  .slap-b2b__form-select,
+  .slap-b2b__form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: #fff;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .slap-b2b__form-input::placeholder,
+  .slap-b2b__form-textarea::placeholder {
+    color: #666;
+  }
+
+  .slap-b2b__form-input:focus,
+  .slap-b2b__form-select:focus,
+  .slap-b2b__form-textarea:focus {
+    border-color: #39FF14;
+    box-shadow: 0 0 0 1px #39FF14;
+  }
+
+  .slap-b2b__form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a3a3a3' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .slap-b2b__form-select option {
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .slap-b2b__form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .slap-b2b__form-submit {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-b2b__form-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 18px 36px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    background: #39FF14;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .slap-b2b__form-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.4);
+  }
+
+  .slap-b2b__form-btn-arrow {
+    font-size: 1.1em;
+  }
+
+  .slap-b2b__form-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media screen and (max-width: 989px) {
+    .slap-b2b__pricing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slap-b2b__benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-b2b__pricing-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-b2b__benefits-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-b2b__form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .slap-b2b__hero-heading {
+      font-size: 3rem;
+    }
+
+    .slap-b2b__section-heading {
+      font-size: 36px;
+    }
+
+    .slap-b2b__hero-stats {
+      gap: 2rem;
+    }
+
+    .slap-b2b__form-submit {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Bulk/B2B",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_label",
+      "default": "STATION B2B — BULK ORDERS",
+      "label": "Hero Label"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "default": "BULK ORDERS.\nBIGGER SAVINGS.",
+      "label": "Hero Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheading",
+      "default": "Scale your sticker and label game with volume pricing that makes sense. From 250 to 100,000+ units — we've got the capacity, quality, and pricing to fuel your brand.",
+      "label": "Hero Subheading"
+    },
+    {
+      "type": "text",
+      "id": "pricing_heading",
+      "default": "VOLUME PRICING TIERS",
+      "label": "Pricing Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "pricing_subheading",
+      "default": "The more you order, the more you save. All tiers include free proofing, quality inspection, and dedicated support.",
+      "label": "Pricing Section Subheading"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "default": "BENEFITS OF BULK ORDERING",
+      "label": "Benefits Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "default": "GET A CUSTOM QUOTE",
+      "label": "Form Section Heading"
+    },
+    {
+      "type": "text",
+      "id": "form_subheading",
+      "default": "Tell us about your project and we'll put together a custom quote within 1 business day.",
+      "label": "Form Section Subheading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_stat",
+      "name": "Hero Stat",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "default": "10K+",
+          "label": "Number"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "default": "Orders Shipped",
+          "label": "Label"
+        }
+      ]
+    },
+    {
+      "type": "pricing_tier",
+      "name": "Pricing Tier",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "default": "Starter",
+          "label": "Tier Name"
+        },
+        {
+          "type": "text",
+          "id": "quantity",
+          "default": "250 – 499 UNITS",
+          "label": "Quantity Range"
+        },
+        {
+          "type": "text",
+          "id": "price_per_unit",
+          "default": "$0.35",
+          "label": "Price Per Unit"
+        },
+        {
+          "type": "text",
+          "id": "savings",
+          "default": "SAVE 15%",
+          "label": "Savings Text"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text (optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "default": false,
+          "label": "Featured Tier"
+        },
+        {
+          "type": "text",
+          "id": "features",
+          "default": "Free digital proof|Standard 5-day turnaround|All materials available",
+          "label": "Features (pipe-separated)",
+          "info": "Separate features with | character"
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 9,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "default": "💰",
+          "label": "Icon (emoji)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Lower Per-Unit Cost",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Volume pricing means significant savings on every unit ordered.",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Bulk/B2B"
+    }
+  ]
+}
+{% endschema %}

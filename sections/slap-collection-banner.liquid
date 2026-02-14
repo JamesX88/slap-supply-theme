@@ -1,0 +1,287 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+{{ 'slap-collection-page.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign collection_handle = collection.handle | downcase
+  assign banner_heading = collection.title
+  assign banner_description = collection.description
+  assign banner_label = 'COLLECTION'
+  assign banner_icon = '📦'
+  assign banner_bg_image = ''
+
+  if collection_handle contains 'sticker'
+    assign banner_label = 'STATION 01 — STICKERS'
+    assign banner_icon = '🔥'
+    if banner_description == blank
+      assign banner_description = 'Die-cut, kiss-cut, vinyl, holographic, and more. Every sticker is printed on premium materials with industrial-grade adhesive that sticks to virtually any surface. Weather-resistant. Dishwasher-safe. Built to last.'
+    endif
+  elsif collection_handle contains 'label'
+    assign banner_label = 'STATION 02 — LABELS'
+    assign banner_icon = '🏷️'
+    if banner_description == blank
+      assign banner_description = 'Professional product labels on rolls or sheets. Waterproof, freezer-safe, and oil-resistant options available. Perfect for food & beverage, cosmetics, candles, and retail packaging. FDA-compliant materials.'
+    endif
+  elsif collection_handle contains 'adhesive'
+    assign banner_label = 'STATION 03 — ADHESIVES'
+    assign banner_icon = '📐'
+    if banner_description == blank
+      assign banner_description = 'Large-format adhesive prints for walls, floors, windows, and vehicles. From retail displays to event graphics, our adhesive prints deliver vibrant color and rock-solid adhesion on any surface.'
+    endif
+  elsif collection_handle contains 'print'
+    assign banner_label = 'STATION 04 — PRINTS'
+    assign banner_icon = '🖨️'
+    if banner_description == blank
+      assign banner_description = 'Museum-quality art prints, posters, and packaging inserts on premium paper stocks. Giclée printing with archival inks ensures your designs look stunning and last for years. Custom sizes available.'
+    endif
+  endif
+-%}
+
+<div class="slap-collection-banner" id="CollectionBanner-{{ section.id }}">
+  <div class="slap-collection-banner__bg-pattern"></div>
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'collection_banner' -%}
+      {%- assign block_handle = block.settings.collection_handle | downcase -%}
+      {%- if collection_handle contains block_handle and block.settings.background_image != blank -%}
+        <div class="slap-collection-banner__bg-image">
+          {{ block.settings.background_image | image_url: width: 1920 | image_tag: class: 'slap-collection-banner__bg-img', loading: 'eager' }}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+  <div class="slap-collection-banner__inner page-width">
+    <div class="slap-collection-banner__content">
+      <div class="slap-collection-banner__label">{{ banner_label }}</div>
+      <h1 class="slap-collection-banner__title">{{ banner_heading | escape }}</h1>
+      <div class="slap-collection-banner__description">{{ banner_description }}</div>
+      <div class="slap-collection-banner__stats">
+        {%- if collection.products_count > 0 -%}
+          <div class="slap-collection-banner__stat">
+            <span class="slap-collection-banner__stat-number">{{ collection.products_count }}</span>
+            <span class="slap-collection-banner__stat-label">PRODUCTS</span>
+          </div>
+        {%- endif -%}
+        <div class="slap-collection-banner__stat">
+          <span class="slap-collection-banner__stat-number">3 DAY</span>
+          <span class="slap-collection-banner__stat-label">TURNAROUND</span>
+        </div>
+        <div class="slap-collection-banner__stat">
+          <span class="slap-collection-banner__stat-number">$75+</span>
+          <span class="slap-collection-banner__stat-label">FREE SHIPPING</span>
+        </div>
+      </div>
+    </div>
+    <div class="slap-collection-banner__icon-side">
+      <span class="slap-collection-banner__big-icon">{{ banner_icon }}</span>
+    </div>
+  </div>
+  <div class="slap-collection-banner__caution-stripe"></div>
+</div>
+
+<style>
+  .slap-collection-banner {
+    background-color: #1a1a1a;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .slap-collection-banner__bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(57, 255, 20, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 255, 20, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  .slap-collection-banner__bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .slap-collection-banner__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+  }
+
+  .slap-collection-banner__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .slap-collection-banner__label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+    margin-bottom: 1rem;
+  }
+
+  .slap-collection-banner__title {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff !important;
+    margin: 0 0 1rem;
+  }
+
+  .slap-collection-banner__description {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 0 1.5rem;
+  }
+
+  .slap-collection-banner__stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-collection-banner__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .slap-collection-banner__stat-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #39FF14;
+    line-height: 1;
+  }
+
+  .slap-collection-banner__stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a3a3a3;
+  }
+
+  .slap-collection-banner__icon-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slap-collection-banner__big-icon {
+    font-size: 80px;
+    opacity: 0.3;
+    filter: grayscale(100%);
+  }
+
+  .slap-collection-banner__caution-stripe {
+    width: 100%;
+    height: 8px;
+    background: repeating-linear-gradient(
+      135deg,
+      #39FF14,
+      #39FF14 10px,
+      #1a1a1a 10px,
+      #1a1a1a 20px
+    );
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hide the default collection hero when this section is used */
+  .collection-hero {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-collection-banner__inner {
+      grid-template-columns: 1fr;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .slap-collection-banner__icon-side {
+      display: none;
+    }
+
+    .slap-collection-banner__stats {
+      gap: 1.5rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SLAP Collection Banner",
+  "tag": "section",
+  "class": "section slap-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "default": true,
+      "label": "Show stats bar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_banner",
+      "name": "Collection Banner",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_handle",
+          "label": "Collection handle (e.g., stickers, labels)",
+          "info": "Enter the collection handle to match"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "custom_label",
+          "label": "Custom Station Label (optional)"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_description",
+          "label": "Custom Description (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Collection Banner"
+    }
+  ]
+}
+{% endschema %}

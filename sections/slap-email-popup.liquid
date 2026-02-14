@@ -1,0 +1,453 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+
+<div class="slap-popup-overlay" id="SlapPopup-{{ section.id }}" style="display: none;" role="dialog" aria-modal="true" aria-label="Email signup popup">
+  <div class="slap-popup">
+    <div class="slap-popup__caution-top"></div>
+    <button class="slap-popup__close" aria-label="Close popup" onclick="closeSlapPopup()">✕</button>
+    <div class="slap-popup__inner">
+      <div class="slap-popup__badge">{{ section.settings.badge_text }}</div>
+      <h2 class="slap-popup__heading">{{ section.settings.heading }}</h2>
+      <p class="slap-popup__subheading">{{ section.settings.subheading }}</p>
+
+      <div class="slap-popup__discount">
+        <span class="slap-popup__discount-code">{{ section.settings.discount_code }}</span>
+      </div>
+
+      <form class="slap-popup__form" id="slap-popup-form" method="post" action="/contact#contact_form">
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <div class="slap-popup__form-row">
+          <input
+            type="email"
+            name="contact[email]"
+            class="slap-popup__input"
+            placeholder="Enter your email address"
+            required
+            aria-label="Email address"
+          >
+          <button type="submit" class="slap-popup__btn">
+            {{ section.settings.button_label }} <span class="slap-popup__btn-arrow">→</span>
+          </button>
+        </div>
+      </form>
+
+      <p class="slap-popup__note">{{ section.settings.note_text }}</p>
+    </div>
+    <div class="slap-popup__caution-bottom"></div>
+  </div>
+</div>
+
+<style>
+  .slap-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(2px);
+    animation: slapPopupFadeIn 0.3s ease;
+  }
+
+  @keyframes slapPopupFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slapPopupSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .slap-popup {
+    background: #1a1a1a;
+    border: 3px solid #39FF14;
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    animation: slapPopupSlideUp 0.3s ease 0.1s both;
+  }
+
+  .slap-popup__caution-top,
+  .slap-popup__caution-bottom {
+    width: 100%;
+    height: 6px;
+    background: repeating-linear-gradient(
+      135deg,
+      #39FF14,
+      #39FF14 8px,
+      #1a1a1a 8px,
+      #1a1a1a 16px
+    );
+  }
+
+  .slap-popup__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #444;
+    background: transparent;
+    color: #a3a3a3;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.15s ease;
+    border-radius: 0;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .slap-popup__close:hover {
+    background: #39FF14;
+    color: #000;
+    border-color: #39FF14;
+  }
+
+  .slap-popup__inner {
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .slap-popup__badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #39FF14;
+    border: 1px solid #39FF14;
+    padding: 4px 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-popup__heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: #fff;
+    margin: 0 0 0.75rem;
+  }
+
+  .slap-popup__subheading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: #a3a3a3;
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .slap-popup__discount {
+    margin-bottom: 1.5rem;
+  }
+
+  .slap-popup__discount-code {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #1a1a1a;
+    background: #39FF14;
+    padding: 8px 24px;
+    border: 2px solid #000;
+  }
+
+  .slap-popup__form-row {
+    display: flex;
+    gap: 0;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .slap-popup__input {
+    flex: 1;
+    padding: 14px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-right: none;
+    border-radius: 0;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .slap-popup__input::placeholder {
+    color: #666;
+  }
+
+  .slap-popup__input:focus {
+    border-color: #39FF14;
+  }
+
+  .slap-popup__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 14px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    background: #39FF14;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .slap-popup__btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 rgba(57, 255, 20, 0.4);
+  }
+
+  .slap-popup__btn-arrow {
+    font-size: 1.1em;
+  }
+
+  .slap-popup__note {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 0.5px;
+    margin: 1rem 0 0;
+  }
+
+  /* Success state */
+  .slap-popup__success {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .slap-popup__success-icon {
+    font-size: 48px;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .slap-popup__success-heading {
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #39FF14;
+    margin: 0 0 0.5rem;
+  }
+
+  .slap-popup__success-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #a3a3a3;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slap-popup__inner {
+      padding: 2rem 1.5rem;
+    }
+
+    .slap-popup__heading {
+      font-size: 32px;
+    }
+
+    .slap-popup__form-row {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .slap-popup__input {
+      border-right: 2px solid #444;
+    }
+
+    .slap-popup__btn {
+      justify-content: center;
+    }
+
+    .slap-popup__discount-code {
+      font-size: 20px;
+      letter-spacing: 3px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var POPUP_ID = 'SlapPopup-{{ section.id }}';
+    var STORAGE_KEY = 'slap_popup_dismissed';
+    var DELAY_MS = {{ section.settings.delay_seconds | times: 1000 }};
+
+    function showSlapPopup() {
+      var popup = document.getElementById(POPUP_ID);
+      if (popup) {
+        popup.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    window.closeSlapPopup = function() {
+      var popup = document.getElementById(POPUP_ID);
+      if (popup) {
+        popup.style.display = 'none';
+        document.body.style.overflow = '';
+        try {
+          localStorage.setItem(STORAGE_KEY, Date.now().toString());
+        } catch(e) {}
+      }
+    };
+
+    function shouldShowPopup() {
+      // Don't show in Shopify editor
+      if (window.Shopify && window.Shopify.designMode) return true;
+
+      try {
+        var dismissed = localStorage.getItem(STORAGE_KEY);
+        if (dismissed) {
+          var dismissedTime = parseInt(dismissed, 10);
+          var daysSince = (Date.now() - dismissedTime) / (1000 * 60 * 60 * 24);
+          // Don't show again for {{ section.settings.dismiss_days }} days
+          if (daysSince < {{ section.settings.dismiss_days }}) {
+            return false;
+          }
+        }
+      } catch(e) {}
+      return true;
+    }
+
+    // Close on overlay click
+    document.addEventListener('DOMContentLoaded', function() {
+      var overlay = document.getElementById(POPUP_ID);
+      if (overlay) {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) {
+            closeSlapPopup();
+          }
+        });
+      }
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeSlapPopup();
+        }
+      });
+
+      // Handle form submission
+      var form = document.getElementById('slap-popup-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var inner = form.closest('.slap-popup__inner');
+          if (inner) {
+            inner.innerHTML = '<div class="slap-popup__success">' +
+              '<span class="slap-popup__success-icon">✓</span>' +
+              '<h3 class="slap-popup__success-heading">YOU\'RE IN!</h3>' +
+              '<p class="slap-popup__success-text">Check your inbox for your discount code.<br>Welcome to the SLAP fam.</p>' +
+              '</div>';
+          }
+          try {
+            localStorage.setItem(STORAGE_KEY, Date.now().toString());
+          } catch(e) {}
+          setTimeout(function() {
+            closeSlapPopup();
+          }, 3000);
+        });
+      }
+
+      // Show popup after delay if conditions met
+      if (shouldShowPopup()) {
+        setTimeout(showSlapPopup, DELAY_MS);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SLAP Email Popup",
+  "tag": "section",
+  "class": "slap-email-popup-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "default": "FIRST ORDER DEAL",
+      "label": "Badge Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "GET 10% OFF",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Join the SLAP Supply mailing list and get 10% off your first order. Plus early access to new products and exclusive deals.",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "default": "SLAP10",
+      "label": "Discount Code"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "CLAIM DEAL",
+      "label": "Button Label"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "default": "No spam, ever. Unsubscribe anytime.",
+      "label": "Note Text"
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Popup Delay (seconds)",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "dismiss_days",
+      "min": 1,
+      "max": 90,
+      "step": 1,
+      "unit": "days",
+      "label": "Days before showing again",
+      "default": 7,
+      "info": "After dismissing, popup won't show again for this many days"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Email Popup"
+    }
+  ]
+}
+{% endschema %}
