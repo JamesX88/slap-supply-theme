@@ -227,6 +227,12 @@
   border-color: var(--slap-black) !important;
 }
 
+/* Hide Dawn's custom SVG checkbox elements since we're using native checkboxes */
+.facets-vertical .facet-checkbox > svg,
+.facets-vertical .facet-checkbox > .svg-wrapper {
+  display: none !important;
+}
+
 /* Active filter pills */
 .facets-vertical .active-facets {
   display: flex !important;
