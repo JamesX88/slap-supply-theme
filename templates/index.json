@@ -4,9 +4,9 @@
       "type": "slap-hero",
       "settings": {
         "button_label_1": "START CUSTOMIZING",
-        "button_link_1": "",
+        "button_link_1": "/pages/customize",
         "button_label_2": "VIEW CATALOG",
-        "button_link_2": "",
+        "button_link_2": "/pages/customize",
         "color_scheme": "scheme-1"
       }
     },
