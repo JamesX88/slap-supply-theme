@@ -38,7 +38,17 @@
               }}
             {%- else -%}
               <div class="slap-cat-card__placeholder">
-                <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=400&q=80" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- if block.settings.title == 'CUSTOM STICKERS' -%}
+                  <img src="{{ 'cat-stickers.webp' | asset_url }}" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- elsif block.settings.title == 'PRODUCT LABELS' -%}
+                  <img src="{{ 'cat-labels.webp' | asset_url }}" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- elsif block.settings.title == 'ADHESIVE PRINTS' -%}
+                  <img src="{{ 'cat-adhesive-prints.jpg' | asset_url }}" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- elsif block.settings.title == 'CUSTOM PRINTS' -%}
+                  <img src="{{ 'cat-custom-prints.jpg' | asset_url }}" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'cat-stickers.webp' | asset_url }}" alt="{{ block.settings.title }}" class="slap-cat-card__image" loading="lazy">
+                {%- endif -%}
               </div>
             {%- endif -%}
             {%- if block.settings.badge_text != blank -%}

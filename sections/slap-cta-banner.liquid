@@ -15,6 +15,7 @@
 {%- endstyle -%}
 
 <div class="slap-cta-v2">
+  <div class="slap-cta-v2__stripe-overlay"></div>
   <div class="page-width section-{{ section.id }}-padding">
     <div class="slap-cta-v2__inner">
       <div class="slap-cta-v2__content">
@@ -41,6 +42,22 @@
     background-color: #1a1a1a;
     color: #fff;
     position: relative;
+    overflow: hidden;
+  }
+
+  .slap-cta-v2__stripe-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.10;
+    background: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 40px,
+      #39FF14 40px,
+      #39FF14 42px
+    );
+    pointer-events: none;
+    z-index: 0;
   }
 
   .slap-cta-v2__inner {
@@ -49,6 +66,8 @@
     align-items: center;
     gap: 3rem;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
   }
 
   .slap-cta-v2__content {
