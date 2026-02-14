@@ -1,47 +1,195 @@
 {
   "sections": {
-    "customizer_marquee": {
-      "type": "slap-marquee",
-      "blocks": {
-        "text_1": { "type": "text", "settings": { "text": "CUSTOM STICKERS" } },
-        "text_2": { "type": "text", "settings": { "text": "YOUR DESIGN" } },
-        "text_3": { "type": "text", "settings": { "text": "OUR PRESS" } },
-        "text_4": { "type": "text", "settings": { "text": "FAST TURNAROUND" } },
-        "text_5": { "type": "text", "settings": { "text": "PREMIUM QUALITY" } }
-      },
-      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5"],
-      "settings": {
-        "color_scheme": "scheme-3"
-      }
-    },
     "customizer_main": {
       "type": "slap-customizer",
       "blocks": {
-        "mat_1": { "type": "material", "settings": { "label": "VINYL", "value": "vinyl" } },
-        "mat_2": { "type": "material", "settings": { "label": "PAPER", "value": "paper" } },
-        "mat_3": { "type": "material", "settings": { "label": "CLEAR", "value": "clear" } },
-        "mat_4": { "type": "material", "settings": { "label": "HOLOGRAPHIC", "value": "holographic" } },
-        "mat_5": { "type": "material", "settings": { "label": "METALLIC", "value": "metallic" } },
-        "size_1": { "type": "size", "settings": { "label": "2\"", "value": "2in" } },
-        "size_2": { "type": "size", "settings": { "label": "3\"", "value": "3in" } },
-        "size_3": { "type": "size", "settings": { "label": "4\"", "value": "4in" } },
-        "size_4": { "type": "size", "settings": { "label": "5\"", "value": "5in" } },
-        "size_5": { "type": "size", "settings": { "label": "6\"", "value": "6in" } },
-        "size_6": { "type": "size", "settings": { "label": "8\"", "value": "8in" } },
-        "size_7": { "type": "size", "settings": { "label": "10\"", "value": "10in" } },
-        "size_8": { "type": "size", "settings": { "label": "12\"", "value": "12in" } },
-        "fin_1": { "type": "finish", "settings": { "label": "GLOSS", "value": "gloss" } },
-        "fin_2": { "type": "finish", "settings": { "label": "MATTE", "value": "matte" } },
-        "fin_3": { "type": "finish", "settings": { "label": "SATIN", "value": "satin" } },
-        "fin_4": { "type": "finish", "settings": { "label": "UNCOATED", "value": "uncoated" } },
-        "shp_1": { "type": "shape", "settings": { "label": "DIE CUT", "value": "die-cut" } },
-        "shp_2": { "type": "shape", "settings": { "label": "KISS CUT", "value": "kiss-cut" } },
-        "shp_3": { "type": "shape", "settings": { "label": "CIRCLE", "value": "circle" } },
-        "shp_4": { "type": "shape", "settings": { "label": "SQUARE", "value": "square" } },
-        "shp_5": { "type": "shape", "settings": { "label": "RECTANGLE", "value": "rectangle" } },
-        "shp_6": { "type": "shape", "settings": { "label": "OVAL", "value": "oval" } }
+        "mat_1": {
+          "type": "material",
+          "settings": {
+            "label": "VINYL",
+            "value": "vinyl"
+          }
+        },
+        "mat_2": {
+          "type": "material",
+          "settings": {
+            "label": "PAPER",
+            "value": "paper"
+          }
+        },
+        "mat_3": {
+          "type": "material",
+          "settings": {
+            "label": "CLEAR",
+            "value": "clear"
+          }
+        },
+        "mat_4": {
+          "type": "material",
+          "settings": {
+            "label": "HOLOGRAPHIC",
+            "value": "holographic"
+          }
+        },
+        "mat_5": {
+          "type": "material",
+          "settings": {
+            "label": "METALLIC",
+            "value": "metallic"
+          }
+        },
+        "size_1": {
+          "type": "size",
+          "settings": {
+            "label": "2\"",
+            "value": "2in"
+          }
+        },
+        "size_2": {
+          "type": "size",
+          "settings": {
+            "label": "3\"",
+            "value": "3in"
+          }
+        },
+        "size_3": {
+          "type": "size",
+          "settings": {
+            "label": "4\"",
+            "value": "4in"
+          }
+        },
+        "size_4": {
+          "type": "size",
+          "settings": {
+            "label": "5\"",
+            "value": "5in"
+          }
+        },
+        "size_5": {
+          "type": "size",
+          "settings": {
+            "label": "6\"",
+            "value": "6in"
+          }
+        },
+        "size_6": {
+          "type": "size",
+          "settings": {
+            "label": "8\"",
+            "value": "8in"
+          }
+        },
+        "size_7": {
+          "type": "size",
+          "settings": {
+            "label": "10\"",
+            "value": "10in"
+          }
+        },
+        "size_8": {
+          "type": "size",
+          "settings": {
+            "label": "12\"",
+            "value": "12in"
+          }
+        },
+        "fin_1": {
+          "type": "finish",
+          "settings": {
+            "label": "GLOSS",
+            "value": "gloss"
+          }
+        },
+        "fin_2": {
+          "type": "finish",
+          "settings": {
+            "label": "MATTE",
+            "value": "matte"
+          }
+        },
+        "fin_3": {
+          "type": "finish",
+          "settings": {
+            "label": "SATIN",
+            "value": "satin"
+          }
+        },
+        "fin_4": {
+          "type": "finish",
+          "settings": {
+            "label": "UNCOATED",
+            "value": "uncoated"
+          }
+        },
+        "shp_1": {
+          "type": "shape",
+          "settings": {
+            "label": "DIE CUT",
+            "value": "die-cut"
+          }
+        },
+        "shp_2": {
+          "type": "shape",
+          "settings": {
+            "label": "KISS CUT",
+            "value": "kiss-cut"
+          }
+        },
+        "shp_3": {
+          "type": "shape",
+          "settings": {
+            "label": "CIRCLE",
+            "value": "circle"
+          }
+        },
+        "shp_4": {
+          "type": "shape",
+          "settings": {
+            "label": "SQUARE",
+            "value": "square"
+          }
+        },
+        "shp_5": {
+          "type": "shape",
+          "settings": {
+            "label": "RECTANGLE",
+            "value": "rectangle"
+          }
+        },
+        "shp_6": {
+          "type": "shape",
+          "settings": {
+            "label": "OVAL",
+            "value": "oval"
+          }
+        }
       },
-      "block_order": ["mat_1", "mat_2", "mat_3", "mat_4", "mat_5", "size_1", "size_2", "size_3", "size_4", "size_5", "size_6", "size_7", "size_8", "fin_1", "fin_2", "fin_3", "fin_4", "shp_1", "shp_2", "shp_3", "shp_4", "shp_5", "shp_6"],
+      "block_order": [
+        "mat_1",
+        "mat_2",
+        "mat_3",
+        "mat_4",
+        "mat_5",
+        "size_1",
+        "size_2",
+        "size_3",
+        "size_4",
+        "size_5",
+        "size_6",
+        "size_7",
+        "size_8",
+        "fin_1",
+        "fin_2",
+        "fin_3",
+        "fin_4",
+        "shp_1",
+        "shp_2",
+        "shp_3",
+        "shp_4",
+        "shp_5",
+        "shp_6"
+      ],
       "settings": {
         "label_text": "CUSTOM ORDERS",
         "heading": "BUILD YOUR CUSTOM STICKERS",
@@ -54,11 +202,33 @@
     "customizer_cta": {
       "type": "slap-cta-banner",
       "blocks": {
-        "stat_1": { "type": "stat", "settings": { "number": "10K+", "label": "Orders Shipped" } },
-        "stat_2": { "type": "stat", "settings": { "number": "500+", "label": "5-Star Reviews" } },
-        "stat_3": { "type": "stat", "settings": { "number": "3 DAY", "label": "Avg. Turnaround" } }
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "Orders Shipped"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "500+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        }
       },
-      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
       "settings": {
         "label_text": "NEED HELP?",
         "heading": "<p>NOT SURE WHERE<br>TO START?</p>",
@@ -74,7 +244,6 @@
     }
   },
   "order": [
-    "customizer_marquee",
     "customizer_main",
     "customizer_cta"
   ]

@@ -1,27 +1,5 @@
 {
   "sections": {
-    "slap_marquee_collection": {
-      "type": "slap-marquee",
-      "blocks": {
-        "text_1": { "type": "text", "settings": { "text": "STICKERS" } },
-        "text_2": { "type": "text", "settings": { "text": "LABELS" } },
-        "text_3": { "type": "text", "settings": { "text": "ADHESIVES" } },
-        "text_4": { "type": "text", "settings": { "text": "PRINTS" } },
-        "text_5": { "type": "text", "settings": { "text": "FREE SHIPPING $50+" } },
-        "text_6": { "type": "text", "settings": { "text": "WEATHERPROOF" } }
-      },
-      "block_order": ["text_1", "text_2", "text_3", "text_4", "text_5", "text_6"],
-      "settings": {
-        "background_color": "#121212",
-        "text_color": "#39FF14",
-        "border_color": "#39FF14",
-        "separator": "//",
-        "speed": 25,
-        "font_size": 10,
-        "padding": 4,
-        "color_scheme": "scheme-3"
-      }
-    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -73,7 +51,11 @@
           }
         }
       },
-      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
       "settings": {
         "label_text": "READY TO PRINT?",
         "heading": "<p>CAN'T FIND<br>WHAT YOU NEED?</p>",
@@ -89,7 +71,6 @@
     }
   },
   "order": [
-    "slap_marquee_collection",
     "banner",
     "product-grid",
     "slap_cta_collection"
