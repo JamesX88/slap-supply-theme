@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6,
 .h0, .h1, .h2, .h3, .h4, .h5,
 .hx,
 .title,
-[class*="heading"],
+[class*="heading"]:not([class*="subheading"]):not([class*="__description"]):not(.slap-cta__description):not(.slap-hiw__description),
 .rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6 {
   font-family: 'Oswald', var(--font-heading-family), sans-serif !important;
   text-transform: uppercase;
@@ -273,8 +273,8 @@ a.button:active {
 .header__heading-link span {
   font-family: 'Oswald', sans-serif !important;
   font-weight: 900;
-  font-size: 24px;
-  letter-spacing: -1.2px;
+  font-size: 30px;
+  letter-spacing: -1.5px;
   color: #1a1a1a !important;
 }
 
@@ -817,4 +817,354 @@ a:not(.button):not(.header__menu-item):hover {
 .slap-footer-v2 * {
   --color-foreground: 26, 26, 26;
   --color-background: 250, 250, 248;
+}
+
+
+/* ============================================================
+   HOW IT WORKS — OLD CLASS NAME OVERRIDES
+   Targets the old .slap-how-it-works / .slap-hiw__ classes
+   that the live theme is currently using, to match the mockup
+   ============================================================ */
+.slap-how-it-works {
+  background-color: #FFFFFF !important;
+  position: relative;
+}
+
+.slap-how-it-works.color-scheme-1,
+.slap-how-it-works.color-scheme-3 {
+  background-color: #FFFFFF !important;
+}
+
+.slap-hiw__header {
+  text-align: left !important;
+  margin-bottom: 3rem !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.slap-hiw__label {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  color: #737373 !important;
+  margin-bottom: 0.8rem !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  display: block !important;
+  box-shadow: none !important;
+}
+
+.slap-hiw__heading {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 36px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  line-height: 40px !important;
+  letter-spacing: -0.9px !important;
+  margin: 0 !important;
+  color: #1a1a1a !important;
+}
+
+/* Steps Grid - 4 columns with individual borders */
+.slap-hiw__steps {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 0 !important;
+  position: relative;
+}
+
+.slap-hiw__step {
+  position: relative !important;
+  padding: 32px !important;
+  text-align: left !important;
+  background: transparent !important;
+  transition: all 0.3s ease !important;
+  border: 1px solid #e5e5e5 !important;
+  display: block !important;
+  height: 100% !important;
+}
+
+.slap-hiw__step + .slap-hiw__step {
+  border-left: none !important;
+}
+
+.slap-hiw__step-content {
+  text-align: left !important;
+  display: block !important;
+}
+
+.slap-hiw__step:hover {
+  background: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.slap-hiw__step:hover .slap-hiw__step-title {
+  color: #fff !important;
+}
+
+.slap-hiw__step:hover .slap-hiw__step-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.slap-hiw__step:hover .slap-hiw__step-icon {
+  color: #fff !important;
+}
+
+/* Step Number - large green text, no box/circle */
+.slap-hiw__step-number {
+  margin-bottom: 1.5rem !important;
+}
+
+.slap-hiw__step-num {
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 48px !important;
+  font-weight: 900 !important;
+  color: #39FF14 !important;
+  line-height: 48px !important;
+  align-items: initial !important;
+  justify-content: initial !important;
+}
+
+.slap-hiw__step-icon {
+  font-size: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1 !important;
+  opacity: 0.5 !important;
+}
+
+.slap-hiw__step-title {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  margin: 0 0 0.8rem !important;
+  letter-spacing: -0.5px !important;
+  line-height: 28px !important;
+  color: #1a1a1a !important;
+}
+
+.slap-hiw__step-text {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 14px !important;
+  color: #737373 !important;
+  line-height: 22.75px !important;
+  margin: 0 !important;
+}
+
+/* Hide the connector arrows */
+.slap-hiw__connector {
+  display: none !important;
+}
+
+/* ============================================================
+   CTA BANNER — OLD CLASS NAME OVERRIDES
+   Targets the old .slap-cta / .slap-cta__ classes
+   ============================================================ */
+.slap-cta {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+}
+
+.slap-cta.color-scheme-3 {
+  background-color: #1a1a1a !important;
+  --color-background: 26, 26, 26;
+  --color-foreground: 255, 255, 255;
+}
+
+.slap-cta__inner {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 3rem !important;
+  flex-wrap: wrap !important;
+  flex-direction: row !important;
+  text-align: left !important;
+}
+
+.slap-cta__content {
+  flex: 1 !important;
+  min-width: 280px !important;
+  text-align: left !important;
+}
+
+.slap-cta__heading {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 48px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  line-height: 48px !important;
+  letter-spacing: -1.2px !important;
+  margin: 0 0 1rem !important;
+  color: #fff !important;
+}
+
+.slap-cta__heading p {
+  margin: 0 !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
+}
+
+.slap-cta__heading em,
+.slap-cta__heading i {
+  color: #39FF14 !important;
+  font-style: italic !important;
+}
+
+.slap-cta__description {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 16px !important;
+  color: #a3a3a3 !important;
+  line-height: 24px !important;
+  max-width: 500px !important;
+  margin: 0 !important;
+}
+
+.slap-cta__buttons {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.slap-cta__btn,
+.slap-cta__btn.button,
+.slap-cta__btn.button--primary {
+  display: inline-block !important;
+  padding: 20px 40px !important;
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.9px !important;
+  text-decoration: none !important;
+  background-color: #39FF14 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-shadow: none !important;
+}
+
+.slap-cta__btn:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.4) !important;
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+.slap-cta__heading-green,
+.slap-cta__heading em,
+.slap-cta__heading i {
+  color: #39FF14 !important;
+  font-style: italic !important;
+}
+
+@media screen and (max-width: 749px) {
+  .slap-hiw__steps {
+    grid-template-columns: 1fr !important;
+  }
+
+  .slap-hiw__step {
+    border: 1px solid #e5e5e5 !important;
+  }
+
+  .slap-hiw__step + .slap-hiw__step {
+    border-top: none !important;
+    border-left: 1px solid #e5e5e5 !important;
+  }
+
+  .slap-cta__inner {
+    flex-direction: column !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+
+  .slap-cta__heading {
+    font-size: 36px !important;
+    line-height: 36px !important;
+  }
+
+  .slap-cta__description {
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 989px) and (min-width: 750px) {
+  .slap-hiw__steps {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ============================================================
+   HERO BODY TEXT FIX — Prevent uppercase on body text
+   ============================================================ */
+.slap-hero-v2__body,
+.slap-hero__body,
+.slap-hero-v2__subheading,
+.slap-hero__subheading,
+[class*="subheading"] {
+  text-transform: none !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 29.25px !important;
+}
+
+/* ============================================================
+   CATEGORY SECTION — OLD CLASS NAME OVERRIDES
+   ============================================================ */
+.slap-categories__heading {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 36px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.9px !important;
+  line-height: 40px !important;
+}
+
+.slap-categories__station-label,
+.slap-categories .slap-label {
+  font-family: 'Space Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 3px !important;
+}
+
+/* ============================================================
+   FOOTER — ADDITIONAL OVERRIDES FOR OLD DAWN FOOTER
+   ============================================================ */
+footer.footer,
+.footer,
+.footer-wrapper--1,
+.section-footer,
+.footer-wrapper {
+  background-color: #fafaf8 !important;
+  color: #1a1a1a !important;
+}
+
+.footer .footer__content-top,
+.footer .footer__content-bottom {
+  background-color: #fafaf8 !important;
+  border-color: #d4d4d4 !important;
+}
+
+/* Override Dawn color scheme variables for footer */
+.section-footer .color-scheme-1,
+.section-footer .color-scheme-3,
+[class*="footer-group"] .color-scheme-1,
+[class*="footer-group"] .color-scheme-3 {
+  --color-background: 250, 250, 248 !important;
+  --color-foreground: 26, 26, 26 !important;
+  background-color: #fafaf8 !important;
+  color: #1a1a1a !important;
 }
