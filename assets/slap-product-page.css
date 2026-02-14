@@ -1,6 +1,6 @@
 /* ============================================================
    SLAP SUPPLY — PRODUCT DETAIL PAGE
-   Press Room Neo-Brutalist Styling
+   Press Room Neo-Brutalist Styling — CRO Optimized
    ============================================================ */
 
 /* --- Product Page Layout --- */
@@ -23,8 +23,9 @@
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1.0;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
   color: var(--slap-black);
+  margin-bottom: 0.25rem;
 }
 
 /* --- Product Vendor/Brand Label --- */
@@ -34,17 +35,17 @@
   letter-spacing: 3px;
   font-weight: 700;
   color: var(--slap-neon-green);
-  font-size: 10px;
+  font-size: 12px;
   -webkit-text-stroke: 0.3px var(--slap-black);
   margin-bottom: 0.5rem;
   display: block;
 }
 
-/* --- Price Styling --- */
+/* --- Price Styling (CRO: large, prominent pricing) --- */
 .price--large .price-item--regular,
 .price--large .price-item--sale {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: var(--slap-black);
 }
@@ -57,6 +58,21 @@
 .price .price-item--regular.price-item--last {
   text-decoration: line-through;
   opacity: 0.5;
+  font-size: 1.6rem;
+}
+
+/* Sale badge */
+.price .badge {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--slap-neon-green) !important;
+  color: var(--slap-black) !important;
+  border: 2px solid var(--slap-black);
+  border-radius: 0 !important;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
 }
 
 /* --- Product Info Container --- */
@@ -80,7 +96,7 @@
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.08em;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--slap-black);
   margin-bottom: 0.8rem;
   display: flex;
@@ -101,8 +117,8 @@ variant-radios label {
   border-radius: 0 !important;
   font-family: 'Space Grotesk', sans-serif !important;
   font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.4rem;
   min-width: 60px;
   text-align: center;
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -170,7 +186,7 @@ variant-radios label {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.08em;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .product-form__quantity .quantity__label::before,
@@ -189,14 +205,14 @@ variant-radios label {
 }
 
 .product-form__quantity .quantity__button {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none !important;
   background: transparent;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -208,11 +224,11 @@ variant-radios label {
 }
 
 .product-form__quantity .quantity__input {
-  width: 60px;
+  width: 65px;
   text-align: center;
   font-family: 'Oswald', sans-serif !important;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   border-left: 3px solid var(--slap-black) !important;
   border-right: 3px solid var(--slap-black) !important;
   border-top: none !important;
@@ -220,19 +236,19 @@ variant-radios label {
   border-radius: 0 !important;
 }
 
-/* --- Buy Buttons --- */
+/* --- Buy Buttons (CRO: large, high-contrast, prominent) --- */
 .product-form__submit {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.1em;
-  font-size: 1.2rem;
-  padding: 1.4rem 2rem !important;
+  font-size: 1.35rem;
+  padding: 1.6rem 2.5rem !important;
   background-color: var(--slap-neon-green) !important;
   color: var(--slap-black) !important;
   border: 3px solid var(--slap-black) !important;
   border-radius: 0 !important;
-  box-shadow: 4px 4px 0 var(--slap-black);
+  box-shadow: 5px 5px 0 var(--slap-black);
   transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   width: 100%;
   position: relative;
@@ -242,14 +258,14 @@ variant-radios label {
 .product-form__submit::after {
   content: '→';
   margin-left: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   transition: transform 0.2s ease;
 }
 
 .product-form__submit:hover {
   background-color: var(--slap-black) !important;
   color: var(--slap-neon-green) !important;
-  box-shadow: 6px 6px 0 var(--slap-neon-green) !important;
+  box-shadow: 7px 7px 0 var(--slap-neon-green) !important;
   transform: translate(-2px, -2px);
 }
 
@@ -268,14 +284,19 @@ variant-radios label {
   border: 3px solid var(--slap-black) !important;
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
+  min-height: 56px;
 }
 
-/* --- Product Description --- */
+/* --- Product Description (CRO: larger, more readable text) --- */
 .product__description {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(18, 18, 18, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: rgba(18, 18, 18, 0.85);
+}
+
+.product__description p {
+  margin-bottom: 1rem;
 }
 
 .product__description h2,
@@ -285,9 +306,21 @@ variant-radios label {
   text-transform: uppercase;
   font-weight: 700;
   margin-top: 1.5rem;
+  font-size: 1.3rem;
 }
 
-/* --- Accordion / Collapsible Tabs --- */
+.product__description ul,
+.product__description ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.product__description li {
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}
+
+/* --- Accordion / Collapsible Tabs (CRO: larger touch targets, clearer text) --- */
 .product__accordion {
   border-top: 3px solid var(--slap-black) !important;
   border-bottom: none !important;
@@ -303,7 +336,7 @@ variant-radios label {
 }
 
 .product__accordion summary {
-  padding: 1.2rem 0;
+  padding: 1.4rem 0;
   cursor: pointer;
   transition: all 0.15s ease;
   border-bottom: 1px solid #e5e5e5;
@@ -318,14 +351,15 @@ variant-radios label {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   letter-spacing: 0.05em;
 }
 
 .product__accordion .accordion__content {
   font-family: 'Space Grotesk', sans-serif !important;
   padding-bottom: 1.5rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1.05rem;
 }
 
 .product__accordion[open] summary {
@@ -377,7 +411,7 @@ variant-radios label {
 /* --- Tax/Shipping Notice --- */
 .product__tax {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #737373;
   margin-top: 0.5rem;
 }
@@ -392,7 +426,7 @@ variant-radios label {
 /* --- SKU Display --- */
 .product__sku {
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #737373;
   letter-spacing: 2px;
 }
@@ -401,7 +435,7 @@ variant-radios label {
 .product__inventory {
   font-family: 'Space Grotesk', sans-serif !important;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 /* --- Related Products Section --- */
@@ -414,7 +448,7 @@ variant-radios label {
 /* --- Volume Pricing --- */
 .volume-pricing-note {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--slap-neon-green);
   font-weight: 600;
   -webkit-text-stroke: 0.3px var(--slap-black);
@@ -432,7 +466,7 @@ variant-radios label {
   align-items: center;
   gap: 0.5rem;
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 700;
@@ -460,7 +494,7 @@ variant-radios label {
   width: 100%;
   border-collapse: collapse;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .slap-specs-table tr {
@@ -468,14 +502,14 @@ variant-radios label {
 }
 
 .slap-specs-table td {
-  padding: 0.8rem 0;
+  padding: 0.9rem 0;
 }
 
 .slap-specs-table td:first-child {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   letter-spacing: 0.05em;
   color: #737373;
   width: 40%;
@@ -486,11 +520,15 @@ variant-radios label {
   color: var(--slap-black);
 }
 
-/* --- Product Trust Badges --- */
+/* ============================================================
+   CRO ELEMENTS — Trust Signals, Urgency, Social Proof, Value Props
+   ============================================================ */
+
+/* --- Trust Badges (below buy buttons) --- */
 .slap-product-trust {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
+  gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 2px dashed #d4d4d4;
@@ -499,39 +537,237 @@ variant-radios label {
 .slap-product-trust__item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #737373;
+  letter-spacing: 0.03em;
+  color: #555;
 }
 
 .slap-product-trust__icon {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--slap-neon-green);
+  flex-shrink: 0;
 }
 
-/* --- Responsive --- */
+/* --- Value Proposition Strip --- */
+.slap-value-props {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 1.5rem 0;
+  border: 3px solid var(--slap-black);
+}
+
+.slap-value-props__item {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--slap-black);
+  border-bottom: 2px solid var(--slap-black);
+  border-right: 2px solid var(--slap-black);
+  background: var(--slap-white, #fff);
+}
+
+.slap-value-props__item:nth-child(2n) {
+  border-right: none;
+}
+
+.slap-value-props__item:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.slap-value-props__icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+/* --- Urgency Banner --- */
+.slap-urgency {
+  background: var(--slap-black);
+  color: var(--slap-neon-green);
+  padding: 0.8rem 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  border: 3px solid var(--slap-neon-green);
+}
+
+.slap-urgency__icon {
+  font-size: 1.2rem;
+  animation: slap-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes slap-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* --- Social Proof Bar --- */
+.slap-social-proof {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  margin-bottom: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.slap-social-proof__stars {
+  color: var(--slap-neon-green);
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.slap-social-proof__text {
+  font-weight: 600;
+}
+
+.slap-social-proof__count {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* --- Guarantee Badge --- */
+.slap-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  margin: 1rem 0;
+  background: rgba(57, 255, 20, 0.05);
+  border: 2px dashed var(--slap-neon-green);
+}
+
+.slap-guarantee__icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.slap-guarantee__text {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.slap-guarantee__title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--slap-black);
+  margin-bottom: 0.2rem;
+}
+
+.slap-guarantee__desc {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* --- Shipping Info Highlight --- */
+.slap-shipping-highlight {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: var(--slap-neon-green);
+  color: var(--slap-black);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 3px solid var(--slap-black);
+  margin-bottom: 1rem;
+}
+
+.slap-shipping-highlight__icon {
+  font-size: 1.2rem;
+}
+
+/* --- Payment Icons --- */
+.slap-payment-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 0;
+  flex-wrap: wrap;
+}
+
+.slap-payment-icons__label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.slap-payment-icons__icon {
+  width: 38px;
+  height: 24px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #555;
+  background: #f9f9f9;
+}
+
+/* --- Responsive (CRO: mobile-optimized) --- */
 @media screen and (max-width: 749px) {
   .product__title h1,
   .product__title .h1,
   .product__title h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .price--large .price-item--regular,
   .price--large .price-item--sale {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .product-form__submit {
-    font-size: 1rem;
-    padding: 1.2rem 1.5rem !important;
+    font-size: 1.15rem;
+    padding: 1.4rem 1.5rem !important;
   }
 
   .slap-product-trust {
     grid-template-columns: 1fr;
+  }
+
+  .slap-value-props__item {
+    flex: 1 1 100%;
+    border-right: none !important;
+  }
+
+  .slap-value-props__item:not(:last-child) {
+    border-bottom: 2px solid var(--slap-black);
+  }
+
+  .product__description {
+    font-size: 1.05rem;
   }
 }

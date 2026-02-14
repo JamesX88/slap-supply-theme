@@ -83,16 +83,50 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "social_proof": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"slap-social-proof\">\n  <span class=\"slap-social-proof__stars\">\u2605\u2605\u2605\u2605\u2605</span>\n  <span class=\"slap-social-proof__text\">4.9/5</span>\n  <span class=\"slap-social-proof__count\">\u2022 2,400+ orders shipped</span>\n</div>"
+          }
+        },
+        "urgency": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"slap-urgency\">\n  <span class=\"slap-urgency__icon\">\u26a1</span>\n  <span>Order today \u2014 ships within 3-5 business days</span>\n</div>"
+          }
+        },
+        "value_props": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"slap-value-props\">\n  <div class=\"slap-value-props__item\">\n    <span class=\"slap-value-props__icon\">\ud83d\ude9a</span>\n    <span>Free shipping $50+</span>\n  </div>\n  <div class=\"slap-value-props__item\">\n    <span class=\"slap-value-props__icon\">\u2600\ufe0f</span>\n    <span>Weatherproof &amp; UV-resistant</span>\n  </div>\n  <div class=\"slap-value-props__item\">\n    <span class=\"slap-value-props__icon\">\ud83c\udfed</span>\n    <span>Made in-house, USA</span>\n  </div>\n  <div class=\"slap-value-props__item\">\n    <span class=\"slap-value-props__icon\">\ud83d\udce6</span>\n    <span>Bulk discounts available</span>\n  </div>\n</div>"
+          }
+        },
+        "guarantee": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"slap-guarantee\">\n  <span class=\"slap-guarantee__icon\">\ud83d\udee1\ufe0f</span>\n  <div class=\"slap-guarantee__text\">\n    <div class=\"slap-guarantee__title\">100% Satisfaction Guarantee</div>\n    <div class=\"slap-guarantee__desc\">Not happy with your order? We'll reprint or refund \u2014 no questions asked.</div>\n  </div>\n</div>"
+          }
+        },
+        "payment_trust": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"slap-payment-icons\">\n  <div class=\"slap-payment-icons__label\">Secure checkout with</div>\n  <div class=\"slap-payment-icons__icon\">VISA</div>\n  <div class=\"slap-payment-icons__icon\">MC</div>\n  <div class=\"slap-payment-icons__icon\">AMEX</div>\n  <div class=\"slap-payment-icons__icon\">SHOP</div>\n  <div class=\"slap-payment-icons__icon\">PYPL</div>\n  <div class=\"slap-payment-icons__icon\">\ud83d\udd12</div>\n</div>"
+          }
         }
       },
       "block_order": [
         "vendor",
         "title",
-        "sku",
+        "social_proof",
         "price",
+        "urgency",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "value_props",
+        "guarantee",
+        "payment_trust",
         "description",
         "collapsible_material",
         "collapsible_sizing",
