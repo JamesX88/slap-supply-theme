@@ -18,9 +18,9 @@
   <div class="page-width section-{{ section.id }}-padding">
     <div class="slap-cta-v2__inner">
       <div class="slap-cta-v2__content">
-        <h2 class="slap-cta-v2__heading">
+        <h3 class="slap-cta-v2__heading">
           READY TO <span class="slap-cta-v2__heading-green">SLAP</span>?
-        </h2>
+        </h3>
         <p class="slap-cta-v2__description">
           {{ section.settings.description }}
         </p>
@@ -51,37 +51,48 @@
     flex-wrap: wrap;
   }
 
+  .slap-cta-v2__content {
+    flex: 1;
+    min-width: 280px;
+  }
+
   .slap-cta-v2__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(2.4rem, 5vw, 4.5rem);
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: 900;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 48px;
+    letter-spacing: -1.2px;
     margin: 0 0 1rem;
     color: #fff;
   }
 
   .slap-cta-v2__heading-green {
     color: #39FF14;
+    font-style: italic;
   }
 
   .slap-cta-v2__description {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.5;
+    font-size: 16px;
+    color: #a3a3a3;
+    line-height: 24px;
     max-width: 500px;
     margin: 0;
+  }
+
+  .slap-cta-v2__action {
+    flex-shrink: 0;
   }
 
   .slap-cta-v2__btn {
     display: inline-block;
     padding: 20px 40px;
     font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
+    font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.9px;
     text-decoration: none;
     background-color: #39FF14;
     color: #000;
@@ -89,12 +100,13 @@
     border-radius: 0;
     cursor: pointer;
     transition: all 0.15s ease;
-    box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.3);
+    position: relative;
+    box-shadow: none;
   }
 
   .slap-cta-v2__btn:hover {
-    box-shadow: 6px 6px 0 rgba(57, 255, 20, 0.5);
     transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 rgba(57, 255, 20, 0.4);
     text-decoration: none;
     color: #000;
   }
@@ -104,6 +116,11 @@
       flex-direction: column;
       text-align: center;
       align-items: center;
+    }
+
+    .slap-cta-v2__heading {
+      font-size: 36px;
+      line-height: 36px;
     }
 
     .slap-cta-v2__description {

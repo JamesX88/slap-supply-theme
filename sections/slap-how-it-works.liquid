@@ -19,10 +19,10 @@
     <!-- Section Header -->
     <div class="slap-hiw-v2__header">
       <div class="slap-hiw-v2__station-label">STATION 03 — PROCESS</div>
-      <h2 class="slap-hiw-v2__heading">HOW IT WORKS</h2>
+      <h3 class="slap-hiw-v2__heading">HOW IT WORKS</h3>
     </div>
 
-    <!-- Steps Grid -->
+    <!-- Steps Grid - bordered container with vertical dividers -->
     <div class="slap-hiw-v2__steps">
       {%- for block in section.blocks -%}
         <div class="slap-hiw-v2__step {% if forloop.last %}slap-hiw-v2__step--last{% endif %}" {{ block.shopify_attributes }}>
@@ -32,7 +32,7 @@
           {%- if block.settings.icon_text != blank -%}
             <div class="slap-hiw-v2__step-icon">{{ block.settings.icon_text }}</div>
           {%- endif -%}
-          <h3 class="slap-hiw-v2__step-title">{{ block.settings.title }}</h3>
+          <h4 class="slap-hiw-v2__step-title">{{ block.settings.title }}</h4>
           <p class="slap-hiw-v2__step-text">{{ block.settings.text }}</p>
         </div>
       {%- endfor -%}
@@ -42,7 +42,7 @@
 
 <style>
   .slap-hiw-v2 {
-    background-color: #fafaf8;
+    background-color: #FFFFFF;
     position: relative;
   }
 
@@ -52,26 +52,27 @@
   }
 
   .slap-hiw-v2__station-label {
-    font-family: 'Space Mono', 'Space Grotesk', monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: #888;
+    color: #737373;
     margin-bottom: 0.8rem;
   }
 
   .slap-hiw-v2__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 900;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 40px;
+    letter-spacing: -0.9px;
     margin: 0;
     color: #1a1a1a;
   }
 
-  /* Steps Layout - 4 cards in a row with thin borders */
+  /* Steps Layout - 4 columns, each card has its own border */
   .slap-hiw-v2__steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -80,11 +81,11 @@
 
   .slap-hiw-v2__step {
     position: relative;
-    padding: 2rem;
+    padding: 32px;
     text-align: left;
-    border: 1px solid #e0e0e0;
     background: transparent;
     transition: all 0.3s ease;
+    border: 1px solid #e5e5e5;
   }
 
   .slap-hiw-v2__step + .slap-hiw-v2__step {
@@ -95,7 +96,7 @@
   }
 
   .slap-hiw-v2__step:hover {
-    background: #000;
+    background: #1a1a1a;
     color: #fff;
   }
 
@@ -109,10 +110,10 @@
 
   .slap-hiw-v2__step-number {
     font-family: 'Oswald', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: 900;
     color: #39FF14;
-    line-height: 1;
+    line-height: 48px;
     margin-bottom: 1.5rem;
   }
 
@@ -120,24 +121,25 @@
     font-size: 1.5rem;
     margin-bottom: 1rem;
     line-height: 1;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 
   .slap-hiw-v2__step-title {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.1rem;
+    font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
     margin: 0 0 0.8rem;
-    letter-spacing: 0.03em;
+    letter-spacing: -0.5px;
+    line-height: 28px;
     color: #1a1a1a;
   }
 
   .slap-hiw-v2__step-text {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: #888;
-    line-height: 1.5;
+    font-size: 14px;
+    color: #737373;
+    line-height: 22.75px;
     margin: 0;
   }
 
@@ -146,12 +148,12 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .slap-hiw-v2__step {
-      border-bottom: 1px solid #e0e0e0;
+    .slap-hiw-v2__step + .slap-hiw-v2__step {
+      border-left: 1px solid #e5e5e5;
     }
 
-    .slap-hiw-v2__step:nth-child(2) {
-      border-right: none;
+    .slap-hiw-v2__step:nth-child(2n+1) {
+      border-left: 1px solid #e5e5e5;
     }
   }
 
@@ -161,12 +163,11 @@
     }
 
     .slap-hiw-v2__step {
-      border-right: none;
-      border-bottom: 1px solid #e0e0e0;
+      border: 1px solid #e5e5e5;
     }
 
-    .slap-hiw-v2__step--last {
-      border-bottom: none;
+    .slap-hiw-v2__step + .slap-hiw-v2__step {
+      border-top: none;
     }
   }
 </style>

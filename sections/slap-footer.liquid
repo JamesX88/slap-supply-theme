@@ -5,13 +5,13 @@
     <div class="slap-footer-v2__grid">
       <!-- Column 1: Brand -->
       <div class="slap-footer-v2__col slap-footer-v2__col--brand">
-        <h3 class="slap-footer-v2__logo">SLAP SUPPLY</h3>
+        <h4 class="slap-footer-v2__logo">SLAP<span class="slap-footer-v2__logo-dot">.</span>SUPPLY</h4>
         <p class="slap-footer-v2__tagline">{{ section.settings.tagline }}</p>
       </div>
 
       <!-- Column 2: Products -->
       <div class="slap-footer-v2__col">
-        <h4 class="slap-footer-v2__heading">PRODUCTS</h4>
+        <h5 class="slap-footer-v2__heading">PRODUCTS</h5>
         <ul class="slap-footer-v2__links">
           <li><a href="#">Custom Stickers</a></li>
           <li><a href="#">Product Labels</a></li>
@@ -23,7 +23,7 @@
 
       <!-- Column 3: Company -->
       <div class="slap-footer-v2__col">
-        <h4 class="slap-footer-v2__heading">COMPANY</h4>
+        <h5 class="slap-footer-v2__heading">COMPANY</h5>
         <ul class="slap-footer-v2__links">
           <li><a href="#">About Us</a></li>
           <li><a href="#">How It Works</a></li>
@@ -35,7 +35,7 @@
 
       <!-- Column 4: Contact -->
       <div class="slap-footer-v2__col">
-        <h4 class="slap-footer-v2__heading">GET IN TOUCH</h4>
+        <h5 class="slap-footer-v2__heading">GET IN TOUCH</h5>
         <div class="slap-footer-v2__contact">
           <p>hello@slapsupply.com</p>
           <p>1-800-SLAP-IT</p>
@@ -57,11 +57,13 @@
 </footer>
 
 <style>
-  .slap-footer-v2 {
-    background-color: #1a1a1a;
-    color: #fff;
+  /* Override any inherited footer styles */
+  .slap-footer-v2,
+  footer.slap-footer-v2 {
+    background-color: #fafaf8 !important;
+    color: #1a1a1a !important;
     padding: 4rem 0 2rem;
-    border-top: none;
+    border-top: 2px solid #000000;
   }
 
   .slap-footer-v2__grid {
@@ -69,35 +71,40 @@
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
     gap: 3rem;
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #d4d4d4;
   }
 
   .slap-footer-v2__logo {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #fff;
+    letter-spacing: -1.2px;
+    line-height: 32px;
+    color: #1a1a1a !important;
     margin: 0 0 0.8rem;
+  }
+
+  .slap-footer-v2__logo-dot {
+    color: #39FF14;
   }
 
   .slap-footer-v2__tagline {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.5;
+    font-size: 12px;
+    color: #737373 !important;
+    line-height: 19.5px;
     margin: 0;
     max-width: 250px;
   }
 
   .slap-footer-v2__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.6px;
+    color: #1a1a1a !important;
     margin: 0 0 1.2rem;
   }
 
@@ -108,15 +115,16 @@
   }
 
   .slap-footer-v2__links li {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
 
   .slap-footer-v2__links a {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 12px;
+    color: #737373 !important;
     text-decoration: none;
     transition: color 0.2s ease;
+    line-height: 16px;
   }
 
   .slap-footer-v2__links a:hover {
@@ -124,10 +132,11 @@
   }
 
   .slap-footer-v2__contact p {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #737373 !important;
     margin: 0 0 0.4rem;
+    line-height: 16px;
   }
 
   .slap-footer-v2__social {
@@ -140,22 +149,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 32px;
+    height: 32px;
+    border: 1px solid #d4d4d4 !important;
     font-family: 'Oswald', sans-serif;
-    font-size: 0.7rem;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: #737373 !important;
     text-decoration: none;
     transition: all 0.2s ease;
+    background: transparent !important;
   }
 
   .slap-footer-v2__social-icon:hover {
-    border-color: #39FF14;
+    border-color: #39FF14 !important;
     color: #39FF14 !important;
-    background: rgba(57, 255, 20, 0.1);
+    background: rgba(57, 255, 20, 0.05) !important;
   }
 
   .slap-footer-v2__bottom {
@@ -168,19 +178,21 @@
   }
 
   .slap-footer-v2__copyright {
-    font-family: 'Space Mono', 'Space Grotesk', monospace;
-    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.3);
+    color: #a3a3a3 !important;
     text-transform: uppercase;
+    line-height: 15px;
   }
 
   .slap-footer-v2__concept {
-    font-family: 'Space Mono', 'Space Grotesk', monospace;
-    font-size: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.2);
+    color: #a3a3a3 !important;
     text-transform: uppercase;
+    line-height: 15px;
   }
 
   @media screen and (max-width: 989px) {
@@ -218,7 +230,7 @@
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
-      "default": "scheme-3"
+      "default": "scheme-1"
     }
   ],
   "presets": [
