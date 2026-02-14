@@ -45,13 +45,13 @@ p, li, dd, td, th, blockquote {
 /* ============================================================
    GLOBAL HEADING SIZES — Increase from current small values
    ============================================================ */
-h1, .h1, .h0 {
+h1:not(.header__heading), .h1, .h0 {
   font-size: clamp(2rem, 4vw, 3rem) !important;
   line-height: 1.1 !important;
   letter-spacing: -1px;
 }
 
-h2, .h2 {
+h2:not(.slap-hero-v2__heading), .h2:not(.slap-hero-v2__heading) {
   font-size: clamp(1.75rem, 3.5vw, 2.5rem) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.5px;
@@ -83,7 +83,7 @@ h5, .h5 {
 }
 
 .header__heading-link .h2,
-.header__heading-link span {
+.header__heading-link span.slap-header-logo__brand {
   font-size: 28px !important;
 }
 

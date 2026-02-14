@@ -65,7 +65,7 @@ h1, .h1, .h0 {
   line-height: 30px;
 }
 
-h2, .h2 {
+h2:not(.slap-hero-v2__heading), .h2:not(.slap-hero-v2__heading) {
   font-size: 36px;
   font-weight: 900;
   letter-spacing: -0.9px;
@@ -270,7 +270,7 @@ a.button:active {
 }
 
 .header__heading-link .h2,
-.header__heading-link span {
+.header__heading-link span.slap-header-logo__brand {
   font-family: 'Oswald', sans-serif !important;
   font-weight: 900;
   font-size: 30px;
@@ -752,7 +752,7 @@ a:not(.button):not(.header__menu-item):hover {
 }
 
 .section-header .header-wrapper .header__heading-link,
-.section-header .header-wrapper .header__heading-link span,
+.section-header .header-wrapper .header__heading-link span.slap-header-logo__brand,
 .section-header .header-wrapper .header__heading-link .h2 {
   color: #1a1a1a !important;
 }

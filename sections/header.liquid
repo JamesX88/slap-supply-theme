@@ -101,14 +101,14 @@
   }
 
   .slap-header-logo__tagline {
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 2.5px;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.3em !important;
     text-transform: uppercase;
     color: #737373 !important;
     margin-top: 3px;
-    line-height: 1;
+    line-height: 1 !important;
     text-decoration: none !important;
   }
 
@@ -150,17 +150,17 @@
     color: #39FF14 !important;
   }
 
-  /* START ORDER CTA button */
+  /* START ORDER CTA button — matches mockup: black border, transparent bg */
   .slap-header-nav__cta {
     font-family: 'Oswald', sans-serif !important;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.6px;
-    font-size: 13px;
+    font-size: 12px;
     color: #1a1a1a !important;
     text-decoration: none !important;
-    padding: 10px 20px;
-    background: #39FF14;
+    padding: 8px 20px;
+    background: transparent;
     border: 2px solid #1a1a1a;
     transition: all 0.15s ease;
     white-space: nowrap;
@@ -170,11 +170,16 @@
   .slap-header-nav__cta:hover {
     background: #1a1a1a;
     color: #39FF14 !important;
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 #39FF14;
   }
 
   /* Override the default header layout for our custom structure */
+  .slap-header-nav-wrapper {
+    grid-area: navigation;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
   .header--middle-left.header--has-menu .slap-header-nav-wrapper {
     flex: 1;
     display: flex;
@@ -191,8 +196,8 @@
       font-size: 24px;
     }
     .slap-header-logo__tagline {
-      font-size: 8px;
-      letter-spacing: 1.5px;
+      font-size: 8px !important;
+      letter-spacing: 1.5px !important;
     }
   }
 </style>
