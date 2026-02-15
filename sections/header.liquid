@@ -233,6 +233,20 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Force header to stay sticky on mobile — never hide on scroll */
+  @media screen and (max-width: 989px) {
+    .section-header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 3;
+    }
+
+    .section-header.shopify-section-header-hidden {
+      top: 0 !important;
+      transform: none !important;
+    }
+  }
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>

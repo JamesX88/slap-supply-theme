@@ -64,12 +64,12 @@
           {%- for media in product.media -%}
             <img
               id="SpecSheetImage-{{ section.id }}-{{ forloop.index }}"
+              class="spec-sheet__gallery-img{% if forloop.first %} is-active{% endif %}"
               src="{{ media | image_url: width: 1200 }}"
               alt="{{ media.alt | escape | default: product.title | escape }}"
               width="{{ media.width }}"
               height="{{ media.height }}"
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-              style="{% unless forloop.first %}display: none;{% endunless %} max-width: 100%; max-height: 100%; object-fit: contain;"
             >
           {%- endfor -%}
 
@@ -480,36 +480,94 @@
       var mainImageContainer = document.getElementById('SpecSheetMainImage-' + sectionId);
       var counter = document.getElementById('SpecSheetCounter-' + sectionId);
       var totalImages = {{ product.media.size | default: 1 }};
+      var currentIndex = 1;
 
+      function switchImage(index) {
+        if (index < 1 || index > totalImages) return;
+        currentIndex = index;
+
+        // Update active state on thumbnails
+        if (thumbContainer) {
+          thumbContainer.querySelectorAll('.spec-sheet__thumb').forEach(function(t) {
+            t.classList.remove('is-active');
+          });
+          var activeThumb = thumbContainer.querySelector('[data-index="' + index + '"]');
+          if (activeThumb) {
+            activeThumb.classList.add('is-active');
+            // Scroll the active thumbnail into view
+            activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        }
+
+        // Switch active image using CSS classes
+        mainImageContainer.querySelectorAll('.spec-sheet__gallery-img').forEach(function(img) {
+          img.classList.remove('is-active');
+        });
+        var targetImg = document.getElementById('SpecSheetImage-' + sectionId + '-' + index);
+        if (targetImg) {
+          // Force load if the image hasn't loaded yet (lazy loading fix)
+          if (!targetImg.complete || targetImg.naturalWidth === 0) {
+            targetImg.loading = 'eager';
+            // Re-trigger load by re-setting src
+            var currentSrc = targetImg.src;
+            targetImg.src = '';
+            targetImg.src = currentSrc;
+          }
+          targetImg.classList.add('is-active');
+        }
+
+        // Update counter
+        if (counter) {
+          var indexStr = index < 10 ? '0' + index : '' + index;
+          var totalStr = totalImages < 10 ? '0' + totalImages : '' + totalImages;
+          counter.textContent = indexStr + ' / ' + totalStr;
+        }
+      }
+
+      // Thumbnail click handler
       if (thumbContainer) {
         thumbContainer.addEventListener('click', function(e) {
           var thumb = e.target.closest('.spec-sheet__thumb');
           if (!thumb) return;
-
           var index = parseInt(thumb.getAttribute('data-index'));
-
-          // Update active state
-          thumbContainer.querySelectorAll('.spec-sheet__thumb').forEach(function(t) {
-            t.classList.remove('is-active');
-          });
-          thumb.classList.add('is-active');
-
-          // Show/hide images
-          mainImageContainer.querySelectorAll('img[id^="SpecSheetImage"]').forEach(function(img) {
-            img.style.display = 'none';
-          });
-          var targetImg = document.getElementById('SpecSheetImage-' + sectionId + '-' + index);
-          if (targetImg) {
-            targetImg.style.display = 'block';
-          }
-
-          // Update counter
-          if (counter) {
-            var indexStr = index < 10 ? '0' + index : '' + index;
-            var totalStr = totalImages < 10 ? '0' + totalImages : '' + totalImages;
-            counter.textContent = indexStr + ' / ' + totalStr;
-          }
+          switchImage(index);
         });
+      }
+
+      // Mobile swipe support
+      if (mainImageContainer && totalImages > 1) {
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var touchEndX = 0;
+        var touchEndY = 0;
+        var isSwiping = false;
+
+        mainImageContainer.addEventListener('touchstart', function(e) {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+          isSwiping = true;
+        }, { passive: true });
+
+        mainImageContainer.addEventListener('touchend', function(e) {
+          if (!isSwiping) return;
+          isSwiping = false;
+          touchEndX = e.changedTouches[0].screenX;
+          touchEndY = e.changedTouches[0].screenY;
+
+          var diffX = touchStartX - touchEndX;
+          var diffY = touchStartY - touchEndY;
+
+          // Only trigger if horizontal swipe is dominant and significant
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+            if (diffX > 0 && currentIndex < totalImages) {
+              // Swipe left -> next image
+              switchImage(currentIndex + 1);
+            } else if (diffX < 0 && currentIndex > 1) {
+              // Swipe right -> previous image
+              switchImage(currentIndex - 1);
+            }
+          }
+        }, { passive: true });
       }
     });
   </script>

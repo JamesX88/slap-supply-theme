@@ -63,12 +63,24 @@
   }
 }
 
-.spec-sheet__main-image img {
+.spec-sheet__main-image img.spec-sheet__gallery-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.spec-sheet__main-image img.spec-sheet__gallery-img.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
-  display: block;
-  transition: opacity 0.3s ease;
 }
 
 /* Product badge */
@@ -916,11 +928,18 @@ details[open] .spec-sheet__accordion-caret {
 /* --- RESPONSIVE: Mobile --- */
 @media screen and (max-width: 989px) {
   .spec-sheet__gallery {
-    max-height: 60vh;
+    max-height: none;
+    overflow: visible;
   }
 
   .spec-sheet__main-image {
     min-height: 280px;
+    max-height: 55vh;
+  }
+
+  .spec-sheet__thumbnails {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .spec-sheet__title {
