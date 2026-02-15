@@ -1,0 +1,529 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+{{ 'slap-catalog-drawer.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign collection_handle = collection.handle | downcase
+  assign banner_heading = collection.title
+  assign banner_description = collection.description
+  assign banner_label = 'COLLECTION'
+  assign banner_icon = '📦'
+
+  if collection_handle contains 'sticker'
+    assign banner_label = 'STATION 01 — STICKERS'
+    assign banner_icon = '🔥'
+    if banner_description == blank
+      assign banner_description = 'Die-cut, kiss-cut, vinyl, holographic, and more. Every sticker is printed on premium materials with industrial-grade adhesive.'
+    endif
+  elsif collection_handle contains 'label'
+    assign banner_label = 'STATION 02 — LABELS'
+    assign banner_icon = '🏷️'
+    if banner_description == blank
+      assign banner_description = 'Professional product labels on rolls or sheets. Waterproof, freezer-safe, and oil-resistant options available.'
+    endif
+  elsif collection_handle contains 'adhesive'
+    assign banner_label = 'STATION 03 — ADHESIVES'
+    assign banner_icon = '📐'
+    if banner_description == blank
+      assign banner_description = 'Large-format adhesive prints for walls, floors, windows, and vehicles.'
+    endif
+  elsif collection_handle contains 'print'
+    assign banner_label = 'STATION 04 — PRINTS'
+    assign banner_icon = '🖨️'
+    if banner_description == blank
+      assign banner_description = 'Museum-quality art prints, posters, and packaging inserts on premium paper stocks.'
+    endif
+  endif
+
+  assign products_per_page = section.settings.products_per_page
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+-%}
+
+{%- paginate collection.products by products_per_page -%}
+
+<!-- ============================================================
+     COLLECTION HERO BANNER
+     ============================================================ -->
+<div class="slap-catalog__hero">
+  <div class="slap-catalog__hero-grid-pattern"></div>
+  <div class="slap-catalog__hero-inner page-width">
+    <div class="slap-catalog__hero-content">
+      <div class="slap-catalog__hero-label">{{ banner_label }}</div>
+      <h1 class="slap-catalog__hero-title">{{ banner_heading | escape }}</h1>
+      {%- if banner_description != blank -%}
+        <div class="slap-catalog__hero-desc">{{ banner_description }}</div>
+      {%- endif -%}
+      <div class="slap-catalog__hero-stats">
+        {%- if collection.products_count > 0 -%}
+          <div class="slap-catalog__hero-stat">
+            <span class="slap-catalog__hero-stat-num">{{ collection.products_count }}</span>
+            <span class="slap-catalog__hero-stat-lbl">PRODUCTS</span>
+          </div>
+        {%- endif -%}
+        <div class="slap-catalog__hero-stat">
+          <span class="slap-catalog__hero-stat-num">3 DAY</span>
+          <span class="slap-catalog__hero-stat-lbl">TURNAROUND</span>
+        </div>
+        <div class="slap-catalog__hero-stat">
+          <span class="slap-catalog__hero-stat-num">$75+</span>
+          <span class="slap-catalog__hero-stat-lbl">FREE SHIPPING</span>
+        </div>
+      </div>
+    </div>
+    <div class="slap-catalog__hero-icon-side">
+      <span class="slap-catalog__hero-big-icon">{{ banner_icon }}</span>
+    </div>
+  </div>
+  <div class="slap-catalog__caution-stripe"></div>
+</div>
+
+<!-- ============================================================
+     STICKY TOP FILTER BAR
+     ============================================================ -->
+<div class="slap-catalog__filter-bar" id="SlapCatalogFilterBar">
+  <div class="slap-catalog__filter-bar-inner page-width">
+    <!-- Filter Toggle Button -->
+    <button class="slap-catalog__filter-btn" id="SlapFilterToggle" type="button" aria-label="Open filters">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="16" y2="12"></line>
+        <line x1="4" y1="18" x2="12" y2="18"></line>
+      </svg>
+      <span>FILTERS</span>
+      {%- assign active_filter_count = 0 -%}
+      {%- for filter in collection.filters -%}
+        {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+            {%- assign active_filter_count = active_filter_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if active_filter_count > 0 -%}
+        <span class="slap-catalog__filter-count">{{ active_filter_count }}</span>
+      {%- endif -%}
+    </button>
+
+    <!-- Sort Dropdown -->
+    <facet-filters-form class="slap-catalog__sort-wrapper">
+      <form id="FacetSortForm" class="slap-catalog__sort-form">
+        <label for="SlapSortBy" class="slap-catalog__sort-label">SORT:</label>
+        <div class="slap-catalog__sort-select-wrap">
+          <select name="sort_by" id="SlapSortBy" class="slap-catalog__sort-select" aria-describedby="a11y-refresh-page-message">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                {{ option.name | escape }}
+              </option>
+            {%- endfor -%}
+          </select>
+          <svg class="slap-catalog__sort-caret" width="10" height="6" viewBox="0 0 10 6" fill="currentColor">
+            <path d="M0 0L5 6L10 0H0Z"/>
+          </svg>
+        </div>
+      </form>
+    </facet-filters-form>
+
+    <!-- Product Count -->
+    <div class="slap-catalog__product-count" id="ProductCount" role="status">
+      <span id="ProductCountDesktop">
+        {%- if collection.products_count == collection.all_products_count -%}
+          {{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}
+        {%- else -%}
+          {{ collection.products_count }} of {{ collection.all_products_count }} products
+        {%- endif -%}
+      </span>
+    </div>
+
+    <!-- Active Filters Pills -->
+    {%- if active_filter_count > 0 -%}
+      <div class="slap-catalog__active-filters">
+        {%- for filter in collection.filters -%}
+          {%- for value in filter.active_values -%}
+            <facet-remove>
+              <a href="{{ value.url_to_remove }}" class="slap-catalog__active-pill js-facet-remove">
+                {{ value.label | escape }}
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="2"/></svg>
+              </a>
+            </facet-remove>
+          {%- endfor -%}
+        {%- endfor -%}
+        <facet-remove>
+          <a href="{{ collection.url }}" class="slap-catalog__clear-all js-facet-remove">CLEAR ALL</a>
+        </facet-remove>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<!-- ============================================================
+     SLIDE-OUT FILTER DRAWER
+     ============================================================ -->
+<div class="slap-catalog__drawer-overlay" id="SlapDrawerOverlay"></div>
+<div class="slap-catalog__drawer" id="SlapFilterDrawer">
+  <div class="slap-catalog__drawer-header">
+    <h2 class="slap-catalog__drawer-title">FILTERS</h2>
+    <button class="slap-catalog__drawer-close" id="SlapDrawerClose" type="button" aria-label="Close filters">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+        <line x1="4" y1="4" x2="16" y2="16"></line>
+        <line x1="16" y1="4" x2="4" y2="16"></line>
+      </svg>
+    </button>
+  </div>
+
+  <facet-filters-form>
+    <form id="FacetFiltersForm" class="slap-catalog__drawer-form">
+      {%- for filter in collection.filters -%}
+        <div class="slap-catalog__drawer-group js-filter" data-index="{{ forloop.index }}">
+          <button type="button" class="slap-catalog__drawer-group-toggle" aria-expanded="true">
+            <span>{{ filter.label | escape }}</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M2 4L6 8L10 4"/></svg>
+          </button>
+          <div class="slap-catalog__drawer-group-content">
+            {%- case filter.type -%}
+              {%- when 'list' -%}
+                <ul class="slap-catalog__drawer-list">
+                  {%- for value in filter.values -%}
+                    <li class="slap-catalog__drawer-list-item">
+                      <label class="slap-catalog__drawer-checkbox">
+                        <input
+                          type="checkbox"
+                          name="{{ value.param_name }}"
+                          value="{{ value.value }}"
+                          {% if value.active %}checked{% endif %}
+                          {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                          class="slap-catalog__drawer-input"
+                        >
+                        <span class="slap-catalog__drawer-checkmark"></span>
+                        <span class="slap-catalog__drawer-label-text">{{ value.label | escape }}</span>
+                        <span class="slap-catalog__drawer-label-count">({{ value.count }})</span>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- when 'price_range' -%}
+                <price-range class="slap-catalog__price-range">
+                  <div class="slap-catalog__price-fields">
+                    <div class="slap-catalog__price-field">
+                      <span class="slap-catalog__price-currency">{{ cart.currency.symbol }}</span>
+                      <input
+                        class="slap-catalog__price-input"
+                        name="{{ filter.min_value.param_name }}"
+                        id="Filter-{{ filter.label | escape }}-GTE"
+                        type="number"
+                        placeholder="0"
+                        min="0"
+                        {%- if filter.range_max -%}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{%- endif -%}
+                        {%- if filter.min_value.value -%}value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{%- endif -%}
+                      >
+                    </div>
+                    <span class="slap-catalog__price-sep">—</span>
+                    <div class="slap-catalog__price-field">
+                      <span class="slap-catalog__price-currency">{{ cart.currency.symbol }}</span>
+                      <input
+                        class="slap-catalog__price-input"
+                        name="{{ filter.max_value.param_name }}"
+                        id="Filter-{{ filter.label | escape }}-LTE"
+                        type="number"
+                        placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        min="0"
+                        {%- if filter.range_max -%}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{%- endif -%}
+                        {%- if filter.max_value.value -%}value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{%- endif -%}
+                      >
+                    </div>
+                  </div>
+                </price-range>
+            {%- endcase -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </form>
+  </facet-filters-form>
+
+  <div class="slap-catalog__drawer-footer">
+    <a href="{{ collection.url }}" class="slap-catalog__drawer-clear">CLEAR ALL</a>
+    <button type="button" class="slap-catalog__drawer-apply" id="SlapDrawerApply">APPLY FILTERS</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     PRODUCT GRID
+     ============================================================ -->
+<div class="slap-catalog__grid-wrapper page-width" id="ProductGridContainer">
+  {%- if collection.products.size == 0 -%}
+    <div class="slap-catalog__empty collection" id="product-grid" data-id="{{ section.id }}">
+      <div class="loading-overlay gradient"></div>
+      <div class="slap-catalog__empty-inner">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <h2 class="slap-catalog__empty-title">NO PRODUCTS FOUND</h2>
+        <p class="slap-catalog__empty-text">Try adjusting your filters or <a href="{{ collection.url }}">clear all filters</a>.</p>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="collection" id="product-grid-wrapper">
+      <div class="loading-overlay gradient"></div>
+      <ul class="slap-catalog__grid" id="product-grid" data-id="{{ section.id }}">
+        {%- for product in collection.products -%}
+          <li class="slap-catalog__grid-item">
+            <div class="slap-catalog__card">
+              <a href="{{ product.url }}" class="slap-catalog__card-link" aria-label="{{ product.title | escape }}">
+                <div class="slap-catalog__card-media">
+                  {%- if product.featured_media -%}
+                    {{ product.featured_media | image_url: width: 600 | image_tag:
+                      class: 'slap-catalog__card-img',
+                      loading: 'lazy',
+                      widths: '300,400,500,600',
+                      sizes: '(min-width: 990px) 25vw, 50vw'
+                    }}
+                    {%- if product.media[1] != nil -%}
+                      {{ product.media[1] | image_url: width: 600 | image_tag:
+                        class: 'slap-catalog__card-img slap-catalog__card-img--hover',
+                        loading: 'lazy',
+                        widths: '300,400,500,600',
+                        sizes: '(min-width: 990px) 25vw, 50vw'
+                      }}
+                    {%- endif -%}
+                  {%- else -%}
+                    <div class="slap-catalog__card-placeholder">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1">
+                        <rect x="3" y="3" width="18" height="18" rx="0"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+                      </svg>
+                    </div>
+                  {%- endif -%}
+
+                  {%- if product.available == false -%}
+                    <span class="slap-catalog__card-badge slap-catalog__card-badge--soldout">SOLD OUT</span>
+                  {%- elsif product.compare_at_price > product.price -%}
+                    <span class="slap-catalog__card-badge slap-catalog__card-badge--sale">SALE</span>
+                  {%- endif -%}
+
+                  <!-- Quick View Overlay -->
+                  <div class="slap-catalog__card-overlay">
+                    <span class="slap-catalog__card-quickview">QUICK VIEW</span>
+                  </div>
+                </div>
+              </a>
+
+              <div class="slap-catalog__card-info">
+                {%- if section.settings.show_vendor and product.vendor -%}
+                  <span class="slap-catalog__card-vendor">{{ product.vendor }}</span>
+                {%- endif -%}
+                <h3 class="slap-catalog__card-title">
+                  <a href="{{ product.url }}">{{ product.title | escape }}</a>
+                </h3>
+                <div class="slap-catalog__card-price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="slap-catalog__card-price--compare">{{ product.compare_at_price | money }}</span>
+                    <span class="slap-catalog__card-price--sale">{{ product.price | money }}</span>
+                  {%- else -%}
+                    <span class="slap-catalog__card-price--regular">
+                      {%- if product.price_varies -%}
+                        From {{ product.price | money }}
+                      {%- else -%}
+                        {{ product.price | money }}
+                      {%- endif -%}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <!-- Load More / Pagination -->
+      {%- if paginate.pages > 1 -%}
+        <div class="slap-catalog__load-more-wrapper">
+          <div class="slap-catalog__progress">
+            <div class="slap-catalog__progress-bar">
+              <div class="slap-catalog__progress-fill" style="width: {{ paginate.current_page | times: 100.0 | divided_by: paginate.pages }}%"></div>
+            </div>
+            <span class="slap-catalog__progress-text">
+              SHOWING {{ paginate.current_offset | plus: collection.products.size }} OF {{ collection.products_count }} PRODUCTS
+            </span>
+          </div>
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" class="slap-catalog__load-more" id="SlapLoadMore">
+              LOAD MORE PRODUCTS
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+                <line x1="7" y1="2" x2="7" y2="12"></line>
+                <line x1="2" y1="7" x2="12" y2="7"></line>
+              </svg>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{%- endpaginate -%}
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Filter Drawer Toggle ---
+  const filterToggle = document.getElementById('SlapFilterToggle');
+  const filterDrawer = document.getElementById('SlapFilterDrawer');
+  const drawerOverlay = document.getElementById('SlapDrawerOverlay');
+  const drawerClose = document.getElementById('SlapDrawerClose');
+  const drawerApply = document.getElementById('SlapDrawerApply');
+
+  function openDrawer() {
+    filterDrawer.classList.add('is-open');
+    drawerOverlay.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    filterDrawer.classList.remove('is-open');
+    drawerOverlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  }
+
+  if (filterToggle) filterToggle.addEventListener('click', openDrawer);
+  if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (drawerApply) drawerApply.addEventListener('click', closeDrawer);
+
+  // --- Drawer Group Toggles ---
+  document.querySelectorAll('.slap-catalog__drawer-group-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const content = this.nextElementSibling;
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      content.style.display = expanded ? 'none' : 'block';
+      this.querySelector('svg').style.transform = expanded ? 'rotate(-90deg)' : 'rotate(0deg)';
+    });
+  });
+
+  // --- Sticky Filter Bar ---
+  const filterBar = document.getElementById('SlapCatalogFilterBar');
+  if (filterBar) {
+    const hero = document.querySelector('.slap-catalog__hero');
+    const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height') || '0');
+
+    function handleScroll() {
+      if (!hero) return;
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      if (heroBottom <= headerHeight) {
+        filterBar.classList.add('is-stuck');
+      } else {
+        filterBar.classList.remove('is-stuck');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+
+  // --- Load More (AJAX) ---
+  const loadMoreBtn = document.getElementById('SlapLoadMore');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = this.href;
+      this.classList.add('is-loading');
+      this.innerHTML = 'LOADING... <span class="slap-catalog__spinner"></span>';
+
+      fetch(url)
+        .then(function(response) { return response.text(); })
+        .then(function(html) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newItems = doc.querySelectorAll('.slap-catalog__grid-item');
+          const grid = document.querySelector('.slap-catalog__grid');
+
+          newItems.forEach(function(item) {
+            grid.appendChild(item);
+          });
+
+          // Update load more button
+          const newLoadMore = doc.getElementById('SlapLoadMore');
+          const loadMoreWrapper = document.querySelector('.slap-catalog__load-more-wrapper');
+          if (newLoadMore && loadMoreWrapper) {
+            loadMoreWrapper.innerHTML = doc.querySelector('.slap-catalog__load-more-wrapper').innerHTML;
+            // Re-attach event listener
+            const newBtn = document.getElementById('SlapLoadMore');
+            if (newBtn) {
+              newBtn.addEventListener('click', arguments.callee);
+            }
+          } else if (loadMoreWrapper) {
+            // No more pages
+            const progressEl = loadMoreWrapper.querySelector('.slap-catalog__progress');
+            if (progressEl) {
+              loadMoreWrapper.innerHTML = '';
+              loadMoreWrapper.appendChild(progressEl);
+              const fill = progressEl.querySelector('.slap-catalog__progress-fill');
+              if (fill) fill.style.width = '100%';
+              const text = progressEl.querySelector('.slap-catalog__progress-text');
+              if (text) text.textContent = 'ALL PRODUCTS LOADED';
+            }
+          }
+        })
+        .catch(function() {
+          loadMoreBtn.classList.remove('is-loading');
+          loadMoreBtn.innerHTML = 'LOAD MORE PRODUCTS <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><line x1="7" y1="2" x2="7" y2="12"></line><line x1="2" y1="7" x2="12" y2="7"></line></svg>';
+        });
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "SLAP Catalog Drawer",
+  "tag": "section",
+  "class": "section slap-section slap-catalog-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show product vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show secondary image on hover"
+    },
+    {
+      "type": "header",
+      "content": "Banner Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "default": true,
+      "label": "Show stats bar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Catalog Drawer"
+    }
+  ]
+}
+{% endschema %}
