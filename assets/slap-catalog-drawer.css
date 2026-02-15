@@ -129,7 +129,7 @@
   border-bottom: 3px solid #1a1a1a;
   padding: 0;
   position: sticky;
-  top: 0;
+  top: var(--header-height, 0px);
   z-index: 90;
   transition: box-shadow 0.2s ease;
 }
