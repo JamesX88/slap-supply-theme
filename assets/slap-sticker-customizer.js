@@ -403,8 +403,410 @@
   }
 
   /* ----------------------------------------------------------
-     BACKGROUND REMOVAL (Client-side flood-fill approach)
+     BACKGROUND REMOVAL — AI-Powered via withoutbg ONNX Models
+     Uses the withoutbg Snap 3-stage pipeline:
+       Stage 1: Depth Anything V2 (depth estimation)
+       Stage 2: Snap Matting (RGBD → alpha)
+       Stage 3: Snap Refiner (RGB+A → refined alpha)
+     Models: https://huggingface.co/withoutbg/snap (Apache 2.0)
+     Runtime: ONNX Runtime Web (WebAssembly)
      ---------------------------------------------------------- */
+
+  /* --- ONNX Model Cache & Lazy Loader --- */
+  var ONNX = {
+    runtimeLoaded: false,
+    runtimeLoading: false,
+    depthSession: null,
+    mattingSession: null,
+    refinerSession: null,
+    modelsLoaded: false,
+    modelsLoading: false,
+    MODEL_BASE: 'https://huggingface.co/withoutbg/snap/resolve/main/',
+    DEPTH_MODEL: 'depth_anything_v2_vits_slim.onnx',
+    MATTING_MODEL: 'snap_matting_0.1.0.onnx',
+    REFINER_MODEL: 'snap_refiner_0.1.0.onnx'
+  };
+
+  /** Check if browser supports WebAssembly (required for ONNX Runtime Web) */
+  function browserSupportsWasm() {
+    try {
+      if (typeof WebAssembly === 'object' &&
+              typeof WebAssembly.instantiate === 'function') {
+        var module = new WebAssembly.Module(
+          new Uint8Array([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00])
+        );
+        if (module instanceof WebAssembly.Module) {
+          return new WebAssembly.Instance(module) instanceof WebAssembly.Instance;
+        }
+      }
+    } catch (e) { /* ignore */ }
+    return false;
+  }
+
+  /** Dynamically load ONNX Runtime Web from CDN */
+  function loadOnnxRuntime() {
+    return new Promise(function (resolve, reject) {
+      if (ONNX.runtimeLoaded && window.ort) {
+        resolve();
+        return;
+      }
+      if (ONNX.runtimeLoading) {
+        // Wait for existing load
+        var check = setInterval(function () {
+          if (ONNX.runtimeLoaded) { clearInterval(check); resolve(); }
+        }, 200);
+        return;
+      }
+      ONNX.runtimeLoading = true;
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/ort.min.js';
+      script.onload = function () {
+        ONNX.runtimeLoaded = true;
+        ONNX.runtimeLoading = false;
+        // Configure WASM paths to use CDN
+        if (window.ort && window.ort.env && window.ort.env.wasm) {
+          window.ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/';
+        }
+        resolve();
+      };
+      script.onerror = function () {
+        ONNX.runtimeLoading = false;
+        reject(new Error('Failed to load ONNX Runtime Web from CDN'));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  /** Load all three ONNX models (cached after first load) */
+  function loadOnnxModels(progressCb) {
+    return new Promise(function (resolve, reject) {
+      if (ONNX.modelsLoaded) { resolve(); return; }
+      if (ONNX.modelsLoading) {
+        var check = setInterval(function () {
+          if (ONNX.modelsLoaded) { clearInterval(check); resolve(); }
+        }, 200);
+        return;
+      }
+      ONNX.modelsLoading = true;
+
+      var opts = { executionProviders: ['wasm'] };
+
+      progressCb('Loading depth model (99 MB)...', 10);
+
+      window.ort.InferenceSession.create(
+        ONNX.MODEL_BASE + ONNX.DEPTH_MODEL, opts
+      ).then(function (session) {
+        ONNX.depthSession = session;
+        progressCb('Loading matting model (27 MB)...', 35);
+        return window.ort.InferenceSession.create(
+          ONNX.MODEL_BASE + ONNX.MATTING_MODEL, opts
+        );
+      }).then(function (session) {
+        ONNX.mattingSession = session;
+        progressCb('Loading refiner model (15 MB)...', 55);
+        return window.ort.InferenceSession.create(
+          ONNX.MODEL_BASE + ONNX.REFINER_MODEL, opts
+        );
+      }).then(function (session) {
+        ONNX.refinerSession = session;
+        ONNX.modelsLoaded = true;
+        ONNX.modelsLoading = false;
+        resolve();
+      }).catch(function (err) {
+        ONNX.modelsLoading = false;
+        reject(err);
+      });
+    });
+  }
+
+  /* --- Image helpers for ONNX preprocessing --- */
+
+  /** Draw image to canvas and return pixel data as Float32Array [0..1] */
+  function imgToFloat32(img, w, h) {
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    var id = ctx.getImageData(0, 0, w, h);
+    var d = id.data;
+    var rgb = new Float32Array(w * h * 3);
+    for (var i = 0; i < w * h; i++) {
+      rgb[i * 3]     = d[i * 4] / 255.0;
+      rgb[i * 3 + 1] = d[i * 4 + 1] / 255.0;
+      rgb[i * 3 + 2] = d[i * 4 + 2] / 255.0;
+    }
+    return rgb;
+  }
+
+  /** Transpose HWC float32 to CHW float32 */
+  function hwcToChw(data, h, w, c) {
+    var out = new Float32Array(c * h * w);
+    for (var ch = 0; ch < c; ch++) {
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          out[ch * h * w + y * w + x] = data[(y * w + x) * c + ch];
+        }
+      }
+    }
+    return out;
+  }
+
+  /** ImageNet normalization */
+  function normalizeImageNet(rgb, count) {
+    var mean = [0.485, 0.456, 0.406];
+    var std  = [0.229, 0.224, 0.225];
+    for (var i = 0; i < count; i++) {
+      rgb[i * 3]     = (rgb[i * 3]     - mean[0]) / std[0];
+      rgb[i * 3 + 1] = (rgb[i * 3 + 1] - mean[1]) / std[1];
+      rgb[i * 3 + 2] = (rgb[i * 3 + 2] - mean[2]) / std[2];
+    }
+    return rgb;
+  }
+
+  /** Constrain to multiple of N */
+  function constrainMultiple(x, m, minVal) {
+    var y = Math.round(x / m) * m;
+    if (y < minVal) y = Math.ceil(x / m) * m;
+    return y;
+  }
+
+  /* --- Stage 1: Depth Estimation --- */
+  function runDepthEstimation(img) {
+    var ort = window.ort;
+    var origW = img.naturalWidth || img.width;
+    var origH = img.naturalHeight || img.height;
+    var targetW = 518, targetH = 518, multiple = 14;
+
+    // Calculate resize maintaining aspect ratio
+    var scaleW = targetW / origW;
+    var scaleH = targetH / origH;
+    var scale = Math.max(scaleW, scaleH);
+    var newW = constrainMultiple(scale * origW, multiple, targetW);
+    var newH = constrainMultiple(scale * origH, multiple, targetH);
+
+    // Get RGB data and normalize
+    var rgb = imgToFloat32(img, newW, newH);
+    normalizeImageNet(rgb, newW * newH);
+
+    // Transpose to CHW
+    var chw = hwcToChw(rgb, newH, newW, 3);
+
+    // Create tensor [1, 3, H, W]
+    var tensor = new ort.Tensor('float32', chw, [1, 3, newH, newW]);
+
+    return ONNX.depthSession.run({ image: tensor }).then(function (results) {
+      var outputKey = Object.keys(results)[0];
+      var depthData = results[outputKey].data;
+
+      // Rescale to 0-255
+      var min = Infinity, max = -Infinity;
+      for (var i = 0; i < depthData.length; i++) {
+        if (depthData[i] < min) min = depthData[i];
+        if (depthData[i] > max) max = depthData[i];
+      }
+      var range = max - min || 1;
+      var depthU8 = new Uint8Array(depthData.length);
+      for (var i = 0; i < depthData.length; i++) {
+        depthU8[i] = Math.round((depthData[i] - min) / range * 255);
+      }
+      return depthU8; // flat array, size depends on model output
+    });
+  }
+
+  /* --- Stage 2: Matting (RGBD → Alpha) --- */
+  function runMatting(img, depthU8) {
+    var ort = window.ort;
+    var size = 256;
+
+    // Get RGB at 256x256
+    var rgb = imgToFloat32(img, size, size);
+
+    // Resize depth to 256x256 — render depthU8 to canvas then read back
+    // depthU8 came from the depth model output; we need to figure out its dims.
+    // The depth model outputs a single-channel map. Its spatial dims match the
+    // input we gave it. We stored those in the closure, but to keep it simple,
+    // we'll pass depth as a separate canvas-resized version.
+    // Actually, we receive depthU8 as flat; we need W/H. We'll pass them.
+    // For simplicity, we resize the depth via canvas in the caller and pass
+    // a 256x256 Float32Array here.
+
+    // Build 4-channel RGBD
+    var rgbd = new Float32Array(4 * size * size);
+    for (var i = 0; i < size * size; i++) {
+      rgbd[i * 4]     = rgb[i * 3];
+      rgbd[i * 4 + 1] = rgb[i * 3 + 1];
+      rgbd[i * 4 + 2] = rgb[i * 3 + 2];
+      rgbd[i * 4 + 3] = depthU8[i] / 255.0;
+    }
+
+    // Transpose to CHW
+    var chw = hwcToChw(rgbd, size, size, 4);
+    var tensor = new ort.Tensor('float32', chw, [1, 4, size, size]);
+
+    var inputName = ONNX.mattingSession.inputNames
+      ? ONNX.mattingSession.inputNames[0]
+      : 'input';
+    var feeds = {};
+    feeds[inputName] = tensor;
+
+    return ONNX.mattingSession.run(feeds).then(function (results) {
+      var outputKey = Object.keys(results)[0];
+      var alphaData = results[outputKey].data;
+      // Squeeze and clamp
+      var alpha = new Float32Array(size * size);
+      for (var i = 0; i < size * size; i++) {
+        var v = alphaData[i] !== undefined ? alphaData[i] : 0;
+        alpha[i] = Math.max(0, Math.min(1, v));
+      }
+      return alpha;
+    });
+  }
+
+  /* --- Stage 3: Refiner (RGB+A → Refined Alpha) --- */
+  function runRefiner(img, alpha256) {
+    var ort = window.ort;
+    var origW = img.naturalWidth || img.width;
+    var origH = img.naturalHeight || img.height;
+
+    // Max 800px on bigger side for refiner
+    var maxSize = 800;
+    var rW = origW, rH = origH;
+    if (Math.max(origW, origH) > maxSize) {
+      var s = maxSize / Math.max(origW, origH);
+      rW = Math.round(origW * s);
+      rH = Math.round(origH * s);
+    }
+
+    // Get RGB at refiner size
+    var rgb = imgToFloat32(img, rW, rH);
+
+    // Resize alpha (256x256) to refiner size via canvas
+    var alphaCanvas = document.createElement('canvas');
+    alphaCanvas.width = 256; alphaCanvas.height = 256;
+    var actx = alphaCanvas.getContext('2d');
+    var aid = actx.createImageData(256, 256);
+    for (var i = 0; i < 256 * 256; i++) {
+      var v = Math.round(alpha256[i] * 255);
+      aid.data[i * 4] = v;
+      aid.data[i * 4 + 1] = v;
+      aid.data[i * 4 + 2] = v;
+      aid.data[i * 4 + 3] = 255;
+    }
+    actx.putImageData(aid, 0, 0);
+
+    var resizedAlphaCanvas = document.createElement('canvas');
+    resizedAlphaCanvas.width = rW; resizedAlphaCanvas.height = rH;
+    var rctx = resizedAlphaCanvas.getContext('2d');
+    rctx.drawImage(alphaCanvas, 0, 0, rW, rH);
+    var resizedAlphaData = rctx.getImageData(0, 0, rW, rH).data;
+
+    // Build 4-channel RGB+A
+    var rgba = new Float32Array(4 * rW * rH);
+    for (var i = 0; i < rW * rH; i++) {
+      rgba[i * 4]     = rgb[i * 3];
+      rgba[i * 4 + 1] = rgb[i * 3 + 1];
+      rgba[i * 4 + 2] = rgb[i * 3 + 2];
+      rgba[i * 4 + 3] = resizedAlphaData[i * 4] / 255.0;
+    }
+
+    // Transpose to CHW
+    var chw = hwcToChw(rgba, rH, rW, 4);
+    var tensor = new ort.Tensor('float32', chw, [1, 4, rH, rW]);
+
+    var inputName = ONNX.refinerSession.inputNames
+      ? ONNX.refinerSession.inputNames[0]
+      : 'input';
+    var feeds = {};
+    feeds[inputName] = tensor;
+
+    return ONNX.refinerSession.run(feeds).then(function (results) {
+      var outputKey = Object.keys(results)[0];
+      var alphaData = results[outputKey].data;
+      // Build result at refiner resolution
+      var refined = new Float32Array(rW * rH);
+      for (var i = 0; i < rW * rH; i++) {
+        refined[i] = Math.max(0, Math.min(1, alphaData[i] !== undefined ? alphaData[i] : 0));
+      }
+      return { alpha: refined, w: rW, h: rH };
+    });
+  }
+
+  /** Resize a depth Uint8Array from model output dims to 256x256 via canvas */
+  function resizeDepthTo256(depthU8, srcW, srcH) {
+    var c = document.createElement('canvas');
+    c.width = srcW; c.height = srcH;
+    var ctx = c.getContext('2d');
+    var id = ctx.createImageData(srcW, srcH);
+    for (var i = 0; i < srcW * srcH; i++) {
+      id.data[i * 4] = depthU8[i];
+      id.data[i * 4 + 1] = depthU8[i];
+      id.data[i * 4 + 2] = depthU8[i];
+      id.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(id, 0, 0);
+
+    var c2 = document.createElement('canvas');
+    c2.width = 256; c2.height = 256;
+    var ctx2 = c2.getContext('2d');
+    ctx2.drawImage(c, 0, 0, 256, 256);
+    var d2 = ctx2.getImageData(0, 0, 256, 256).data;
+    var out = new Uint8Array(256 * 256);
+    for (var i = 0; i < 256 * 256; i++) {
+      out[i] = d2[i * 4];
+    }
+    return out;
+  }
+
+  /** Apply alpha mask to original image and produce result */
+  function applyAlphaMask(img, alphaResult) {
+    var origW = img.naturalWidth || img.width;
+    var origH = img.naturalHeight || img.height;
+
+    // Render alpha at refiner resolution to a canvas, then resize to original
+    var ac = document.createElement('canvas');
+    ac.width = alphaResult.w; ac.height = alphaResult.h;
+    var actx = ac.getContext('2d');
+    var aid = actx.createImageData(alphaResult.w, alphaResult.h);
+    for (var i = 0; i < alphaResult.w * alphaResult.h; i++) {
+      var v = Math.round(alphaResult.alpha[i] * 255);
+      aid.data[i * 4] = v;
+      aid.data[i * 4 + 1] = v;
+      aid.data[i * 4 + 2] = v;
+      aid.data[i * 4 + 3] = 255;
+    }
+    actx.putImageData(aid, 0, 0);
+
+    // Final canvas at original resolution
+    var fc = document.createElement('canvas');
+    fc.width = origW; fc.height = origH;
+    var fctx = fc.getContext('2d');
+
+    // Draw original image
+    fctx.drawImage(img, 0, 0, origW, origH);
+    var imgData = fctx.getImageData(0, 0, origW, origH);
+
+    // Draw alpha resized to original dims
+    var ac2 = document.createElement('canvas');
+    ac2.width = origW; ac2.height = origH;
+    var actx2 = ac2.getContext('2d');
+    actx2.drawImage(ac, 0, 0, origW, origH);
+    var alphaImgData = actx2.getImageData(0, 0, origW, origH).data;
+
+    // Apply alpha
+    var d = imgData.data;
+    for (var i = 0; i < origW * origH; i++) {
+      d[i * 4 + 3] = alphaImgData[i * 4]; // R channel = alpha
+    }
+    fctx.putImageData(imgData, 0, 0);
+
+    var dataURL = fc.toDataURL('image/png');
+    var resultImg = new Image();
+    resultImg.src = dataURL;
+    return { image: resultImg, dataURL: dataURL };
+  }
+
+  /* --- Main BG Removal Orchestrator --- */
+
   function initBgRemoval() {
     if (DOM.removeBgBtn) DOM.removeBgBtn.addEventListener('click', removeBg);
     if (DOM.toggleBgBtn) DOM.toggleBgBtn.addEventListener('click', toggleBg);
@@ -412,172 +814,109 @@
 
   function removeBg() {
     if (!STATE.originalImage) return;
-    DOM.bgStatus.style.display = 'block';
-    DOM.bgFill.style.width = '10%';
-    DOM.bgText.textContent = 'Analyzing image...';
 
-    // Use requestAnimationFrame to not block UI
-    requestAnimationFrame(function () {
-      setTimeout(function () {
-        DOM.bgFill.style.width = '30%';
-        DOM.bgText.textContent = 'Detecting background...';
+    // Check WebAssembly support
+    if (!browserSupportsWasm()) {
+      DOM.bgStatus.style.display = 'block';
+      DOM.bgFill.style.width = '0%';
+      DOM.bgText.textContent = 'Your browser does not support WebAssembly. Please upload a PNG with transparent background instead.';
+      return;
+    }
+
+    // Disable button during processing
+    DOM.removeBgBtn.disabled = true;
+    DOM.removeBgBtn.style.opacity = '0.6';
+    DOM.bgStatus.style.display = 'block';
+    DOM.bgFill.style.width = '5%';
+    DOM.bgText.textContent = 'Loading AI engine...';
+
+    var img = STATE.originalImage;
+
+    // Step 1: Load ONNX Runtime
+    loadOnnxRuntime().then(function () {
+      DOM.bgFill.style.width = '8%';
+      DOM.bgText.textContent = 'Loading AI models (first time may take a moment)...';
+
+      // Step 2: Load models
+      return loadOnnxModels(function (msg, pct) {
+        DOM.bgFill.style.width = pct + '%';
+        DOM.bgText.textContent = msg;
+      });
+    }).then(function () {
+      DOM.bgFill.style.width = '60%';
+      DOM.bgText.textContent = 'Running depth estimation...';
+
+      // Step 3: Run depth estimation
+      return runDepthEstimation(img);
+    }).then(function (depthU8) {
+      DOM.bgFill.style.width = '70%';
+      DOM.bgText.textContent = 'Running matting...';
+
+      // Figure out depth output dimensions from the model
+      // The depth model input was 518x518 (or adjusted), output matches input spatial dims
+      var origW = img.naturalWidth || img.width;
+      var origH = img.naturalHeight || img.height;
+      var targetW = 518, targetH = 518, multiple = 14;
+      var scaleW = targetW / origW;
+      var scaleH = targetH / origH;
+      var scale = Math.max(scaleW, scaleH);
+      var depthW = constrainMultiple(scale * origW, multiple, targetW);
+      var depthH = constrainMultiple(scale * origH, multiple, targetH);
+
+      // Resize depth to 256x256 for matting
+      var depth256 = resizeDepthTo256(depthU8, depthW, depthH);
+
+      // Step 4: Run matting
+      return runMatting(img, depth256);
+    }).then(function (alpha256) {
+      DOM.bgFill.style.width = '85%';
+      DOM.bgText.textContent = 'Refining edges...';
+
+      // Step 5: Run refiner
+      return runRefiner(img, alpha256);
+    }).then(function (alphaResult) {
+      DOM.bgFill.style.width = '95%';
+      DOM.bgText.textContent = 'Applying mask...';
+
+      // Step 6: Apply alpha mask
+      var result = applyAlphaMask(img, alphaResult);
+
+      // Wait for result image to load
+      var onReady = function () {
+        STATE.processedImage = result.image;
+        STATE.processedDataURL = result.dataURL;
+        STATE.showOriginal = false;
+        DOM.previewImg.src = STATE.processedDataURL;
+        DOM.bgFill.style.width = '100%';
+        DOM.bgText.textContent = 'Background removed!';
+        DOM.toggleBgBtn.style.display = 'inline-flex';
+        DOM.toggleBgBtn.textContent = 'SHOW ORIGINAL';
+        DOM.removeBgBtn.style.display = 'none';
 
         setTimeout(function () {
-          try {
-            var result = floodFillRemoveBg(STATE.originalImage);
-            DOM.bgFill.style.width = '80%';
-            DOM.bgText.textContent = 'Finalizing...';
+          DOM.bgStatus.style.display = 'none';
+        }, 1500);
 
-            setTimeout(function () {
-              STATE.processedImage = result.image;
-              STATE.processedDataURL = result.dataURL;
-              STATE.showOriginal = false;
-              DOM.previewImg.src = STATE.processedDataURL;
-              DOM.bgFill.style.width = '100%';
-              DOM.bgText.textContent = 'Background removed!';
-              DOM.toggleBgBtn.style.display = 'inline-flex';
-              DOM.toggleBgBtn.textContent = 'SHOW ORIGINAL';
-              DOM.removeBgBtn.style.display = 'none';
+        // Re-trace contour with new image
+        STATE.contourPath = null;
+        updateContour();
+        renderCanvas();
+        DOM.removeBgBtn.disabled = false;
+        DOM.removeBgBtn.style.opacity = '1';
+      };
 
-              setTimeout(function () {
-                DOM.bgStatus.style.display = 'none';
-              }, 1500);
-
-              // Re-trace contour with new image
-              STATE.contourPath = null;
-              updateContour();
-              renderCanvas();
-            }, 300);
-          } catch (err) {
-            DOM.bgFill.style.width = '0%';
-            DOM.bgText.textContent = 'Error: ' + err.message + '. Try a different image.';
-            console.error('BG removal error:', err);
-          }
-        }, 200);
-      }, 200);
+      if (result.image.complete) {
+        onReady();
+      } else {
+        result.image.onload = onReady;
+      }
+    }).catch(function (err) {
+      console.error('AI BG removal error:', err);
+      DOM.bgFill.style.width = '0%';
+      DOM.bgText.textContent = 'Error: ' + (err.message || 'Unknown error') + '. Please try again or upload a PNG with transparent background.';
+      DOM.removeBgBtn.disabled = false;
+      DOM.removeBgBtn.style.opacity = '1';
     });
-  }
-
-  function floodFillRemoveBg(img) {
-    var c = document.createElement('canvas');
-    var w = img.naturalWidth;
-    var h = img.naturalHeight;
-    // Limit processing size for performance
-    var maxDim = 800;
-    var scale = 1;
-    if (Math.max(w, h) > maxDim) {
-      scale = maxDim / Math.max(w, h);
-      w = Math.round(w * scale);
-      h = Math.round(h * scale);
-    }
-    c.width = w;
-    c.height = h;
-    var ctx = c.getContext('2d');
-    ctx.drawImage(img, 0, 0, w, h);
-    var imageData = ctx.getImageData(0, 0, w, h);
-    var data = imageData.data;
-
-    // Sample corners to determine background color
-    var corners = [
-      getPixel(data, 0, 0, w),
-      getPixel(data, w - 1, 0, w),
-      getPixel(data, 0, h - 1, w),
-      getPixel(data, w - 1, h - 1, w)
-    ];
-
-    // Average the corner colors
-    var bgColor = {
-      r: Math.round((corners[0].r + corners[1].r + corners[2].r + corners[3].r) / 4),
-      g: Math.round((corners[0].g + corners[1].g + corners[2].g + corners[3].g) / 4),
-      b: Math.round((corners[0].b + corners[1].b + corners[2].b + corners[3].b) / 4)
-    };
-
-    // Tolerance for color matching
-    var tolerance = 45;
-
-    // Flood fill from all edges
-    var visited = new Uint8Array(w * h);
-    var queue = [];
-
-    // Add edge pixels to queue
-    for (var x = 0; x < w; x++) {
-      queue.push(x + 0 * w);
-      queue.push(x + (h - 1) * w);
-    }
-    for (var y = 0; y < h; y++) {
-      queue.push(0 + y * w);
-      queue.push((w - 1) + y * w);
-    }
-
-    // BFS flood fill
-    while (queue.length > 0) {
-      var idx = queue.shift();
-      if (idx < 0 || idx >= w * h || visited[idx]) continue;
-
-      var px = idx % w;
-      var py = Math.floor(idx / w);
-      var pi = idx * 4;
-
-      var dr = Math.abs(data[pi] - bgColor.r);
-      var dg = Math.abs(data[pi + 1] - bgColor.g);
-      var db = Math.abs(data[pi + 2] - bgColor.b);
-
-      if (dr + dg + db <= tolerance * 3) {
-        visited[idx] = 1;
-        data[pi + 3] = 0; // Set alpha to 0
-
-        // Add neighbors
-        if (px > 0) queue.push((px - 1) + py * w);
-        if (px < w - 1) queue.push((px + 1) + py * w);
-        if (py > 0) queue.push(px + (py - 1) * w);
-        if (py < h - 1) queue.push(px + (py + 1) * w);
-      }
-    }
-
-    // Smooth edges slightly
-    smoothAlphaEdges(data, w, h);
-
-    ctx.putImageData(imageData, 0, 0);
-
-    // Now create full-res version
-    var fullCanvas = document.createElement('canvas');
-    fullCanvas.width = img.naturalWidth;
-    fullCanvas.height = img.naturalHeight;
-    var fullCtx = fullCanvas.getContext('2d');
-    fullCtx.drawImage(c, 0, 0, img.naturalWidth, img.naturalHeight);
-
-    var dataURL = fullCanvas.toDataURL('image/png');
-    var resultImg = new Image();
-    resultImg.src = dataURL;
-
-    return { image: resultImg, dataURL: dataURL };
-  }
-
-  function getPixel(data, x, y, w) {
-    var i = (y * w + x) * 4;
-    return { r: data[i], g: data[i + 1], b: data[i + 2], a: data[i + 3] };
-  }
-
-  function smoothAlphaEdges(data, w, h) {
-    // Simple 1-pass edge softening
-    var copy = new Uint8ClampedArray(data);
-    for (var y = 1; y < h - 1; y++) {
-      for (var x = 1; x < w - 1; x++) {
-        var i = (y * w + x) * 4;
-        if (copy[i + 3] === 0) continue;
-        // Check if any neighbor is transparent
-        var neighbors = [
-          copy[((y - 1) * w + x) * 4 + 3],
-          copy[((y + 1) * w + x) * 4 + 3],
-          copy[(y * w + x - 1) * 4 + 3],
-          copy[(y * w + x + 1) * 4 + 3]
-        ];
-        var transparentCount = neighbors.filter(function (a) { return a === 0; }).length;
-        if (transparentCount > 0 && transparentCount < 4) {
-          data[i + 3] = Math.round(data[i + 3] * (1 - transparentCount * 0.2));
-        }
-      }
-    }
   }
 
   function toggleBg() {
