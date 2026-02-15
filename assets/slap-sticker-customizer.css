@@ -1441,3 +1441,213 @@
     flex-direction: column;
   }
 }
+
+/* ============================================================
+   ISSUE 1 FIX — BG REMOVAL OVERLAY
+   Full-panel overlay with animated progress bar
+   ============================================================ */
+
+.sc__bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.sc__bg-overlay-inner {
+  background: var(--slap-black, #1a1a1a);
+  border: 3px solid var(--slap-neon-green, #39FF14);
+  box-shadow: 0 0 40px rgba(57, 255, 20, 0.15), 8px 8px 0 var(--slap-neon-green, #39FF14);
+  padding: 3rem 3.5rem;
+  text-align: center;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scanline effect */
+.sc__bg-overlay-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(57, 255, 20, 0.03) 2px,
+    rgba(57, 255, 20, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Grid background */
+.sc__bg-overlay-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sc__bg-overlay-inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sc__bg-overlay-icon {
+  margin-bottom: 1.5rem;
+}
+
+@keyframes scPulseGlow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(57, 255, 20, 0.4)); }
+  50% { filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.8)); }
+}
+
+.sc__bg-overlay-icon svg {
+  animation: scPulseGlow 2s ease-in-out infinite;
+}
+
+.sc__bg-overlay-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--slap-neon-green, #39FF14);
+  margin-bottom: 0.6rem;
+}
+
+.sc__bg-overlay-status {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  min-height: 1.5em;
+}
+
+.sc__bg-overlay-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sc__bg-overlay-bar {
+  flex: 1;
+  height: 12px;
+  background: #333;
+  border: 2px solid #555;
+  position: relative;
+  overflow: hidden;
+}
+
+.sc__bg-overlay-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--slap-neon-green, #39FF14);
+  transition: width 0.4s ease;
+  position: relative;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+/* Animated stripe on the fill */
+.sc__bg-overlay-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(0, 0, 0, 0.15) 4px,
+    rgba(0, 0, 0, 0.15) 8px
+  );
+  animation: scStripeMove 0.6s linear infinite;
+}
+
+@keyframes scStripeMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 16px 0; }
+}
+
+.sc__bg-overlay-pct {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--slap-neon-green, #39FF14);
+  min-width: 48px;
+  text-align: right;
+}
+
+.sc__bg-overlay-substatus {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #737373;
+  letter-spacing: 0.05em;
+}
+
+/* Completion state */
+.sc__bg-overlay--done .sc__bg-overlay-title {
+  color: var(--slap-neon-green, #39FF14);
+}
+
+.sc__bg-overlay--done .sc__bg-overlay-bar-fill {
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+}
+
+/* ============================================================
+   ISSUE 3 FIX — DIMENSION RULERS ON CANVAS
+   Visual ruler indicators with arrows
+   ============================================================ */
+
+.sc__preview-ruler-wrap {
+  position: relative;
+  margin-bottom: 0.8rem;
+}
+
+.sc__preview-ruler-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+}
+
+.sc__preview-ruler-right {
+  position: absolute;
+  right: -36px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.sc__ruler-line {
+  flex: 1;
+  height: 2px;
+  background: #a3a3a3;
+  max-width: 60px;
+}
+
+.sc__ruler-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--slap-black, #1a1a1a);
+  white-space: nowrap;
+}

@@ -84,6 +84,13 @@
       bgFill: document.getElementById('scBgFill'),
       bgText: document.getElementById('scBgText'),
       step1Next: document.getElementById('scStep1Next'),
+      // BG Overlay (Issue 1)
+      bgOverlay: document.getElementById('scBgOverlay'),
+      bgOverlayTitle: document.getElementById('scBgOverlayTitle'),
+      bgOverlayStatus: document.getElementById('scBgOverlayStatus'),
+      bgOverlayFill: document.getElementById('scBgOverlayFill'),
+      bgOverlayPct: document.getElementById('scBgOverlayPct'),
+      bgOverlaySubstatus: document.getElementById('scBgOverlaySubstatus'),
       // Shape
       diecutOptions: document.getElementById('scDiecutOptions'),
       presetOptions: document.getElementById('scPresetOptions'),
@@ -588,6 +595,32 @@
     return { image: resultImg, dataURL: dataURL };
   }
 
+  /* --- ISSUE 1 FIX: BG Removal Overlay Helpers --- */
+
+  function showBgOverlay() {
+    if (!DOM.bgOverlay) return;
+    DOM.bgOverlay.style.display = 'flex';
+    DOM.bgOverlay.classList.remove('sc__bg-overlay--done');
+    updateBgOverlay('Loading AI engine...', 0, 'Initializing WebAssembly runtime');
+  }
+
+  function updateBgOverlay(statusText, pct, substatus) {
+    if (!DOM.bgOverlay) return;
+    if (DOM.bgOverlayStatus) DOM.bgOverlayStatus.textContent = statusText;
+    if (DOM.bgOverlayFill) DOM.bgOverlayFill.style.width = pct + '%';
+    if (DOM.bgOverlayPct) DOM.bgOverlayPct.textContent = Math.round(pct) + '%';
+    if (substatus && DOM.bgOverlaySubstatus) DOM.bgOverlaySubstatus.textContent = substatus;
+  }
+
+  function hideBgOverlay() {
+    if (!DOM.bgOverlay) return;
+    DOM.bgOverlay.classList.add('sc__bg-overlay--done');
+    setTimeout(function () {
+      DOM.bgOverlay.style.display = 'none';
+      DOM.bgOverlay.classList.remove('sc__bg-overlay--done');
+    }, 800);
+  }
+
   /* --- Main BG Removal Orchestrator --- */
 
   function initBgRemoval() {
@@ -609,9 +642,14 @@
     // Disable button during processing
     DOM.removeBgBtn.disabled = true;
     DOM.removeBgBtn.style.opacity = '0.6';
+
+    // Show legacy status bar (kept for compatibility)
     DOM.bgStatus.style.display = 'block';
     DOM.bgFill.style.width = '5%';
     DOM.bgText.textContent = 'Loading AI engine...';
+
+    // ISSUE 1 FIX: Show prominent overlay
+    showBgOverlay();
 
     var img = STATE.originalImage;
 
@@ -619,15 +657,18 @@
     loadOnnxRuntime().then(function () {
       DOM.bgFill.style.width = '10%';
       DOM.bgText.textContent = 'Loading AI model (first time may take a moment)...';
+      updateBgOverlay('Loading AI model...', 10, 'Downloading ~44 MB model (cached after first use)');
 
       // Step 2: Load model
       return loadOnnxModel(function (msg, pct) {
         DOM.bgFill.style.width = pct + '%';
         DOM.bgText.textContent = msg;
+        updateBgOverlay('Loading AI model...', pct, 'Downloading ~44 MB model (cached after first use)');
       });
     }).then(function () {
       DOM.bgFill.style.width = '50%';
       DOM.bgText.textContent = 'Analyzing image...';
+      updateBgOverlay('Analyzing image...', 50, 'Running neural network inference');
 
       // Step 3: Preprocess and run inference
       var chw = preprocessForRMBG(img);
@@ -644,7 +685,8 @@
       return ONNX.session.run(feeds);
     }).then(function (results) {
       DOM.bgFill.style.width = '85%';
-      DOM.bgText.textContent = 'Applying mask...';
+      DOM.bgText.textContent = 'Removing background...';
+      updateBgOverlay('Removing background...', 85, 'Applying transparency mask to artwork');
 
       // Get output mask
       var outputKey = Object.keys(results)[0];
@@ -665,11 +707,15 @@
         DOM.toggleBgBtn.textContent = 'SHOW ORIGINAL';
         DOM.removeBgBtn.style.display = 'none';
 
+        // Update overlay to complete
+        updateBgOverlay('Finalizing...', 100, 'Background removed successfully!');
+
         setTimeout(function () {
           DOM.bgStatus.style.display = 'none';
-        }, 1500);
+          hideBgOverlay();
+        }, 1200);
 
-        // Re-trace contour with new image
+        // ISSUE 2 FIX: Re-trace contour with the BG-removed image
         STATE.contourPath = null;
         updateContour();
         renderCanvas();
@@ -686,6 +732,8 @@
       console.error('AI BG removal error:', err);
       DOM.bgFill.style.width = '0%';
       DOM.bgText.textContent = 'Error: ' + (err.message || 'Unknown error') + '. Please try again or upload a PNG with transparent background.';
+      updateBgOverlay('Error occurred', 0, (err.message || 'Unknown error') + ' — please try again');
+      setTimeout(function () { hideBgOverlay(); }, 3000);
       DOM.removeBgBtn.disabled = false;
       DOM.removeBgBtn.style.opacity = '1';
     });
@@ -708,6 +756,7 @@
 
   /* ----------------------------------------------------------
      CONTOUR TRACING (Marching Squares)
+     ISSUE 2 FIX: Properly uses alpha channel from BG-removed images
      ---------------------------------------------------------- */
   function traceContour(img, padding) {
     var c = document.createElement('canvas');
@@ -723,24 +772,35 @@
     c.width = cw;
     c.height = ch;
     var ctx = c.getContext('2d');
+
+    // ISSUE 2 FIX: Clear canvas to fully transparent first
+    ctx.clearRect(0, 0, cw, ch);
     ctx.drawImage(img, 0, 0, cw, ch);
     var imageData = ctx.getImageData(0, 0, cw, ch);
     var data = imageData.data;
 
     // Create binary mask (1 = opaque, 0 = transparent/near-bg)
+    // ISSUE 2 FIX: Use a moderate alpha threshold to properly detect
+    // the artwork shape after background removal
     var mask = new Uint8Array(cw * ch);
+    var alphaThreshold = 128; // Higher threshold for cleaner contour after BG removal
     for (var i = 0; i < cw * ch; i++) {
-      mask[i] = data[i * 4 + 3] > 20 ? 1 : 0;
+      mask[i] = data[i * 4 + 3] > alphaThreshold ? 1 : 0;
     }
 
-    // If no transparency detected, use edge detection instead
-    var hasTransparency = false;
-    for (var i = 0; i < mask.length; i++) {
-      if (mask[i] === 0) { hasTransparency = true; break; }
+    // Check if there's meaningful transparency (i.e., BG was removed)
+    var transparentCount = 0;
+    var totalPixels = cw * ch;
+    for (var i = 0; i < totalPixels; i++) {
+      if (mask[i] === 0) transparentCount++;
     }
+    var transparencyRatio = transparentCount / totalPixels;
 
-    if (!hasTransparency) {
-      // Create mask based on background color difference
+    // ISSUE 2 FIX: Only fall back to edge detection if there's truly
+    // no transparency (< 1% transparent pixels). After BG removal,
+    // there will always be significant transparency.
+    if (transparencyRatio < 0.01) {
+      // No meaningful transparency — use edge detection based on background color
       var bgR = data[0], bgG = data[1], bgB = data[2];
       var tol = 40;
       for (var i = 0; i < cw * ch; i++) {
@@ -749,6 +809,12 @@
         mask[i] = diff > tol * 3 ? 1 : 0;
       }
     }
+
+    // ISSUE 2 FIX: Clean up the mask with morphological close operation
+    // (dilate then erode) to fill small holes in the artwork mask
+    var closeMask = dilateMask(mask, cw, ch, 2);
+    closeMask = erodeMask(closeMask, cw, ch, 2);
+    mask = closeMask;
 
     // Dilate mask by padding amount
     var padPx = Math.round(padding * scale);
@@ -765,6 +831,30 @@
     return points.map(function (p) {
       return { x: p.x * invScale, y: p.y * invScale };
     });
+  }
+
+  /* ISSUE 2 FIX: Erode mask helper (opposite of dilate) */
+  function erodeMask(mask, w, h, radius) {
+    var result = new Uint8Array(w * h);
+    var r2 = radius * radius;
+    for (var y = 0; y < h; y++) {
+      for (var x = 0; x < w; x++) {
+        if (!mask[y * w + x]) continue;
+        // Check if all pixels within radius are set
+        var allSet = true;
+        for (var dy = -radius; dy <= radius && allSet; dy++) {
+          for (var dx = -radius; dx <= radius && allSet; dx++) {
+            if (dx * dx + dy * dy > r2) continue;
+            var nx = x + dx, ny = y + dy;
+            if (nx < 0 || nx >= w || ny < 0 || ny >= h || !mask[ny * w + nx]) {
+              allSet = false;
+            }
+          }
+        }
+        if (allSet) result[y * w + x] = 1;
+      }
+    }
+    return result;
   }
 
   function dilateMask(mask, w, h, radius) {
@@ -892,7 +982,7 @@
     return Math.abs(dy * point.x - dx * point.y + lineEnd.x * lineStart.y - lineEnd.y * lineStart.x) / len;
   }
 
-  /* FIX ISSUE 1: Force re-trace contour every time padding changes */
+  /* Force re-trace contour every time padding changes */
   function updateContour() {
     var activeImg = getCurrentImage();
     if (!activeImg) return;
@@ -932,7 +1022,7 @@
       });
     });
 
-    // Contour padding slider — FIX ISSUE 1: debounced re-trace
+    // Contour padding slider — debounced re-trace
     if (DOM.contourPadding) {
       var contourDebounce = null;
       DOM.contourPadding.addEventListener('input', function () {
@@ -965,7 +1055,7 @@
   }
 
   /* ----------------------------------------------------------
-     IMAGE TRANSFORM CONTROLS (for preset shapes) — FIX ISSUE 3
+     IMAGE TRANSFORM CONTROLS (for preset shapes)
      ---------------------------------------------------------- */
   function updateTransformControlsVisibility() {
     if (!DOM.imageTransformControls) return;
@@ -1020,7 +1110,7 @@
   }
 
   /* ----------------------------------------------------------
-     CANVAS DRAG & SCROLL INTERACTIONS — FIX ISSUE 3
+     CANVAS DRAG & SCROLL INTERACTIONS
      ---------------------------------------------------------- */
   function initCanvasInteractions() {
     var canvas = DOM.canvas;
@@ -1109,6 +1199,7 @@
 
   /* ----------------------------------------------------------
      CANVAS RENDERING
+     ISSUE 3 FIX: Preview scales to selected size with rulers
      ---------------------------------------------------------- */
   function renderCanvas() {
     var canvas = DOM.canvas;
@@ -1138,28 +1229,51 @@
       return;
     }
 
-    // Calculate drawing area
-    var padding = 40;
-    var drawW = displayW - padding * 2;
-    var drawH = displayH - padding * 2;
+    // ISSUE 3 FIX: Scale preview to represent selected physical size
+    // Define a virtual canvas area in inches — the canvas represents a fixed area
+    var rulerMargin = 32; // space for ruler labels
+    var canvasPadding = 20; // inner padding
+    var availW = displayW - rulerMargin - canvasPadding * 2;
+    var availH = displayH - rulerMargin - canvasPadding * 2;
+
+    // The canvas area represents enough inches to show the sticker with context
+    // Use a virtual ruler where the available area = max(sizeW, sizeH) * 1.4 inches
+    var maxSizeIn = Math.max(STATE.sizeW, STATE.sizeH);
+    var virtualInches = maxSizeIn * 1.5; // show sticker with some surrounding space
+    if (virtualInches < 3) virtualInches = 3; // minimum 3 inches visible
+    var pxPerInch = Math.min(availW, availH) / virtualInches;
+
+    // Calculate sticker dimensions in pixels
+    var stickerPxW = STATE.sizeW * pxPerInch;
+    var stickerPxH = STATE.sizeH * pxPerInch;
+
+    // Center the sticker in the available area (offset by ruler margin)
+    var areaOffsetX = rulerMargin;
+    var areaOffsetY = 0;
+    var centerX = areaOffsetX + canvasPadding + availW / 2;
+    var centerY = areaOffsetY + canvasPadding + availH / 2;
+    var offsetX = centerX - stickerPxW / 2;
+    var offsetY = centerY - stickerPxH / 2;
+
+    // Calculate image scale to fit within the sticker size
     var imgW = img.naturalWidth || img.width;
     var imgH = img.naturalHeight || img.height;
+    var imgScale = Math.min(stickerPxW / imgW, stickerPxH / imgH) * STATE.canvasZoom;
+    var scaledW = imgW * imgScale;
+    var scaledH = imgH * imgScale;
 
-    // Fit image in draw area
-    var scale = Math.min(drawW / imgW, drawH / imgH) * STATE.canvasZoom;
-    var scaledW = imgW * scale;
-    var scaledH = imgH * scale;
-    var offsetX = (displayW - scaledW) / 2;
-    var offsetY = (displayH - scaledH) / 2;
+    // Center image within sticker bounds
+    var imgOffsetX = centerX - scaledW / 2;
+    var imgOffsetY = centerY - scaledH / 2;
 
     if (STATE.cutType === 'die-cut') {
-      renderDieCut(ctx, img, displayW, displayH, offsetX, offsetY, scaledW, scaledH, scale);
+      renderDieCut(ctx, img, displayW, displayH, imgOffsetX, imgOffsetY, scaledW, scaledH, imgScale);
     } else {
-      renderPresetShape(ctx, img, displayW, displayH, offsetX, offsetY, scaledW, scaledH, scale);
+      renderPresetShape(ctx, img, displayW, displayH, imgOffsetX, imgOffsetY, scaledW, scaledH, imgScale);
     }
 
-    // Draw dimension labels on canvas
-    drawDimensionLabels(ctx, displayW, displayH, offsetX, offsetY, scaledW, scaledH);
+    // ISSUE 3 FIX: Draw dimension rulers with arrows
+    drawDimensionRulers(ctx, displayW, displayH, imgOffsetX, imgOffsetY, scaledW, scaledH, stickerPxW, stickerPxH, centerX, centerY);
   }
 
   function drawCheckerboard(ctx, w, h) {
@@ -1252,7 +1366,6 @@
     }
   }
 
-  /* FIX ISSUE 3: renderPresetShape now uses STATE.imgX, imgY, imgScale, imgRotation */
   function renderPresetShape(ctx, img, cw, ch, ox, oy, sw, sh, scale) {
     var centerX = cw / 2;
     var centerY = ch / 2;
@@ -1429,39 +1542,128 @@
     ctx.setLineDash([]);
   }
 
-  function drawDimensionLabels(ctx, cw, ch, ox, oy, sw, sh) {
+  /* ISSUE 3 FIX: Draw dimension rulers with arrows and labels */
+  function drawDimensionRulers(ctx, cw, ch, ox, oy, sw, sh, stickerW, stickerH, centerX, centerY) {
+    // Use the sticker pixel dimensions for ruler positioning
+    var left = centerX - stickerW / 2;
+    var right = centerX + stickerW / 2;
+    var top = centerY - stickerH / 2;
+    var bottom = centerY + stickerH / 2;
+
+    var arrowSize = 5;
+
+    // --- Bottom ruler (width) ---
+    var rulerY = bottom + 16;
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = '#1a1a1a';
+
+    // Horizontal line
+    ctx.beginPath();
+    ctx.moveTo(left, rulerY);
+    ctx.lineTo(right, rulerY);
+    ctx.stroke();
+
+    // Left arrow
+    ctx.beginPath();
+    ctx.moveTo(left, rulerY);
+    ctx.lineTo(left + arrowSize, rulerY - arrowSize);
+    ctx.lineTo(left + arrowSize, rulerY + arrowSize);
+    ctx.closePath();
+    ctx.fill();
+
+    // Right arrow
+    ctx.beginPath();
+    ctx.moveTo(right, rulerY);
+    ctx.lineTo(right - arrowSize, rulerY - arrowSize);
+    ctx.lineTo(right - arrowSize, rulerY + arrowSize);
+    ctx.closePath();
+    ctx.fill();
+
+    // Left tick
+    ctx.beginPath();
+    ctx.moveTo(left, rulerY - 6);
+    ctx.lineTo(left, rulerY + 6);
+    ctx.stroke();
+
+    // Right tick
+    ctx.beginPath();
+    ctx.moveTo(right, rulerY - 6);
+    ctx.lineTo(right, rulerY + 6);
+    ctx.stroke();
+
+    // Width label
     ctx.font = '700 12px "Space Mono", monospace';
-    ctx.fillStyle = '#737373';
+    ctx.fillStyle = '#1a1a1a';
     ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    // Draw label background
+    var wLabel = STATE.sizeW + ' in';
+    var wLabelWidth = ctx.measureText(wLabel).width + 8;
+    ctx.fillStyle = '#F5F5F0';
+    ctx.fillRect(centerX - wLabelWidth / 2, rulerY - 7, wLabelWidth, 14);
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillText(wLabel, centerX, rulerY - 6);
 
-    // Width label (bottom)
-    var wLabel = STATE.sizeW + '"';
-    ctx.fillText(wLabel, cw / 2, ch - 8);
+    // --- Right ruler (height) ---
+    var rulerX = right + 16;
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = '#1a1a1a';
 
-    // Height label (right)
+    // Vertical line
+    ctx.beginPath();
+    ctx.moveTo(rulerX, top);
+    ctx.lineTo(rulerX, bottom);
+    ctx.stroke();
+
+    // Top arrow
+    ctx.beginPath();
+    ctx.moveTo(rulerX, top);
+    ctx.lineTo(rulerX - arrowSize, top + arrowSize);
+    ctx.lineTo(rulerX + arrowSize, top + arrowSize);
+    ctx.closePath();
+    ctx.fill();
+
+    // Bottom arrow
+    ctx.beginPath();
+    ctx.moveTo(rulerX, bottom);
+    ctx.lineTo(rulerX - arrowSize, bottom - arrowSize);
+    ctx.lineTo(rulerX + arrowSize, bottom - arrowSize);
+    ctx.closePath();
+    ctx.fill();
+
+    // Top tick
+    ctx.beginPath();
+    ctx.moveTo(rulerX - 6, top);
+    ctx.lineTo(rulerX + 6, top);
+    ctx.stroke();
+
+    // Bottom tick
+    ctx.beginPath();
+    ctx.moveTo(rulerX - 6, bottom);
+    ctx.lineTo(rulerX + 6, bottom);
+    ctx.stroke();
+
+    // Height label
+    var hLabel = STATE.sizeH + ' in';
     ctx.save();
-    ctx.translate(cw - 8, ch / 2);
+    ctx.translate(rulerX, centerY);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText(STATE.sizeH + '"', 0, 0);
+    var hLabelWidth = ctx.measureText(hLabel).width + 8;
+    ctx.fillStyle = '#F5F5F0';
+    ctx.fillRect(-hLabelWidth / 2, -7, hLabelWidth, 14);
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = '700 12px "Space Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(hLabel, 0, -6);
     ctx.restore();
+  }
 
-    // Dimension arrows
-    ctx.strokeStyle = '#a3a3a3';
-    ctx.lineWidth = 1;
-
-    // Bottom dimension line
-    var arrowY = ch - 18;
-    ctx.beginPath();
-    ctx.moveTo(ox, arrowY);
-    ctx.lineTo(ox + sw, arrowY);
-    ctx.stroke();
-
-    // Right dimension line
-    var arrowX = cw - 18;
-    ctx.beginPath();
-    ctx.moveTo(arrowX, oy);
-    ctx.lineTo(arrowX, oy + sh);
-    ctx.stroke();
+  /* Legacy dimension labels — replaced by drawDimensionRulers */
+  function drawDimensionLabels(ctx, cw, ch, ox, oy, sw, sh) {
+    // No-op: replaced by drawDimensionRulers in ISSUE 3 fix
   }
 
   /* ----------------------------------------------------------
@@ -1787,7 +1989,6 @@
     fetch('/search/suggest.json?q=custom+sticker&resources[type]=product&resources[limit]=1')
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        var variantId = null;
         if (data.resources && data.resources.results && data.resources.results.products && data.resources.results.products.length > 0) {
           var product = data.resources.results.products[0];
           return fetch(product.url + '.json').then(function (r) { return r.json(); });

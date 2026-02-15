@@ -133,10 +133,35 @@
             </div>
           </div>
 
-          <!-- BG Removal Status -->
+          <!-- BG Removal Status (legacy, hidden) -->
           <div class="sc__bg-status" id="scBgStatus" style="display:none;">
             <div class="sc__bg-status-bar"><div class="sc__bg-status-fill" id="scBgFill"></div></div>
             <span class="sc__bg-status-text" id="scBgText">Removing background...</span>
+          </div>
+
+          <!-- BG Removal Overlay (Issue 1 fix) -->
+          <div class="sc__bg-overlay" id="scBgOverlay" style="display:none;">
+            <div class="sc__bg-overlay-inner">
+              <div class="sc__bg-overlay-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <rect x="4" y="4" width="40" height="40" stroke="#39FF14" stroke-width="2" stroke-dasharray="4 4">
+                    <animateTransform attributeName="transform" type="rotate" from="0 24 24" to="360 24 24" dur="8s" repeatCount="indefinite"/>
+                  </rect>
+                  <path d="M14 24L20 30L34 16" stroke="#39FF14" stroke-width="3" stroke-linecap="square" stroke-dasharray="40" stroke-dashoffset="40">
+                    <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.5s" begin="indefinite" fill="freeze"/>
+                  </path>
+                </svg>
+              </div>
+              <div class="sc__bg-overlay-title" id="scBgOverlayTitle">REMOVING BACKGROUND</div>
+              <div class="sc__bg-overlay-status" id="scBgOverlayStatus">Loading AI engine...</div>
+              <div class="sc__bg-overlay-bar-wrap">
+                <div class="sc__bg-overlay-bar">
+                  <div class="sc__bg-overlay-bar-fill" id="scBgOverlayFill"></div>
+                </div>
+                <span class="sc__bg-overlay-pct" id="scBgOverlayPct">0%</span>
+              </div>
+              <div class="sc__bg-overlay-substatus" id="scBgOverlaySubstatus">This may take a few seconds on first run</div>
+            </div>
           </div>
 
           <button class="sc__btn-next" data-goto="2" id="scStep1Next" disabled>
