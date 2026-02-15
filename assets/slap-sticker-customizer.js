@@ -31,6 +31,12 @@
     contourPath: null,     // array of {x,y} points
     // Image transform (for preset shapes)
     imgX: 0, imgY: 0, imgScale: 1, imgRotation: 0,
+    // Drag state
+    _dragging: false,
+    _dragStartX: 0,
+    _dragStartY: 0,
+    _dragStartImgX: 0,
+    _dragStartImgY: 0,
     // Configure
     sizeW: 2, sizeH: 2, sizeLabel: '2x2',
     material: 'vinyl',
@@ -83,6 +89,13 @@
       presetOptions: document.getElementById('scPresetOptions'),
       contourPadding: document.getElementById('scContourPadding'),
       contourPaddingVal: document.getElementById('scContourPaddingVal'),
+      // Image transform controls (for preset shapes)
+      imageTransformControls: document.getElementById('scImageTransformControls'),
+      imgScaleSlider: document.getElementById('scImgScale'),
+      imgScaleVal: document.getElementById('scImgScaleVal'),
+      imgRotationSlider: document.getElementById('scImgRotation'),
+      imgRotationVal: document.getElementById('scImgRotationVal'),
+      imgResetBtn: document.getElementById('scImgReset'),
       // Configure
       customSize: document.getElementById('scCustomSize'),
       customW: document.getElementById('scCustomW'),
@@ -149,7 +162,10 @@
     if (panel) panel.classList.add('sc__panel--active');
 
     // Trigger updates on step entry
-    if (num === 2) updateContour();
+    if (num === 2) {
+      updateContour();
+      updateTransformControlsVisibility();
+    }
     if (num === 4 || num === 2 || num === 3) renderCanvas();
     if (num === 5) updateSummary();
     updatePreviewSpecs();
@@ -354,7 +370,7 @@
   function showUploadPreview() {
     DOM.uploadZone.style.display = 'none';
     DOM.uploadPreview.style.display = 'flex';
-    DOM.removeBgBtn.style.display = 'flex';
+    DOM.removeBgBtn.style.display = 'inline-flex';
     DOM.step1Next.disabled = false;
     if (DOM.placeholder) DOM.placeholder.style.display = 'none';
   }
@@ -390,8 +406,8 @@
      BACKGROUND REMOVAL (Client-side flood-fill approach)
      ---------------------------------------------------------- */
   function initBgRemoval() {
-    DOM.removeBgBtn.addEventListener('click', removeBg);
-    DOM.toggleBgBtn.addEventListener('click', toggleBg);
+    if (DOM.removeBgBtn) DOM.removeBgBtn.addEventListener('click', removeBg);
+    if (DOM.toggleBgBtn) DOM.toggleBgBtn.addEventListener('click', toggleBg);
   }
 
   function removeBg() {
@@ -419,7 +435,7 @@
               DOM.previewImg.src = STATE.processedDataURL;
               DOM.bgFill.style.width = '100%';
               DOM.bgText.textContent = 'Background removed!';
-              DOM.toggleBgBtn.style.display = 'inline-block';
+              DOM.toggleBgBtn.style.display = 'inline-flex';
               DOM.toggleBgBtn.textContent = 'SHOW ORIGINAL';
               DOM.removeBgBtn.style.display = 'none';
 
@@ -429,6 +445,7 @@
 
               // Re-trace contour with new image
               STATE.contourPath = null;
+              updateContour();
               renderCanvas();
             }, 300);
           } catch (err) {
@@ -572,6 +589,9 @@
       DOM.previewImg.src = STATE.processedDataURL;
       DOM.toggleBgBtn.textContent = 'SHOW ORIGINAL';
     }
+    // Re-trace contour with the newly active image
+    STATE.contourPath = null;
+    updateContour();
     renderCanvas();
   }
 
@@ -761,9 +781,11 @@
     return Math.abs(dy * point.x - dx * point.y + lineEnd.x * lineStart.y - lineEnd.y * lineStart.x) / len;
   }
 
+  /* FIX ISSUE 1: Force re-trace contour every time padding changes */
   function updateContour() {
     var activeImg = getCurrentImage();
     if (!activeImg) return;
+    // Always re-trace — clear cached path so traceContour runs fresh
     STATE.contourPath = traceContour(activeImg, STATE.contourPadding);
   }
 
@@ -788,22 +810,32 @@
         if (STATE.cutType === 'die-cut') {
           DOM.diecutOptions.style.display = 'block';
           DOM.presetOptions.style.display = 'none';
+          updateContour();
         } else {
           DOM.diecutOptions.style.display = 'none';
           DOM.presetOptions.style.display = 'block';
         }
+        updateTransformControlsVisibility();
         renderCanvas();
         updatePreviewSpecs();
       });
     });
 
-    // Contour padding slider
-    DOM.contourPadding.addEventListener('input', function () {
-      STATE.contourPadding = parseInt(this.value);
-      DOM.contourPaddingVal.textContent = this.value + 'px';
-      updateContour();
-      renderCanvas();
-    });
+    // Contour padding slider — FIX ISSUE 1: debounced re-trace
+    if (DOM.contourPadding) {
+      var contourDebounce = null;
+      DOM.contourPadding.addEventListener('input', function () {
+        STATE.contourPadding = parseInt(this.value);
+        DOM.contourPaddingVal.textContent = this.value + 'px';
+        // Debounce the expensive contour re-trace
+        clearTimeout(contourDebounce);
+        contourDebounce = setTimeout(function () {
+          STATE.contourPath = null; // Force re-trace
+          updateContour();
+          renderCanvas();
+        }, 50);
+      });
+    }
 
     // Preset shape buttons
     document.querySelectorAll('.sc__shape-btn').forEach(function (btn) {
@@ -813,9 +845,154 @@
         });
         this.classList.add('sc__shape-btn--active');
         STATE.presetShape = this.dataset.shape;
+        // Reset image transform when changing shapes
+        resetImageTransform();
         renderCanvas();
         updatePreviewSpecs();
       });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     IMAGE TRANSFORM CONTROLS (for preset shapes) — FIX ISSUE 3
+     ---------------------------------------------------------- */
+  function updateTransformControlsVisibility() {
+    if (!DOM.imageTransformControls) return;
+    if (STATE.cutType === 'preset' && STATE.originalImage) {
+      DOM.imageTransformControls.style.display = 'block';
+    } else {
+      DOM.imageTransformControls.style.display = 'none';
+    }
+  }
+
+  function resetImageTransform() {
+    STATE.imgX = 0;
+    STATE.imgY = 0;
+    STATE.imgScale = 1;
+    STATE.imgRotation = 0;
+    if (DOM.imgScaleSlider) {
+      DOM.imgScaleSlider.value = 100;
+      DOM.imgScaleVal.textContent = '100%';
+    }
+    if (DOM.imgRotationSlider) {
+      DOM.imgRotationSlider.value = 0;
+      DOM.imgRotationVal.textContent = '0°';
+    }
+  }
+
+  function initImageTransformControls() {
+    // Scale slider
+    if (DOM.imgScaleSlider) {
+      DOM.imgScaleSlider.addEventListener('input', function () {
+        STATE.imgScale = parseInt(this.value) / 100;
+        DOM.imgScaleVal.textContent = this.value + '%';
+        renderCanvas();
+      });
+    }
+
+    // Rotation slider
+    if (DOM.imgRotationSlider) {
+      DOM.imgRotationSlider.addEventListener('input', function () {
+        STATE.imgRotation = parseInt(this.value);
+        DOM.imgRotationVal.textContent = this.value + '°';
+        renderCanvas();
+      });
+    }
+
+    // Reset button
+    if (DOM.imgResetBtn) {
+      DOM.imgResetBtn.addEventListener('click', function () {
+        resetImageTransform();
+        renderCanvas();
+      });
+    }
+  }
+
+  /* ----------------------------------------------------------
+     CANVAS DRAG & SCROLL INTERACTIONS — FIX ISSUE 3
+     ---------------------------------------------------------- */
+  function initCanvasInteractions() {
+    var canvas = DOM.canvas;
+    if (!canvas) return;
+
+    // Mouse drag for repositioning image in preset shapes
+    canvas.addEventListener('mousedown', function (e) {
+      if (STATE.cutType !== 'preset' || !STATE.originalImage) return;
+      STATE._dragging = true;
+      STATE._dragStartX = e.clientX;
+      STATE._dragStartY = e.clientY;
+      STATE._dragStartImgX = STATE.imgX;
+      STATE._dragStartImgY = STATE.imgY;
+      canvas.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!STATE._dragging) return;
+      var dx = e.clientX - STATE._dragStartX;
+      var dy = e.clientY - STATE._dragStartY;
+      STATE.imgX = STATE._dragStartImgX + dx;
+      STATE.imgY = STATE._dragStartImgY + dy;
+      renderCanvas();
+    });
+
+    window.addEventListener('mouseup', function () {
+      if (STATE._dragging) {
+        STATE._dragging = false;
+        if (DOM.canvas) DOM.canvas.style.cursor = STATE.cutType === 'preset' ? 'grab' : 'default';
+      }
+    });
+
+    // Touch drag for mobile
+    canvas.addEventListener('touchstart', function (e) {
+      if (STATE.cutType !== 'preset' || !STATE.originalImage) return;
+      if (e.touches.length === 1) {
+        STATE._dragging = true;
+        STATE._dragStartX = e.touches[0].clientX;
+        STATE._dragStartY = e.touches[0].clientY;
+        STATE._dragStartImgX = STATE.imgX;
+        STATE._dragStartImgY = STATE.imgY;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', function (e) {
+      if (!STATE._dragging || e.touches.length !== 1) return;
+      var dx = e.touches[0].clientX - STATE._dragStartX;
+      var dy = e.touches[0].clientY - STATE._dragStartY;
+      STATE.imgX = STATE._dragStartImgX + dx;
+      STATE.imgY = STATE._dragStartImgY + dy;
+      renderCanvas();
+      e.preventDefault();
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', function () {
+      STATE._dragging = false;
+    });
+
+    // Scroll wheel zoom for preset shapes
+    canvas.addEventListener('wheel', function (e) {
+      if (STATE.cutType !== 'preset' || !STATE.originalImage) return;
+      e.preventDefault();
+      var delta = e.deltaY > 0 ? -0.05 : 0.05;
+      STATE.imgScale = Math.max(0.2, Math.min(3, STATE.imgScale + delta));
+      // Sync slider
+      if (DOM.imgScaleSlider) {
+        DOM.imgScaleSlider.value = Math.round(STATE.imgScale * 100);
+        DOM.imgScaleVal.textContent = Math.round(STATE.imgScale * 100) + '%';
+      }
+      renderCanvas();
+    }, { passive: false });
+
+    // Update cursor based on mode
+    canvas.addEventListener('mouseenter', function () {
+      if (STATE.cutType === 'preset' && STATE.originalImage) {
+        canvas.style.cursor = 'grab';
+      }
+    });
+
+    canvas.addEventListener('mouseleave', function () {
+      canvas.style.cursor = 'default';
     });
   }
 
@@ -898,11 +1075,21 @@
       var imgW = img.naturalWidth || img.width;
       var imgH = img.naturalHeight || img.height;
 
-      // Bleed line (outside contour)
+      // Bleed line (outside contour) — offset outward from contour
       ctx.beginPath();
+      var bleedOffset = 6;
+      var centerXImg = imgW / 2;
+      var centerYImg = imgH / 2;
       STATE.contourPath.forEach(function (p, i) {
-        var cx = ox + (p.x / imgW) * sw;
-        var cy = oy + (p.y / imgH) * sh;
+        // Expand outward from center for bleed
+        var dxb = p.x - centerXImg;
+        var dyb = p.y - centerYImg;
+        var distb = Math.sqrt(dxb * dxb + dyb * dyb);
+        var expandb = distb > 0 ? (distb + bleedOffset) / distb : 1;
+        var bx = centerXImg + dxb * expandb;
+        var by = centerYImg + dyb * expandb;
+        var cx = ox + (bx / imgW) * sw;
+        var cy = oy + (by / imgH) * sh;
         if (i === 0) ctx.moveTo(cx, cy);
         else ctx.lineTo(cx, cy);
       });
@@ -913,9 +1100,8 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Cut line (contour)
+      // Cut line (contour) — this IS the contour path with padding already baked in
       ctx.beginPath();
-      var contourScale = STATE.contourPadding / (STATE.contourPadding + 4);
       STATE.contourPath.forEach(function (p, i) {
         var cx = ox + (p.x / imgW) * sw;
         var cy = oy + (p.y / imgH) * sh;
@@ -932,14 +1118,12 @@
       var safePad = 6;
       STATE.contourPath.forEach(function (p, i) {
         // Shrink toward center
-        var centerX = imgW / 2;
-        var centerY = imgH / 2;
-        var dx = p.x - centerX;
-        var dy = p.y - centerY;
+        var dx = p.x - centerXImg;
+        var dy = p.y - centerYImg;
         var dist = Math.sqrt(dx * dx + dy * dy);
         var shrink = Math.max(0, dist - safePad) / (dist || 1);
-        var sx = centerX + dx * shrink;
-        var sy = centerY + dy * shrink;
+        var sx = centerXImg + dx * shrink;
+        var sy = centerYImg + dy * shrink;
         var cx = ox + (sx / imgW) * sw;
         var cy = oy + (sy / imgH) * sh;
         if (i === 0) ctx.moveTo(cx, cy);
@@ -957,6 +1141,7 @@
     }
   }
 
+  /* FIX ISSUE 3: renderPresetShape now uses STATE.imgX, imgY, imgScale, imgRotation */
   function renderPresetShape(ctx, img, cw, ch, ox, oy, sw, sh, scale) {
     var centerX = cw / 2;
     var centerY = ch / 2;
@@ -980,18 +1165,35 @@
     ctx.fill();
     ctx.restore();
 
-    // Clip to shape and draw image
+    // Clip to shape and draw image with user transforms
     ctx.save();
     drawShapePath(ctx, STATE.presetShape, centerX, centerY, halfW, halfH);
     ctx.clip();
 
-    // Draw image centered and scaled to fill shape
+    // Draw checkerboard background inside shape (to show transparency)
+    var cbSize = 10;
+    for (var cy2 = centerY - halfH; cy2 < centerY + halfH; cy2 += cbSize) {
+      for (var cx2 = centerX - halfW; cx2 < centerX + halfW; cx2 += cbSize) {
+        ctx.fillStyle = ((Math.floor(cx2 / cbSize) + Math.floor(cy2 / cbSize)) % 2 === 0) ? '#e8e8e8' : '#f5f5f5';
+        ctx.fillRect(cx2, cy2, cbSize, cbSize);
+      }
+    }
+
+    // Draw image centered and scaled to fill shape, with user transforms applied
     var imgW = img.naturalWidth || img.width;
     var imgH = img.naturalHeight || img.height;
-    var imgScale = Math.max(halfW * 2 / imgW, halfH * 2 / imgH);
-    var drawW = imgW * imgScale;
-    var drawH = imgH * imgScale;
-    ctx.drawImage(img, centerX - drawW / 2, centerY - drawH / 2, drawW, drawH);
+    var baseScale = Math.max(halfW * 2 / imgW, halfH * 2 / imgH);
+    var userScale = baseScale * STATE.imgScale;
+    var drawW = imgW * userScale;
+    var drawH = imgH * userScale;
+
+    // Apply rotation and position transforms
+    ctx.save();
+    ctx.translate(centerX + STATE.imgX, centerY + STATE.imgY);
+    ctx.rotate(STATE.imgRotation * Math.PI / 180);
+    ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.restore();
+
     ctx.restore();
 
     // Draw bleed line
@@ -1019,6 +1221,17 @@
     ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.setLineDash([]);
+
+    // Draw drag hint if image is at default position
+    if (STATE.imgX === 0 && STATE.imgY === 0 && STATE.imgScale === 1 && STATE.imgRotation === 0) {
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      ctx.font = '600 11px "Space Grotesk", sans-serif';
+      ctx.fillStyle = '#737373';
+      ctx.textAlign = 'center';
+      ctx.fillText('Drag to reposition \u2022 Scroll to zoom', centerX, centerY + halfH + 24);
+      ctx.restore();
+    }
   }
 
   function drawShapePath(ctx, shape, cx, cy, hw, hh) {
@@ -1451,9 +1664,11 @@
       properties['Contour Padding'] = STATE.contourPadding + 'px';
     }
 
+    if (STATE.cutType === 'preset') {
+      properties['Image Position'] = 'X:' + Math.round(STATE.imgX) + ' Y:' + Math.round(STATE.imgY) + ' Scale:' + Math.round(STATE.imgScale * 100) + '% Rot:' + STATE.imgRotation + '°';
+    }
+
     // Attempt Shopify AJAX cart API
-    // We need a product variant ID. For custom orders, typically a "Custom Sticker" product exists.
-    // Try to find it, or use a generic approach
     DOM.addToCart.disabled = true;
     DOM.addToCart.textContent = 'ADDING...';
 
@@ -1464,7 +1679,6 @@
         var variantId = null;
         if (data.resources && data.resources.results && data.resources.results.products && data.resources.results.products.length > 0) {
           var product = data.resources.results.products[0];
-          // Get the first variant
           return fetch(product.url + '.json').then(function (r) { return r.json(); });
         }
         return null;
@@ -1476,7 +1690,6 @@
         }
 
         if (!variantId) {
-          // Fallback: try to get any product
           return fetch('/products.json?limit=1')
             .then(function (r) { return r.json(); })
             .then(function (d) {
@@ -1490,7 +1703,6 @@
       })
       .then(function (variantId) {
         if (!variantId) {
-          // If no product found, show success anyway (the store owner needs to create the product)
           showCartSuccess();
           alert('Note: No "Custom Sticker" product found in the store. Please create a product for custom sticker orders and the cart integration will work automatically.');
           return;
@@ -1511,13 +1723,11 @@
           return r.json();
         }).then(function () {
           showCartSuccess();
-          // Update cart count in header if possible
           updateCartBubble();
         });
       })
       .catch(function (err) {
         console.error('Add to cart error:', err);
-        // Show success anyway — the data is captured
         showCartSuccess();
       });
   }
@@ -1611,6 +1821,8 @@
     initUpload();
     initBgRemoval();
     initShapeSelection();
+    initImageTransformControls();
+    initCanvasInteractions();
     initConfiguration();
     initCart();
     initZoom();

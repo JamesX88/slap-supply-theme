@@ -1225,6 +1225,109 @@
 }
 
 /* ============================================================
+   IMAGE TRANSFORM CONTROLS (Issue 3 fix)
+   ============================================================ */
+
+.sc__image-transform {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed #d4d4d4;
+}
+
+.sc__transform-slider-group {
+  margin-bottom: 1.2rem;
+}
+
+.sc__transform-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #737373;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.sc__btn-reset-transform {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  color: var(--slap-black, #1a1a1a);
+  border: 2px solid #d4d4d4;
+  border-radius: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  margin-top: 0.5rem;
+}
+
+.sc__btn-reset-transform:hover {
+  border-color: var(--slap-black, #1a1a1a);
+  background: rgba(57, 255, 20, 0.1);
+  box-shadow: 2px 2px 0 var(--slap-neon-green, #39FF14);
+  transform: translate(-1px, -1px);
+}
+
+/* Enhanced Remove Background button (Issue 2 fix) */
+.sc__btn-remove-bg {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem !important;
+  background: var(--slap-black, #1a1a1a) !important;
+  color: var(--slap-neon-green, #39FF14) !important;
+  border: 2px solid var(--slap-neon-green, #39FF14) !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0 var(--slap-neon-green, #39FF14);
+}
+
+.sc__btn-remove-bg:hover {
+  background: var(--slap-neon-green, #39FF14) !important;
+  color: var(--slap-black, #1a1a1a) !important;
+  box-shadow: 3px 3px 0 var(--slap-black, #1a1a1a);
+  transform: translate(-1px, -1px);
+}
+
+.sc__btn-toggle-bg {
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.8rem !important;
+  background: transparent !important;
+  color: var(--slap-black, #1a1a1a) !important;
+  border: 2px solid #d4d4d4 !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  transition: all 0.15s ease;
+}
+
+.sc__btn-toggle-bg:hover {
+  border-color: var(--slap-black, #1a1a1a) !important;
+}
+
+/* Canvas cursor for preset shape drag */
+.sc__preview-canvas-wrap canvas {
+  touch-action: none;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 

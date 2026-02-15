@@ -124,7 +124,7 @@
               </div>
               <div class="sc__upload-actions">
                 <button class="sc__btn-remove-bg" id="scRemoveBgBtn" style="display:none;">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14 4L6 12L2 8" stroke="currentColor" stroke-width="2" stroke-linecap="square"/><rect x="1" y="1" width="14" height="14" stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/></svg>
                   REMOVE BACKGROUND
                 </button>
                 <button class="sc__btn-toggle-bg" id="scToggleBgBtn" style="display:none;">SHOW ORIGINAL</button>
@@ -214,6 +214,34 @@
                   <span>HEXAGON</span>
                 </button>
               </div>
+            </div>
+          </div>
+
+          <!-- Image Transform Controls (for preset shapes) -->
+          <div class="sc__image-transform" id="scImageTransformControls" style="display:none;">
+            <div class="sc__option-group">
+              <label class="sc__option-label">&#9654; POSITION YOUR IMAGE</label>
+              <p class="sc__option-hint" style="margin-bottom:1rem;">Drag the preview canvas to move your image. Use the sliders below to scale and rotate.</p>
+
+              <div class="sc__transform-slider-group">
+                <label class="sc__transform-label">SCALE</label>
+                <div class="sc__slider-wrap">
+                  <input type="range" class="sc__slider" id="scImgScale" min="20" max="300" value="100" step="5">
+                  <span class="sc__slider-value" id="scImgScaleVal">100%</span>
+                </div>
+              </div>
+
+              <div class="sc__transform-slider-group">
+                <label class="sc__transform-label">ROTATION</label>
+                <div class="sc__slider-wrap">
+                  <input type="range" class="sc__slider" id="scImgRotation" min="-180" max="180" value="0" step="1">
+                  <span class="sc__slider-value" id="scImgRotationVal">0&deg;</span>
+                </div>
+              </div>
+
+              <button class="sc__btn-reset-transform" id="scImgReset">
+                RESET POSITION
+              </button>
             </div>
           </div>
 
