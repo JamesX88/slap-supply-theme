@@ -811,6 +811,7 @@
       if (mask[i] === 0) transparentCount++;
     }
     var transparencyRatio = transparentCount / totalPixels;
+    console.log('[CONTOUR DEBUG] traceContour: isCanvas:', isCanvas, 'input:', w + 'x' + h, 'scaled:', cw + 'x' + ch, 'transparency:', (transparencyRatio * 100).toFixed(1) + '%');
 
     // ISSUE 2 FIX: Only fall back to edge detection if there's truly
     // no transparency (< 1% transparent pixels). After BG removal,
@@ -838,6 +839,19 @@
     var closeMask = dilateMask(mask, cw, ch, 2);
     closeMask = erodeMask(closeMask, cw, ch, 2);
     mask = closeMask;
+
+    // Debug: check mask shape after cleanup
+    var debugMidY = Math.round(ch / 2);
+    var debugMinX = cw, debugMaxX = 0;
+    for (var dx = 0; dx < cw; dx++) {
+      if (mask[debugMidY * cw + dx]) { debugMinX = Math.min(debugMinX, dx); debugMaxX = Math.max(debugMaxX, dx); }
+    }
+    var debugTopY = Math.round(ch * 0.1);
+    var debugTopMinX = cw, debugTopMaxX = 0;
+    for (var dx = 0; dx < cw; dx++) {
+      if (mask[debugTopY * cw + dx]) { debugTopMinX = Math.min(debugTopMinX, dx); debugTopMaxX = Math.max(debugTopMaxX, dx); }
+    }
+    console.log('[CONTOUR DEBUG] mask after cleanup: midRow y=' + debugMidY + ' width=' + (debugMaxX - debugMinX) + ' topRow y=' + debugTopY + ' width=' + (debugTopMaxX - debugTopMinX));
 
     // Dilate mask by padding amount
     var padPx = Math.round(padding * scale);
@@ -1050,9 +1064,11 @@
     // For contour tracing, prefer the processedCanvas (has reliable alpha data)
     // over the processedImage (which may not be fully decoded yet)
     var activeSource = getContourSource();
+    console.log('[CONTOUR DEBUG] updateContour called. activeSource type:', activeSource instanceof HTMLCanvasElement ? 'Canvas' : (activeSource instanceof HTMLImageElement ? 'Image' : 'null'), 'showOriginal:', STATE.showOriginal, 'hasProcessedCanvas:', !!STATE.processedCanvas, 'hasProcessedImage:', !!STATE.processedImage);
     if (!activeSource) return;
     // Always re-trace — clear cached path so traceContour runs fresh
     STATE.contourPath = traceContour(activeSource, STATE.contourPadding);
+    console.log('[CONTOUR DEBUG] contourPath points:', STATE.contourPath ? STATE.contourPath.length : 0);
   }
 
   /** Get the best source for contour tracing (Canvas preferred over Image) */
