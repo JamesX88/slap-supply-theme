@@ -719,10 +719,8 @@
         }, 1200);
 
         // Re-trace contour using the processed canvas (has correct alpha data)
-        console.log('[DEBUG onReady] About to re-trace contour. processedCanvas:', !!STATE.processedCanvas, 'showOriginal:', STATE.showOriginal);
         STATE.contourPath = null;
         updateContour();
-        console.log('[DEBUG onReady] After updateContour. contourPath points:', STATE.contourPath ? STATE.contourPath.length : 0);
         renderCanvas();
         DOM.removeBgBtn.disabled = false;
         DOM.removeBgBtn.style.opacity = '1';
@@ -831,12 +829,8 @@
     // Remove small noise components: keep only the largest connected component.
     // BG removal often leaves scattered semi-transparent artifact pixels that
     // would otherwise cause the contour to trace a near-rectangular outline.
-    console.log('[DEBUG traceContour] transparencyRatio:', transparencyRatio, 'isCanvas:', isCanvas, 'size:', cw, 'x', ch);
     if (transparencyRatio >= 0.01) {
       mask = keepLargestComponent(mask, cw, ch);
-      console.log('[DEBUG traceContour] Ran keepLargestComponent');
-    } else {
-      console.log('[DEBUG traceContour] Skipped keepLargestComponent (no transparency)');
     }
 
     // Clean up the mask with morphological close operation
@@ -1056,11 +1050,9 @@
     // For contour tracing, prefer the processedCanvas (has reliable alpha data)
     // over the processedImage (which may not be fully decoded yet)
     var activeSource = getContourSource();
-    console.log('[DEBUG updateContour] activeSource type:', activeSource ? (activeSource instanceof HTMLCanvasElement ? 'Canvas' : 'Image') : 'null', 'showOriginal:', STATE.showOriginal, 'hasProcessedCanvas:', !!STATE.processedCanvas);
     if (!activeSource) return;
     // Always re-trace — clear cached path so traceContour runs fresh
     STATE.contourPath = traceContour(activeSource, STATE.contourPadding);
-    console.log('[DEBUG updateContour] contourPath points:', STATE.contourPath ? STATE.contourPath.length : 0);
   }
 
   /** Get the best source for contour tracing (Canvas preferred over Image) */
