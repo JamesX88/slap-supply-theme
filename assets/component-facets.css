@@ -593,7 +593,7 @@ span.active-facets__button-inner {
   color: rgb(var(--color-foreground));
   box-shadow: 0 0 0 0.1rem rgb(var(--color-foreground));
   border-radius: 2.6rem;
-  font-size: 1rem;
+  font-size: 2rem;
   min-height: 0;
   min-width: 0;
   padding: 0.25rem 1.25rem;
@@ -614,7 +614,7 @@ span.active-facets__button-inner:after {
 }
 
 .active-facets__button-wrapper * {
-  font-size: 1rem;
+  font-size: 2rem;
 }
 
 @media screen and (min-width: 990px) {

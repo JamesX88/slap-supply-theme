@@ -455,7 +455,7 @@
 
 .slap-customizer__btn-back {
   font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -607,7 +607,7 @@
 
 .slap-customizer__preview-spec-value {
   font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
   display: block;

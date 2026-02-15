@@ -21,24 +21,24 @@ body,
 
 /* Global body text elements */
 p, li, dd, td, th, blockquote {
-  font-size: 1rem; /* 16px base */
+  font-size: 2rem; /* 16px base */
   line-height: 1.65;
 }
 
 /* RTE (Rich Text Editor) content */
 .rte {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1.7;
 }
 
 .rte p {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1.7;
   margin-bottom: 1rem;
 }
 
 .rte li {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1.65;
 }
 
@@ -192,7 +192,7 @@ h5, .h5 {
 
 .product-form__input input[type="radio"] + label,
 variant-radios label {
-  font-size: 1rem !important;
+  font-size: 2rem !important;
 }
 
 .product__tax {
@@ -217,7 +217,7 @@ variant-radios label {
 }
 
 .slap-specs-table {
-  font-size: 1rem !important;
+  font-size: 2rem !important;
 }
 
 .slap-specs-table td:first-child {
@@ -249,7 +249,7 @@ variant-radios label {
 }
 
 .slap-category-tab {
-  font-size: 1rem !important;
+  font-size: 2rem !important;
 }
 
 .product-count__text {
@@ -445,7 +445,7 @@ label,
 button[type="submit"],
 .btn,
 a.button {
-  font-size: 1rem !important;
+  font-size: 2rem !important;
 }
 
 /* ============================================================
@@ -595,7 +595,7 @@ a.button {
   }
 
   .collection .card__heading {
-    font-size: 1rem !important;
+    font-size: 2rem !important;
   }
 
   /* Hero */
@@ -637,7 +637,7 @@ a.button {
   button[type="submit"],
   .btn,
   a.button {
-    font-size: 1rem !important;
+    font-size: 2rem !important;
     padding: 12px 20px !important;
   }
 

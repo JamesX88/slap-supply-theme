@@ -107,7 +107,7 @@
 
 .slap-custom-order__form-desc {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-size: 2rem;
   color: #555;
   line-height: 1.5;
 }
@@ -125,7 +125,7 @@
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: 1rem;
+  font-size: 2rem;
   letter-spacing: 0.08em;
   color: var(--slap-black, #1a1a1a);
   padding: 0 0.8rem;
