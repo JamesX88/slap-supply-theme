@@ -826,7 +826,14 @@
       }
     }
 
-    // ISSUE 2 FIX: Clean up the mask with morphological close operation
+    // Remove small noise components: keep only the largest connected component.
+    // BG removal often leaves scattered semi-transparent artifact pixels that
+    // would otherwise cause the contour to trace a near-rectangular outline.
+    if (transparencyRatio >= 0.01) {
+      mask = keepLargestComponent(mask, cw, ch);
+    }
+
+    // Clean up the mask with morphological close operation
     // (dilate then erode) to fill small holes in the artwork mask
     var closeMask = dilateMask(mask, cw, ch, 2);
     closeMask = erodeMask(closeMask, cw, ch, 2);
@@ -892,6 +899,46 @@
           }
         }
       }
+    }
+    return result;
+  }
+
+  /* Keep only the largest connected component in a binary mask.
+     Uses BFS flood-fill to label components, then zeroes out everything
+     except the component with the most pixels. */
+  function keepLargestComponent(mask, w, h) {
+    var labels = new Int32Array(w * h);
+    var nextLabel = 1;
+    var bestLabel = 0;
+    var bestSize = 0;
+
+    for (var y = 0; y < h; y++) {
+      for (var x = 0; x < w; x++) {
+        var idx = y * w + x;
+        if (!mask[idx] || labels[idx]) continue;
+        var label = nextLabel++;
+        var queue = [idx];
+        labels[idx] = label;
+        var size = 0;
+        var head = 0;
+        while (head < queue.length) {
+          var ci = queue[head++];
+          size++;
+          var cx = ci % w;
+          var cy = (ci - cx) / w;
+          // 4-connected neighbors
+          if (cx > 0     && mask[ci - 1] && !labels[ci - 1]) { labels[ci - 1] = label; queue.push(ci - 1); }
+          if (cx < w - 1  && mask[ci + 1] && !labels[ci + 1]) { labels[ci + 1] = label; queue.push(ci + 1); }
+          if (cy > 0     && mask[ci - w] && !labels[ci - w]) { labels[ci - w] = label; queue.push(ci - w); }
+          if (cy < h - 1  && mask[ci + w] && !labels[ci + w]) { labels[ci + w] = label; queue.push(ci + w); }
+        }
+        if (size > bestSize) { bestSize = size; bestLabel = label; }
+      }
+    }
+
+    var result = new Uint8Array(w * h);
+    for (var i = 0; i < w * h; i++) {
+      result[i] = labels[i] === bestLabel ? 1 : 0;
     }
     return result;
   }
