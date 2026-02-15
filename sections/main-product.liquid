@@ -180,10 +180,9 @@
       <div class="spec-sheet__caution-tape"></div>
 
       <!-- SPEC 03: Configuration (Variants) -->
+      {%- unless product.has_only_default_variant -%}
       <div class="spec-section spec-sheet__config-section">
         <div class="spec-section__number">SPEC 03 — CONFIGURATION</div>
-
-        {%- unless product.has_only_default_variant -%}
           <variant-selects
             id="variant-selects-{{ section.id }}"
             data-section="{{ section.id }}"
@@ -227,8 +226,8 @@
               {{ product.selected_or_first_available_variant | json }}
             </script>
           </variant-selects>
-        {%- endunless -%}
       </div>
+      {%- endunless -%}
 
       <!-- SPEC 04: Quantity + Add to Cart -->
       <div class="spec-section spec-sheet__cart-section">

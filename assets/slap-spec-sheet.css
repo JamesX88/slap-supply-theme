@@ -968,7 +968,7 @@ details[open] .spec-sheet__accordion-caret {
 
 /* --- Product form error message --- */
 .spec-sheet__cart-section .product-form__error-message-wrapper {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
@@ -978,6 +978,24 @@ details[open] .spec-sheet__accordion-caret {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
   font-size: 13px;
   color: #cc0000;
+}
+
+.spec-sheet__cart-section .product-form__error-message-wrapper:not([hidden]) {
+  display: flex;
+}
+
+/* Hide the error icon SVG when wrapper is hidden */
+.spec-sheet .product-form__error-message-wrapper[hidden] {
+  display: none !important;
+}
+
+/* Fix: Ensure product form submit button icon is properly hidden */
+.spec-sheet .product-form__submit .loading__spinner {
+  display: none;
+}
+
+.spec-sheet .product-form__submit.loading .loading__spinner {
+  display: block;
 }
 
 /* --- Hide Dawn default product styles we don't need --- */
@@ -991,4 +1009,60 @@ details[open] .spec-sheet__accordion-caret {
 product-info.spec-sheet-wrapper {
   display: block;
   width: 100%;
+}
+
+/* Override Dawn's default section padding for spec sheet */
+.template-product [class*="section-"][class*="-padding"] {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Fix: Hide the SVG error icon that shows by default in Dawn */
+.spec-sheet .product-form__error-message-wrapper svg,
+.spec-sheet .product-form__error-message-wrapper .svg-wrapper {
+  display: none;
+}
+
+.spec-sheet .product-form__error-message-wrapper:not([hidden]) svg,
+.spec-sheet .product-form__error-message-wrapper:not([hidden]) .svg-wrapper {
+  display: inline-flex;
+}
+
+/* Ensure the page section has no padding */
+.spec-sheet-wrapper .section-template--padding {
+  padding: 0 !important;
+}
+
+/* Fix: Remove any default page-width constraints */
+.spec-sheet-wrapper .page-width {
+  max-width: none;
+  padding: 0;
+}
+
+/* Fix: Ensure the product-form__buttons layout is correct */
+.spec-sheet .product-form__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: none;
+}
+
+.spec-sheet .product-form__buttons > .product-form__submit {
+  max-width: none;
+}
+
+/* Fix: Shopify payment button styling */
+.spec-sheet .shopify-payment-button {
+  margin-top: 0;
+}
+
+.spec-sheet .shopify-payment-button__button {
+  border-radius: 0 !important;
+  min-height: 48px;
+}
+
+/* Fix: Remove any Dawn section wrapper padding */
+product-info.spec-sheet-wrapper {
+  padding: 0;
+  margin: 0;
 }
