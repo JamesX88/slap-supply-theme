@@ -18,6 +18,7 @@
     file: null,
     originalImage: null,   // HTMLImageElement (original)
     processedImage: null,  // HTMLImageElement (bg removed)
+    processedCanvas: null, // Canvas element with alpha data (for contour tracing)
     showOriginal: true,
     imageDataURL: null,
     processedDataURL: null,
@@ -386,6 +387,7 @@
     STATE.file = null;
     STATE.originalImage = null;
     STATE.processedImage = null;
+    STATE.processedCanvas = null;
     STATE.showOriginal = true;
     STATE.imageDataURL = null;
     STATE.processedDataURL = null;
@@ -592,7 +594,7 @@
     var dataURL = fc.toDataURL('image/png');
     var resultImg = new Image();
     resultImg.src = dataURL;
-    return { image: resultImg, dataURL: dataURL };
+    return { image: resultImg, dataURL: dataURL, canvas: fc };
   }
 
   /* --- ISSUE 1 FIX: BG Removal Overlay Helpers --- */
@@ -695,9 +697,10 @@
       // Step 4: Postprocess and apply mask
       var result = postprocessRMBG(img, maskData);
 
-      // Wait for result image to load
+      // Wait for result image to load, then re-trace contour
       var onReady = function () {
         STATE.processedImage = result.image;
+        STATE.processedCanvas = result.canvas;
         STATE.processedDataURL = result.dataURL;
         STATE.showOriginal = false;
         DOM.previewImg.src = STATE.processedDataURL;
@@ -715,7 +718,7 @@
           hideBgOverlay();
         }, 1200);
 
-        // ISSUE 2 FIX: Re-trace contour with the BG-removed image
+        // Re-trace contour using the processed canvas (has correct alpha data)
         STATE.contourPath = null;
         updateContour();
         renderCanvas();
@@ -723,7 +726,18 @@
         DOM.removeBgBtn.style.opacity = '1';
       };
 
-      if (result.image.complete) {
+      // Use image.decode() to ensure the image is fully decoded before
+      // contour tracing reads its pixel data. Fall back to onload/complete.
+      if (typeof result.image.decode === 'function') {
+        result.image.decode().then(onReady).catch(function () {
+          // decode() failed, try onload fallback
+          if (result.image.complete) {
+            onReady();
+          } else {
+            result.image.onload = onReady;
+          }
+        });
+      } else if (result.image.complete) {
         onReady();
       } else {
         result.image.onload = onReady;
@@ -758,11 +772,13 @@
      CONTOUR TRACING (Marching Squares)
      ISSUE 2 FIX: Properly uses alpha channel from BG-removed images
      ---------------------------------------------------------- */
-  function traceContour(img, padding) {
+  function traceContour(imgOrCanvas, padding) {
     var c = document.createElement('canvas');
     var maxDim = 400;
-    var w = img.naturalWidth || img.width;
-    var h = img.naturalHeight || img.height;
+    // Support both Image elements and Canvas elements as input
+    var isCanvas = (imgOrCanvas instanceof HTMLCanvasElement);
+    var w = isCanvas ? imgOrCanvas.width : (imgOrCanvas.naturalWidth || imgOrCanvas.width);
+    var h = isCanvas ? imgOrCanvas.height : (imgOrCanvas.naturalHeight || imgOrCanvas.height);
     var scale = 1;
     if (Math.max(w, h) > maxDim) {
       scale = maxDim / Math.max(w, h);
@@ -773,9 +789,9 @@
     c.height = ch;
     var ctx = c.getContext('2d');
 
-    // ISSUE 2 FIX: Clear canvas to fully transparent first
+    // Clear canvas to fully transparent first
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, 0, 0, cw, ch);
+    ctx.drawImage(imgOrCanvas, 0, 0, cw, ch);
     var imageData = ctx.getImageData(0, 0, cw, ch);
     var data = imageData.data;
 
@@ -984,14 +1000,31 @@
 
   /* Force re-trace contour every time padding changes */
   function updateContour() {
-    var activeImg = getCurrentImage();
-    if (!activeImg) return;
+    // For contour tracing, prefer the processedCanvas (has reliable alpha data)
+    // over the processedImage (which may not be fully decoded yet)
+    var activeSource = getContourSource();
+    if (!activeSource) return;
     // Always re-trace — clear cached path so traceContour runs fresh
-    STATE.contourPath = traceContour(activeImg, STATE.contourPadding);
+    STATE.contourPath = traceContour(activeSource, STATE.contourPadding);
   }
 
-  function getCurrentImage() {
+  /** Get the best source for contour tracing (Canvas preferred over Image) */
+  function getContourSource() {
+    if (!STATE.showOriginal && STATE.processedCanvas) return STATE.processedCanvas;
     if (!STATE.showOriginal && STATE.processedImage) return STATE.processedImage;
+    return STATE.originalImage;
+  }
+
+  /** Get the current image for rendering (returns Image or Canvas element) */
+  function getCurrentImage() {
+    if (!STATE.showOriginal) {
+      // Prefer processedImage if it's fully loaded, otherwise use processedCanvas
+      if (STATE.processedImage && STATE.processedImage.complete && STATE.processedImage.naturalWidth > 0) {
+        return STATE.processedImage;
+      }
+      if (STATE.processedCanvas) return STATE.processedCanvas;
+      if (STATE.processedImage) return STATE.processedImage;
+    }
     return STATE.originalImage;
   }
 
