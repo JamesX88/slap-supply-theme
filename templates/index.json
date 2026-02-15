@@ -4,7 +4,7 @@
       "type": "slap-hero",
       "settings": {
         "button_label_1": "START CUSTOMIZING",
-        "button_link_1": "/pages/customize",
+        "button_link_1": "/pages/custom-order",
         "button_label_2": "VIEW CATALOG",
         "button_link_2": "/collections/all",
         "color_scheme": "scheme-1"
@@ -207,7 +207,7 @@
         "heading": "<p>READY TO <em>SLAP</em>?</p>",
         "description": "Upload your design, configure your order, and get a free instant proof. No account required.",
         "button_label_1": "START YOUR ORDER",
-        "button_link_1": "/pages/customize",
+        "button_link_1": "/pages/custom-order",
         "button_label_2": "",
         "button_link_2": "",
         "color_scheme": "scheme-3",
