@@ -1,0 +1,596 @@
+{{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
+{{ 'slap-sticker-customizer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sc color-{{ section.settings.color_scheme }}" id="stickerCustomizer">
+  <!-- ============================================================
+       HERO BANNER
+       ============================================================ -->
+  <div class="sc__hero">
+    <div class="page-width">
+      <div class="sc__hero-label">{{ section.settings.label_text }}</div>
+      <h1 class="sc__hero-heading">{{ section.settings.heading }}</h1>
+      <p class="sc__hero-sub">{{ section.settings.subheading }}</p>
+    </div>
+    <div class="section-divider-caution"></div>
+  </div>
+
+  <!-- ============================================================
+       STEP PROGRESS BAR
+       ============================================================ -->
+  <div class="sc__progress">
+    <div class="page-width">
+      <div class="sc__steps">
+        <button class="sc__step sc__step--active" data-step="1">
+          <span class="sc__step-num">01</span>
+          <span class="sc__step-label">UPLOAD</span>
+        </button>
+        <div class="sc__step-line"></div>
+        <button class="sc__step" data-step="2">
+          <span class="sc__step-num">02</span>
+          <span class="sc__step-label">SHAPE</span>
+        </button>
+        <div class="sc__step-line"></div>
+        <button class="sc__step" data-step="3">
+          <span class="sc__step-num">03</span>
+          <span class="sc__step-label">CONFIGURE</span>
+        </button>
+        <div class="sc__step-line"></div>
+        <button class="sc__step" data-step="4">
+          <span class="sc__step-num">04</span>
+          <span class="sc__step-label">PREVIEW</span>
+        </button>
+        <div class="sc__step-line"></div>
+        <button class="sc__step" data-step="5">
+          <span class="sc__step-num">05</span>
+          <span class="sc__step-label">ORDER</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN CONTENT AREA
+       ============================================================ -->
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="sc__layout">
+
+      <!-- ========================================================
+           LEFT COLUMN — CONFIGURATION PANELS
+           ======================================================== -->
+      <div class="sc__config">
+
+        <!-- ======================================================
+             STEP 1 — UPLOAD
+             ====================================================== -->
+        <div class="sc__panel sc__panel--active" data-panel="1">
+          <div class="sc__panel-header">
+            <h2 class="sc__panel-title">UPLOAD YOUR ARTWORK</h2>
+            <p class="sc__panel-desc">Drag & drop your design file or click to browse. We accept PNG, JPG, SVG, and PDF files.</p>
+          </div>
+
+          <!-- Drop Zone -->
+          <div class="sc__upload-zone" id="scUploadZone">
+            <div class="sc__upload-inner">
+              <div class="sc__upload-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M24 32V16M24 16L18 22M24 16L30 22" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                  <path d="M8 32V36C8 38.2 9.8 40 12 40H36C38.2 40 40 38.2 40 36V32" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                </svg>
+              </div>
+              <p class="sc__upload-text">DROP YOUR FILE HERE</p>
+              <p class="sc__upload-sub">or click to browse</p>
+              <input type="file" id="scFileInput" accept=".png,.jpg,.jpeg,.svg,.pdf" hidden>
+            </div>
+          </div>
+
+          <!-- Upload Info -->
+          <div class="sc__upload-info">
+            <div class="sc__upload-info-item">
+              <span class="sc__upload-info-icon">&#10003;</span> Max file size: 50MB
+            </div>
+            <div class="sc__upload-info-item">
+              <span class="sc__upload-info-icon">&#10003;</span> 300 DPI recommended
+            </div>
+            <div class="sc__upload-info-item">
+              <span class="sc__upload-info-icon">&#10003;</span> PNG, JPG, SVG, PDF
+            </div>
+          </div>
+
+          <!-- Upload Preview (hidden by default) -->
+          <div class="sc__upload-preview" id="scUploadPreview" style="display:none;">
+            <div class="sc__upload-preview-img">
+              <img id="scPreviewImg" src="" alt="Preview">
+            </div>
+            <div class="sc__upload-preview-details">
+              <p class="sc__upload-preview-name" id="scFileName"></p>
+              <div class="sc__upload-preview-meta" id="scFileMeta"></div>
+              <!-- DPI Check Badge -->
+              <div class="sc__dpi-badge" id="scDpiBadge" style="display:none;">
+                <span class="sc__dpi-icon" id="scDpiIcon"></span>
+                <span class="sc__dpi-text" id="scDpiText"></span>
+              </div>
+              <div class="sc__upload-actions">
+                <button class="sc__btn-remove-bg" id="scRemoveBgBtn" style="display:none;">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg>
+                  REMOVE BACKGROUND
+                </button>
+                <button class="sc__btn-toggle-bg" id="scToggleBgBtn" style="display:none;">SHOW ORIGINAL</button>
+                <button class="sc__btn-remove-file" id="scRemoveFile">REMOVE FILE</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- BG Removal Status -->
+          <div class="sc__bg-status" id="scBgStatus" style="display:none;">
+            <div class="sc__bg-status-bar"><div class="sc__bg-status-fill" id="scBgFill"></div></div>
+            <span class="sc__bg-status-text" id="scBgText">Removing background...</span>
+          </div>
+
+          <button class="sc__btn-next" data-goto="2" id="scStep1Next" disabled>
+            NEXT: CHOOSE SHAPE &rarr;
+          </button>
+        </div>
+
+        <!-- ======================================================
+             STEP 2 — SHAPE SELECTION
+             ====================================================== -->
+        <div class="sc__panel" data-panel="2">
+          <div class="sc__panel-header">
+            <h2 class="sc__panel-title">CHOOSE YOUR SHAPE</h2>
+            <p class="sc__panel-desc">Select a preset shape or use die-cut to auto-trace your artwork's contour.</p>
+          </div>
+
+          <!-- Shape Type Toggle -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; CUT TYPE</label>
+            <div class="sc__option-buttons">
+              <button class="sc__option-btn sc__option-btn--active" data-option="cutType" data-value="die-cut">
+                <svg class="sc__shape-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4L20 4L18 12L20 20H4L6 12L4 4Z" stroke="currentColor" stroke-width="2"/></svg>
+                DIE-CUT
+              </button>
+              <button class="sc__option-btn" data-option="cutType" data-value="preset">
+                <svg class="sc__shape-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="2"/></svg>
+                PRESET SHAPE
+              </button>
+            </div>
+          </div>
+
+          <!-- Die-Cut Options -->
+          <div class="sc__diecut-options" id="scDiecutOptions">
+            <div class="sc__option-group">
+              <label class="sc__option-label">&#9654; CONTOUR PADDING</label>
+              <div class="sc__slider-wrap">
+                <input type="range" class="sc__slider" id="scContourPadding" min="2" max="30" value="8" step="1">
+                <span class="sc__slider-value" id="scContourPaddingVal">8px</span>
+              </div>
+              <p class="sc__option-hint">Adjusts the gap between artwork edge and cut line</p>
+            </div>
+          </div>
+
+          <!-- Preset Shape Options -->
+          <div class="sc__preset-options" id="scPresetOptions" style="display:none;">
+            <div class="sc__option-group">
+              <label class="sc__option-label">&#9654; SELECT SHAPE</label>
+              <div class="sc__shape-grid">
+                <button class="sc__shape-btn sc__shape-btn--active" data-shape="square">
+                  <svg viewBox="0 0 60 60"><rect x="5" y="5" width="50" height="50" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>SQUARE</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="circle">
+                  <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>CIRCLE</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="oval">
+                  <svg viewBox="0 0 60 60"><ellipse cx="30" cy="30" rx="27" ry="20" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>OVAL</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="rectangle">
+                  <svg viewBox="0 0 80 60"><rect x="5" y="10" width="70" height="40" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>RECTANGLE</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="star">
+                  <svg viewBox="0 0 60 60"><polygon points="30,5 36,22 55,22 40,33 46,50 30,40 14,50 20,33 5,22 24,22" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>STAR</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="heart">
+                  <svg viewBox="0 0 60 60"><path d="M30 50 C10 35 2 20 15 12 C22 7 30 15 30 15 C30 15 38 7 45 12 C58 20 50 35 30 50Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>HEART</span>
+                </button>
+                <button class="sc__shape-btn" data-shape="hexagon">
+                  <svg viewBox="0 0 60 60"><polygon points="30,3 55,17 55,43 30,57 5,43 5,17" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                  <span>HEXAGON</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sc__btn-row">
+            <button class="sc__btn-back" data-goto="1">&larr; BACK</button>
+            <button class="sc__btn-next" data-goto="3">NEXT: CONFIGURE &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 3 — CONFIGURE
+             ====================================================== -->
+        <div class="sc__panel" data-panel="3">
+          <div class="sc__panel-header">
+            <h2 class="sc__panel-title">CONFIGURE YOUR STICKERS</h2>
+            <p class="sc__panel-desc">Choose size, material, finish, quantity, and turnaround time.</p>
+          </div>
+
+          <!-- Size Selector -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; SIZE</label>
+            <div class="sc__option-buttons">
+              <button class="sc__option-btn sc__option-btn--active" data-option="size" data-value="2x2" data-w="2" data-h="2">2" &times; 2"</button>
+              <button class="sc__option-btn" data-option="size" data-value="3x3" data-w="3" data-h="3">3" &times; 3"</button>
+              <button class="sc__option-btn" data-option="size" data-value="4x4" data-w="4" data-h="4">4" &times; 4"</button>
+              <button class="sc__option-btn" data-option="size" data-value="5x5" data-w="5" data-h="5">5" &times; 5"</button>
+              <button class="sc__option-btn" data-option="size" data-value="custom" data-w="0" data-h="0">CUSTOM</button>
+            </div>
+            <div class="sc__custom-size" id="scCustomSize" style="display:none;">
+              <div class="sc__custom-size-inputs">
+                <div class="sc__custom-size-field">
+                  <label>WIDTH (inches)</label>
+                  <input type="number" id="scCustomW" min="1" max="20" step="0.25" value="3" class="sc__input">
+                </div>
+                <span class="sc__custom-size-x">&times;</span>
+                <div class="sc__custom-size-field">
+                  <label>HEIGHT (inches)</label>
+                  <input type="number" id="scCustomH" min="1" max="20" step="0.25" value="3" class="sc__input">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Material Picker -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; MATERIAL</label>
+            <div class="sc__material-grid">
+              <button class="sc__material-btn sc__material-btn--active" data-option="material" data-value="vinyl">
+                <div class="sc__material-swatch sc__material-swatch--vinyl"></div>
+                <span>VINYL</span>
+              </button>
+              <button class="sc__material-btn" data-option="material" data-value="holographic">
+                <div class="sc__material-swatch sc__material-swatch--holographic"></div>
+                <span>HOLOGRAPHIC</span>
+              </button>
+              <button class="sc__material-btn" data-option="material" data-value="glitter">
+                <div class="sc__material-swatch sc__material-swatch--glitter"></div>
+                <span>GLITTER</span>
+              </button>
+              <button class="sc__material-btn" data-option="material" data-value="clear">
+                <div class="sc__material-swatch sc__material-swatch--clear"></div>
+                <span>CLEAR</span>
+              </button>
+              <button class="sc__material-btn" data-option="material" data-value="matte">
+                <div class="sc__material-swatch sc__material-swatch--matte"></div>
+                <span>MATTE</span>
+              </button>
+              <button class="sc__material-btn" data-option="material" data-value="glossy">
+                <div class="sc__material-swatch sc__material-swatch--glossy"></div>
+                <span>GLOSSY</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Finish Options -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; FINISH / LAMINATE</label>
+            <div class="sc__option-buttons">
+              <button class="sc__option-btn sc__option-btn--active" data-option="finish" data-value="none">NONE</button>
+              <button class="sc__option-btn" data-option="finish" data-value="matte-laminate">MATTE LAMINATE</button>
+              <button class="sc__option-btn" data-option="finish" data-value="glossy-laminate">GLOSSY LAMINATE</button>
+              <button class="sc__option-btn" data-option="finish" data-value="uv-coating">UV COATING</button>
+            </div>
+          </div>
+
+          <!-- Quantity Selector -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; QUANTITY</label>
+            <div class="sc__qty-tiers" id="scQtyTiers">
+              <button class="sc__qty-tier sc__qty-tier--active" data-qty="50">
+                <span class="sc__qty-tier-count">50</span>
+                <span class="sc__qty-tier-price">$X.XX ea</span>
+              </button>
+              <button class="sc__qty-tier" data-qty="100">
+                <span class="sc__qty-tier-count">100</span>
+                <span class="sc__qty-tier-price">$X.XX ea</span>
+              </button>
+              <button class="sc__qty-tier" data-qty="250">
+                <span class="sc__qty-tier-count">250</span>
+                <span class="sc__qty-tier-price">$X.XX ea</span>
+              </button>
+              <button class="sc__qty-tier" data-qty="500">
+                <span class="sc__qty-tier-count">500</span>
+                <span class="sc__qty-tier-price">$X.XX ea</span>
+              </button>
+              <button class="sc__qty-tier" data-qty="1000">
+                <span class="sc__qty-tier-count">1,000</span>
+                <span class="sc__qty-tier-price">$X.XX ea</span>
+              </button>
+              <button class="sc__qty-tier" data-qty="custom">
+                <span class="sc__qty-tier-count">CUSTOM</span>
+                <span class="sc__qty-tier-price">&mdash;</span>
+              </button>
+            </div>
+            <div class="sc__custom-qty" id="scCustomQty" style="display:none;">
+              <div class="sc__quantity-wrap">
+                <button class="sc__qty-btn" data-action="decrease">&minus;</button>
+                <input type="number" class="sc__qty-input" id="scQtyInput" value="75" min="10" max="10000" step="10">
+                <button class="sc__qty-btn" data-action="increase">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rush Options -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; TURNAROUND TIME</label>
+            <div class="sc__rush-options">
+              <button class="sc__rush-btn sc__rush-btn--active" data-option="rush" data-value="normal" data-surcharge="0">
+                <span class="sc__rush-name">NORMAL</span>
+                <span class="sc__rush-detail">9 business days</span>
+                <span class="sc__rush-price">No extra charge</span>
+              </button>
+              <button class="sc__rush-btn" data-option="rush" data-value="fast" data-surcharge="15">
+                <span class="sc__rush-name">FAST</span>
+                <span class="sc__rush-detail">5&ndash;7 business days</span>
+                <span class="sc__rush-price">+15% surcharge</span>
+              </button>
+              <button class="sc__rush-btn" data-option="rush" data-value="fastest" data-surcharge="30">
+                <span class="sc__rush-name">FASTEST</span>
+                <span class="sc__rush-detail">3 business days</span>
+                <span class="sc__rush-price">+30% surcharge</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sc__btn-row">
+            <button class="sc__btn-back" data-goto="2">&larr; BACK</button>
+            <button class="sc__btn-next" data-goto="4">NEXT: PREVIEW &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 4 — LIVE PREVIEW
+             ====================================================== -->
+        <div class="sc__panel" data-panel="4">
+          <div class="sc__panel-header">
+            <h2 class="sc__panel-title">LIVE PREVIEW</h2>
+            <p class="sc__panel-desc">Review your sticker design with cut lines, bleed area, and safe zone indicators.</p>
+          </div>
+
+          <div class="sc__preview-legend">
+            <div class="sc__legend-item">
+              <span class="sc__legend-swatch sc__legend-swatch--cut"></span> Cut Line
+            </div>
+            <div class="sc__legend-item">
+              <span class="sc__legend-swatch sc__legend-swatch--bleed"></span> Bleed Area
+            </div>
+            <div class="sc__legend-item">
+              <span class="sc__legend-swatch sc__legend-swatch--safe"></span> Safe Zone
+            </div>
+          </div>
+
+          <div class="sc__canvas-controls">
+            <button class="sc__canvas-ctrl" id="scZoomIn" title="Zoom In">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="10" y1="4" x2="10" y2="16" stroke="currentColor" stroke-width="2"/><line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <button class="sc__canvas-ctrl" id="scZoomOut" title="Zoom Out">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <button class="sc__canvas-ctrl" id="scZoomReset" title="Reset View">FIT</button>
+          </div>
+
+          <div class="sc__btn-row">
+            <button class="sc__btn-back" data-goto="3">&larr; BACK</button>
+            <button class="sc__btn-next" data-goto="5">NEXT: ORDER &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ======================================================
+             STEP 5 — ORDER SUMMARY & ADD TO CART
+             ====================================================== -->
+        <div class="sc__panel" data-panel="5">
+          <div class="sc__panel-header">
+            <h2 class="sc__panel-title">ORDER SUMMARY</h2>
+            <p class="sc__panel-desc">Review your selections and add to cart.</p>
+          </div>
+
+          <div class="sc__summary">
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Shape / Cut</span>
+              <span class="sc__summary-value" id="sumShape">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Size</span>
+              <span class="sc__summary-value" id="sumSize">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Material</span>
+              <span class="sc__summary-value" id="sumMaterial">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Finish</span>
+              <span class="sc__summary-value" id="sumFinish">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Quantity</span>
+              <span class="sc__summary-value" id="sumQty">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Turnaround</span>
+              <span class="sc__summary-value" id="sumRush">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Unit Price</span>
+              <span class="sc__summary-value" id="sumUnitPrice">&mdash;</span>
+            </div>
+            <div class="sc__summary-row">
+              <span class="sc__summary-label">Rush Surcharge</span>
+              <span class="sc__summary-value" id="sumSurcharge">&mdash;</span>
+            </div>
+            <div class="sc__summary-row sc__summary-row--total">
+              <span class="sc__summary-label">ESTIMATED TOTAL</span>
+              <span class="sc__summary-value" id="sumTotal">&mdash;</span>
+            </div>
+          </div>
+
+          <!-- Special Instructions -->
+          <div class="sc__option-group">
+            <label class="sc__option-label">&#9654; SPECIAL INSTRUCTIONS (OPTIONAL)</label>
+            <textarea class="sc__textarea" id="scInstructions" placeholder="Any notes about your order — special colors, placement, etc."></textarea>
+          </div>
+
+          <div class="sc__btn-row">
+            <button class="sc__btn-back" data-goto="4">&larr; BACK</button>
+            <button class="sc__btn-submit" id="scAddToCart">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align:middle;margin-right:8px;"><path d="M6 6H18L16 14H8L6 6ZM6 6L5 2H2" stroke="currentColor" stroke-width="2" stroke-linecap="square"/><circle cx="9" cy="17" r="1.5" fill="currentColor"/><circle cx="15" cy="17" r="1.5" fill="currentColor"/></svg>
+              ADD TO CART &rarr;
+            </button>
+          </div>
+
+          <!-- Success Message -->
+          <div class="sc__success" id="scSuccess" style="display:none;">
+            <div class="sc__success-inner">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#39FF14" stroke-width="3"/><path d="M15 24L21 30L33 18" stroke="#39FF14" stroke-width="3" stroke-linecap="square"/></svg>
+              <h3>ADDED TO CART!</h3>
+              <p>Your custom stickers have been added. Continue shopping or proceed to checkout.</p>
+              <div class="sc__success-btns">
+                <a href="/cart" class="sc__btn-next">VIEW CART &rarr;</a>
+                <button class="sc__btn-back" onclick="location.reload()">NEW ORDER</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.sc__config -->
+
+      <!-- ========================================================
+           RIGHT COLUMN — LIVE PREVIEW CANVAS
+           ======================================================== -->
+      <div class="sc__preview">
+        <div class="sc__preview-sticky">
+          <div class="sc__preview-label">LIVE PREVIEW</div>
+          <div class="sc__preview-canvas-wrap" id="scCanvasWrap">
+            <canvas id="scCanvas" width="500" height="500"></canvas>
+            <div class="sc__preview-placeholder" id="scPlaceholder">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                <rect x="8" y="8" width="48" height="48" stroke="#d4d4d4" stroke-width="2" stroke-dasharray="4 4"/>
+                <path d="M24 40L30 30L36 36L40 32L48 40H24Z" fill="#e5e5e5"/>
+                <circle cx="26" cy="24" r="4" fill="#e5e5e5"/>
+              </svg>
+              <p>Upload artwork to see preview</p>
+            </div>
+          </div>
+
+          <!-- Dimension Labels -->
+          <div class="sc__preview-dims" id="scPreviewDims" style="display:none;">
+            <span class="sc__dim-label" id="scDimW">2"</span>
+            <span class="sc__dim-x">&times;</span>
+            <span class="sc__dim-label" id="scDimH">2"</span>
+          </div>
+
+          <!-- Preview Specs Grid -->
+          <div class="sc__preview-specs">
+            <div class="sc__preview-spec">
+              <span class="sc__preview-spec-label">SIZE</span>
+              <span class="sc__preview-spec-value" id="pvSize">2" &times; 2"</span>
+            </div>
+            <div class="sc__preview-spec">
+              <span class="sc__preview-spec-label">MATERIAL</span>
+              <span class="sc__preview-spec-value" id="pvMaterial">VINYL</span>
+            </div>
+            <div class="sc__preview-spec">
+              <span class="sc__preview-spec-label">SHAPE</span>
+              <span class="sc__preview-spec-value" id="pvShape">DIE-CUT</span>
+            </div>
+            <div class="sc__preview-spec">
+              <span class="sc__preview-spec-label">QTY</span>
+              <span class="sc__preview-spec-value" id="pvQty">50</span>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.sc__preview -->
+
+    </div><!-- /.sc__layout -->
+  </div>
+</div>
+
+<script src="{{ 'slap-sticker-customizer.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "SLAP Sticker Customizer",
+  "tag": "section",
+  "class": "section slap-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "default": "STICKER CUSTOMIZER",
+      "label": "Section Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "DESIGN YOUR CUSTOM STICKERS",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Upload your artwork, choose your shape, pick your specs, and preview your stickers in real-time. Premium quality, blazing fast turnaround.",
+      "label": "Subheading"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "SLAP Sticker Customizer"
+    }
+  ]
+}
+{% endschema %}

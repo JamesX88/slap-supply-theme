@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "sticker_customizer": {
+      "type": "slap-sticker-customizer",
+      "settings": {
+        "label_text": "STICKER CUSTOMIZER",
+        "heading": "DESIGN YOUR CUSTOM STICKERS",
+        "subheading": "Upload your artwork, choose your shape, pick your specs, and preview your stickers in real-time. Premium quality, blazing fast turnaround.",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "customizer_cta": {
+      "type": "slap-cta-banner",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "10K+",
+            "label": "Orders Shipped"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "500+",
+            "label": "5-Star Reviews"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "3 DAY",
+            "label": "Avg. Turnaround"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "settings": {
+        "label_text": "NEED HELP?",
+        "heading": "<p>NOT SURE WHERE<br>TO START?</p>",
+        "description": "Our team can help you choose the right specs for your project. Get in touch for a free consultation.",
+        "button_label_1": "CONTACT US",
+        "button_link_1": "",
+        "button_label_2": "VIEW FAQ",
+        "button_link_2": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "sticker_customizer",
+    "customizer_cta"
+  ]
+}
