@@ -117,8 +117,8 @@
 
         <div class="slap-b2b__form-grid">
           <div class="slap-b2b__form-group">
-            <label class="slap-b2b__form-label" for="b2b-name">FULL NAME *</label>
-            <input class="slap-b2b__form-input" type="text" id="b2b-name" name="contact[name]" required placeholder="Your name">
+            <label class="slap-b2b__form-label" for="b2b-name">CONTACT NAME *</label>
+            <input class="slap-b2b__form-input" type="text" id="b2b-name" name="contact[name]" required placeholder="Your full name">
           </div>
 
           <div class="slap-b2b__form-group">
@@ -161,9 +161,44 @@
             </select>
           </div>
 
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-size">SIZE / DIMENSIONS</label>
+            <input class="slap-b2b__form-input" type="text" id="b2b-size" name="contact[size]" placeholder='e.g., 3" x 3", 4" x 6"'>
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-material">MATERIAL PREFERENCE</label>
+            <select class="slap-b2b__form-select" id="b2b-material" name="contact[material]">
+              <option value="">Select material</option>
+              <option value="Vinyl">Vinyl</option>
+              <option value="BOPP">BOPP (Polypropylene)</option>
+              <option value="Paper">Paper</option>
+              <option value="Clear">Clear / Transparent</option>
+              <option value="Holographic">Holographic</option>
+              <option value="Kraft">Kraft</option>
+              <option value="Not Sure">Not Sure — Recommend One</option>
+            </select>
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-artwork">ARTWORK</label>
+            <select class="slap-b2b__form-select" id="b2b-artwork" name="contact[artwork]">
+              <option value="">Select artwork status</option>
+              <option value="Ready to Upload">Ready to Upload (will email files)</option>
+              <option value="Needs Design Help">Needs Design Help</option>
+              <option value="Has Rough Concept">Has Rough Concept / Sketch</option>
+              <option value="Reorder">Reorder — Same as Previous</option>
+            </select>
+          </div>
+
+          <div class="slap-b2b__form-group">
+            <label class="slap-b2b__form-label" for="b2b-deadline">DEADLINE</label>
+            <input class="slap-b2b__form-input" type="text" id="b2b-deadline" name="contact[deadline]" placeholder="e.g., March 15, 2026 or ASAP">
+          </div>
+
           <div class="slap-b2b__form-group slap-b2b__form-group--full">
-            <label class="slap-b2b__form-label" for="b2b-details">PROJECT DETAILS</label>
-            <textarea class="slap-b2b__form-textarea" id="b2b-details" name="contact[body]" rows="5" placeholder="Tell us about your project — size, material preferences, timeline, recurring needs, etc."></textarea>
+            <label class="slap-b2b__form-label" for="b2b-details">SPECIAL REQUIREMENTS / NOTES</label>
+            <textarea class="slap-b2b__form-textarea" id="b2b-details" name="contact[body]" rows="5" placeholder="Tell us about any special requirements — custom shapes, finishes, packaging, recurring schedule, etc."></textarea>
           </div>
         </div>
 

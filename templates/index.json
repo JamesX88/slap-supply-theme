@@ -6,7 +6,7 @@
         "button_label_1": "START CUSTOMIZING",
         "button_link_1": "/pages/customize",
         "button_label_2": "VIEW CATALOG",
-        "button_link_2": "/pages/customize",
+        "button_link_2": "/collections/all",
         "color_scheme": "scheme-1"
       }
     },
@@ -25,7 +25,8 @@
           "settings": {
             "title": "CUSTOM STICKERS",
             "subtitle": "Die-cut, kiss-cut, vinyl, holographic",
-            "badge_text": "BEST SELLER"
+            "badge_text": "BEST SELLER",
+            "link": "/collections/custom-stickers"
           }
         },
         "cat_2": {
@@ -33,7 +34,8 @@
           "settings": {
             "title": "PRODUCT LABELS",
             "subtitle": "Rolls, sheets, waterproof, freezer-safe",
-            "badge_text": "B2B READY"
+            "badge_text": "B2B READY",
+            "link": "/collections/labels"
           }
         },
         "cat_3": {
@@ -41,7 +43,8 @@
           "settings": {
             "title": "ADHESIVE PRINTS",
             "subtitle": "Wall graphics, floor decals, window clings",
-            "badge_text": "LARGE FORMAT"
+            "badge_text": "LARGE FORMAT",
+            "link": "/collections/adhesive-prints"
           }
         },
         "cat_4": {
@@ -49,7 +52,8 @@
           "settings": {
             "title": "CUSTOM PRINTS",
             "subtitle": "Art prints, posters, packaging inserts",
-            "badge_text": "NEW"
+            "badge_text": "NEW",
+            "link": "/collections/custom-prints"
           }
         }
       },
@@ -203,7 +207,7 @@
         "heading": "<p>READY TO <em>SLAP</em>?</p>",
         "description": "Upload your design, configure your order, and get a free instant proof. No account required.",
         "button_label_1": "START YOUR ORDER",
-        "button_link_1": "",
+        "button_link_1": "/pages/customize",
         "button_label_2": "",
         "button_link_2": "",
         "color_scheme": "scheme-3",
