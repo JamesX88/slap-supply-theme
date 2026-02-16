@@ -175,6 +175,61 @@
 
   <facet-filters-form>
     <form id="FacetFiltersForm" class="slap-catalog__drawer-form">
+      {%- comment -%} Category filter by product type {%- endcomment -%}
+      {%- liquid
+        assign category_types = ''
+        for product in collection.products
+          unless category_types contains product.type
+            if category_types != ''
+              assign category_types = category_types | append: '|||'
+            endif
+            assign category_types = category_types | append: product.type
+          endunless
+        endfor
+        assign category_list = category_types | split: '|||'
+        assign current_category = '' 
+        if request.page_type == 'collection'
+          for param in request.path
+          endfor
+        endif
+      -%}
+      {%- if category_list.size > 0 -%}
+        <div class="slap-catalog__drawer-group js-filter-category" data-index="category">
+          <button type="button" class="slap-catalog__drawer-group-toggle" aria-expanded="true">
+            <span>Category</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M2 4L6 8L10 4"/></svg>
+          </button>
+          <div class="slap-catalog__drawer-group-content">
+            <ul class="slap-catalog__drawer-list">
+              {%- for cat_type in category_list -%}
+                {%- if cat_type != blank -%}
+                  {%- assign cat_count = 0 -%}
+                  {%- for product in collection.products -%}
+                    {%- if product.type == cat_type -%}
+                      {%- assign cat_count = cat_count | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  <li class="slap-catalog__drawer-list-item">
+                    <label class="slap-catalog__drawer-checkbox">
+                      <input
+                        type="checkbox"
+                        name="filter.p.product_type"
+                        value="{{ cat_type | escape }}"
+                        class="slap-catalog__drawer-input"
+                        {% if current_tags contains cat_type %}checked{% endif %}
+                      >
+                      <span class="slap-catalog__drawer-checkmark"></span>
+                      <span class="slap-catalog__drawer-label-text">{{ cat_type | escape }}</span>
+                      <span class="slap-catalog__drawer-label-count">({{ cat_count }})</span>
+                    </label>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+      {%- endif -%}
+
       {%- for filter in collection.filters -%}
         <div class="slap-catalog__drawer-group js-filter" data-index="{{ forloop.index }}">
           <button type="button" class="slap-catalog__drawer-group-toggle" aria-expanded="true">

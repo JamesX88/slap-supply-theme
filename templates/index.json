@@ -4,7 +4,7 @@
       "type": "slap-hero",
       "settings": {
         "button_label_1": "START CUSTOMIZING",
-        "button_link_1": "/pages/custom-order",
+        "button_link_1": "/pages/customizer",
         "button_label_2": "VIEW CATALOG",
         "button_link_2": "/collections/all",
         "color_scheme": "scheme-1"
@@ -35,7 +35,7 @@
             "title": "PRODUCT LABELS",
             "subtitle": "Rolls, sheets, waterproof, freezer-safe",
             "badge_text": "B2B READY",
-            "link": "/collections/labels"
+            "link": "/collections/custom-labels"
           }
         },
         "cat_3": {
@@ -44,7 +44,7 @@
             "title": "ADHESIVE PRINTS",
             "subtitle": "Wall graphics, floor decals, window clings",
             "badge_text": "LARGE FORMAT",
-            "link": "/collections/adhesive-prints"
+            "link": "/collections/custom-adhesives"
           }
         },
         "cat_4": {

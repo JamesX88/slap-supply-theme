@@ -21,44 +21,44 @@ body,
 
 /* Global body text elements */
 p, li, dd, td, th, blockquote {
-  font-size: 2rem; /* 16px base */
+  font-size: 1.1rem;
   line-height: 1.65;
 }
 
 /* RTE (Rich Text Editor) content */
 .rte {
-  font-size: 2rem;
+  font-size: 1.1rem;
   line-height: 1.7;
 }
 
 .rte p {
-  font-size: 2rem;
+  font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 1rem;
 }
 
 .rte li {
-  font-size: 2rem;
+  font-size: 1.1rem;
   line-height: 1.65;
 }
 
 /* ============================================================
    GLOBAL HEADING SIZES — Increase from current small values
    ============================================================ */
-h1:not(.header__heading), .h1, .h0 {
-  font-size: clamp(2rem, 4vw, 3rem) !important;
+h1:not(.header__heading):not(.slap-about-hero__heading):not(.slap-hero-v2__heading), .h1, .h0 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem) !important;
   line-height: 1.1 !important;
   letter-spacing: -1px;
 }
 
-h2:not(.slap-hero-v2__heading), .h2:not(.slap-hero-v2__heading) {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem) !important;
+h2:not(.slap-hero-v2__heading):not(.slap-about-hero__heading), .h2:not(.slap-hero-v2__heading) {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.5px;
 }
 
 h3, .h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem) !important;
+  font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
   line-height: 1.2 !important;
 }
 
@@ -192,7 +192,7 @@ h5, .h5 {
 
 .product-form__input input[type="radio"] + label,
 variant-radios label {
-  font-size: 2rem !important;
+  font-size: 1rem !important;
 }
 
 .product__tax {
@@ -217,7 +217,7 @@ variant-radios label {
 }
 
 .slap-specs-table {
-  font-size: 2rem !important;
+  font-size: 1rem !important;
 }
 
 .slap-specs-table td:first-child {
@@ -249,7 +249,7 @@ variant-radios label {
 }
 
 .slap-category-tab {
-  font-size: 2rem !important;
+  font-size: 1rem !important;
 }
 
 .product-count__text {
@@ -298,7 +298,7 @@ cart-remove-button .button {
 }
 
 .totals__subtotal-value {
-  font-size: 2.2rem !important;
+  font-size: 1.5rem !important;
 }
 
 .tax-note {
@@ -329,7 +329,7 @@ cart-remove-button .button {
    ABOUT PAGE TEXT
    ============================================================ */
 .slap-about-hero__subheading {
-  font-size: 1.5rem !important;
+  font-size: 1.8rem !important;
   line-height: 1.65 !important;
 }
 
@@ -445,7 +445,7 @@ label,
 button[type="submit"],
 .btn,
 a.button {
-  font-size: 2rem !important;
+  font-size: 1rem !important;
 }
 
 /* ============================================================
@@ -538,7 +538,7 @@ a.button {
   }
 
   .slap-about-hero__subheading {
-    font-size: 1.2rem !important;
+    font-size: 1.35rem !important;
     line-height: 1.6 !important;
   }
 
@@ -595,7 +595,7 @@ a.button {
   }
 
   .collection .card__heading {
-    font-size: 2rem !important;
+    font-size: 1rem !important;
   }
 
   /* Hero */
@@ -637,7 +637,7 @@ a.button {
   button[type="submit"],
   .btn,
   a.button {
-    font-size: 2rem !important;
+    font-size: 1rem !important;
     padding: 12px 20px !important;
   }
 
