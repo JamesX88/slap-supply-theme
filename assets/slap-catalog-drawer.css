@@ -38,7 +38,7 @@
 
 .slap-catalog__hero-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -48,7 +48,7 @@
 
 .slap-catalog__hero-title {
   font-family: 'Oswald', sans-serif !important;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(25px, 5vw, 45px);
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
@@ -88,7 +88,7 @@
 
 .slap-catalog__hero-stat-lbl {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -180,7 +180,7 @@
   background: #39FF14;
   color: #1a1a1a;
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   min-width: 20px;
   height: 20px;
@@ -202,7 +202,7 @@
 
 .slap-catalog__sort-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -218,7 +218,7 @@
 
 .slap-catalog__sort-select {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   background: transparent;
@@ -246,7 +246,7 @@
 /* Product Count */
 .slap-catalog__product-count {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -270,7 +270,7 @@
   align-items: center;
   gap: 0.4rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -294,7 +294,7 @@
 
 .slap-catalog__clear-all {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
   color: #737373;
@@ -486,14 +486,14 @@
 
 .slap-catalog__drawer-label-text {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
 }
 
 .slap-catalog__drawer-label-count {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   color: #a3a3a3;
   margin-left: auto;
 }
@@ -527,7 +527,7 @@
 
 .slap-catalog__price-currency {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #737373;
   padding: 0.4rem 0 0.4rem 0.6rem;
@@ -535,7 +535,7 @@
 
 .slap-catalog__price-input {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   border: none;
@@ -563,7 +563,7 @@
 
 .slap-catalog__drawer-clear {
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
   color: #737373;
@@ -693,7 +693,7 @@
   top: 0;
   left: 0;
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -758,7 +758,7 @@
 
 .slap-catalog__card-vendor {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -845,7 +845,7 @@
 
 .slap-catalog__progress-text {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -939,7 +939,7 @@
   }
 
   .slap-catalog__card-title {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
@@ -962,7 +962,7 @@
   }
 
   .slap-catalog__hero-title {
-    font-size: 2.4rem;
+    font-size: 32px;
   }
 
   .slap-catalog__filter-bar-inner {

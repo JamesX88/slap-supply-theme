@@ -48,7 +48,7 @@
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-size: clamp(24px, 5vw, 45px);
   line-height: 1;
   color: var(--slap-white, #ffffff) !important;
   letter-spacing: -0.02em;
@@ -58,7 +58,7 @@
 .slap-custom-order__subheading {
   font-family: 'Space Grotesk', sans-serif !important;
   color: rgba(255, 255, 255, 0.7) !important;
-  font-size: 1.05rem;
+  font-size: 12px;
   line-height: 1.5;
   max-width: 650px;
   margin-top: 1rem;
@@ -75,7 +75,7 @@
   border: 2px solid var(--slap-neon-green, #39FF14);
   background: transparent;
   color: var(--slap-neon-green, #39FF14);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* --- Form Wrapper --- */
@@ -98,7 +98,7 @@
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(18px, 4vw, 28px);
   line-height: 1.1;
   color: var(--slap-black, #1a1a1a);
   margin-top: 0.8rem;
@@ -107,7 +107,7 @@
 
 .slap-custom-order__form-desc {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 2rem;
+  font-size: 20px;
   color: #555;
   line-height: 1.5;
 }
@@ -125,7 +125,7 @@
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 20px;
   letter-spacing: 0.08em;
   color: var(--slap-black, #1a1a1a);
   padding: 0 0.8rem;
@@ -159,7 +159,7 @@
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--slap-black, #1a1a1a);
   margin-bottom: 0.5rem;
@@ -174,7 +174,7 @@
 .slap-form__select,
 .slap-form__textarea {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.95rem;
+  font-size: 12px;
   padding: 0.8rem 1rem;
   border: 2px solid var(--slap-black, #1a1a1a) !important;
   border-radius: 0 !important;
@@ -216,7 +216,7 @@
 
 .slap-form__help-text {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #888;
   margin-bottom: 0.8rem;
 }
@@ -231,7 +231,7 @@
 
 .slap-form__checkbox-label {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.85rem;
+  font-size: 12px;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -292,21 +292,21 @@
 }
 
 .slap-form__file-icon {
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 .slap-form__file-text {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 12px;
   letter-spacing: 0.05em;
   color: var(--slap-black, #1a1a1a);
 }
 
 .slap-form__file-subtext {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: #888;
 }
 
@@ -321,7 +321,7 @@
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.1em;
-  font-size: 1.3rem;
+  font-size: 14px;
   padding: 1.5rem 3rem;
   background-color: var(--slap-neon-green, #39FF14) !important;
   color: var(--slap-black, #1a1a1a) !important;
@@ -355,7 +355,7 @@
 }
 
 .slap-form__submit-arrow {
-  font-size: 1.4rem;
+  font-size: 16px;
   transition: transform 0.2s ease;
 }
 
@@ -365,7 +365,7 @@
 
 .slap-form__submit-note {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #888;
   margin-top: 1rem;
 }
@@ -377,7 +377,7 @@
   }
 
   .slap-custom-order__heading {
-    font-size: 2.2rem;
+    font-size: 22px;
   }
 
   .slap-form__fieldset {
@@ -385,7 +385,7 @@
   }
 
   .slap-form__submit {
-    font-size: 1.1rem;
+    font-size: 12px;
     padding: 1.2rem 2rem;
   }
 
@@ -394,7 +394,7 @@
   }
 
   .slap-form__checkbox-label {
-    font-size: 0.8rem;
+    font-size: 12px;
     padding: 0.4rem 0.8rem;
   }
 }

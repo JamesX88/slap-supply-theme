@@ -92,7 +92,7 @@
   color: var(--slap-black, #1a1a1a);
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 5px 12px;
@@ -163,7 +163,7 @@
   background: var(--slap-black, #1a1a1a);
   color: var(--slap-white, #FFFFFF);
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   padding: 4px 10px;
   letter-spacing: 0.05em;
@@ -202,7 +202,7 @@
 /* Section number label */
 .spec-section__number {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -242,7 +242,7 @@
 
 .spec-sheet__vendor {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -270,7 +270,7 @@
 
 .spec-sheet__sku {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--slap-gray-text, #737373);
   letter-spacing: 0.05em;
@@ -284,7 +284,7 @@
   gap: 6px;
   margin-top: 12px;
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--slap-gray-text, #737373);
 }
 
@@ -301,7 +301,7 @@
 
 .spec-sheet__rating-count {
   color: var(--slap-light-gray-text, #a3a3a3);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* --- SPEC 02: Pricing --- */
@@ -336,7 +336,7 @@
   background: var(--slap-neon-green, #39FF14);
   color: var(--slap-black, #1a1a1a);
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -354,7 +354,7 @@
   background: var(--slap-black, #1a1a1a);
   color: var(--slap-neon-green, #39FF14);
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -406,7 +406,7 @@
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.08em;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--slap-black, #1a1a1a);
   margin-bottom: 8px;
   display: block;
@@ -415,7 +415,7 @@
 /* Pill-style variant buttons */
 .spec-sheet__config-section .product-form__input--pill input[type="radio"] + label {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -484,7 +484,7 @@
   border-left: 2px solid var(--slap-black, #1a1a1a);
   border-right: 2px solid var(--slap-black, #1a1a1a);
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   background: transparent;
   padding: 0;
@@ -575,7 +575,7 @@
   gap: 10px;
   padding: 12px 14px;
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -618,7 +618,7 @@
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.05em;
   color: var(--slap-black, #1a1a1a);
   margin-bottom: 2px;
@@ -626,7 +626,7 @@
 
 .spec-sheet__guarantee-desc {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--slap-gray-text, #737373);
   line-height: 1.4;
 }
@@ -642,7 +642,7 @@
 
 .spec-sheet__payment-label {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--slap-light-gray-text, #a3a3a3);
@@ -658,7 +658,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--slap-gray-text, #737373);
   background: var(--slap-white, #FFFFFF);
@@ -672,7 +672,7 @@
 
 .spec-sheet__description {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
   color: var(--slap-black, #1a1a1a);
 }
@@ -735,7 +735,7 @@
 
 .spec-sheet__accordion-title {
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -769,7 +769,7 @@ details[open] .spec-sheet__accordion-caret {
 .spec-sheet__accordion-content {
   padding: 0 18px 16px 18px;
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--slap-gray-text, #737373);
 }
@@ -792,7 +792,7 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__reviews-title {
   font-family: 'Oswald', var(--font-heading-family), sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -804,12 +804,12 @@ details[open] .spec-sheet__accordion-caret {
   align-items: center;
   gap: 6px;
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--slap-gray-text, #737373);
 }
 
 .spec-sheet__reviews-avg .spec-sheet__stars {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Review card */
@@ -838,13 +838,13 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__review-stars {
   color: var(--slap-neon-green, #39FF14);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 1px;
 }
 
 .spec-sheet__review-verified {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -853,7 +853,7 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__review-text {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.5;
   color: var(--slap-black, #1a1a1a);
   margin-bottom: 8px;
@@ -861,7 +861,7 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__review-author {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--slap-gray-text, #737373);
   text-transform: uppercase;
@@ -874,7 +874,7 @@ details[open] .spec-sheet__accordion-caret {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.08em;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--slap-black, #1a1a1a);
   margin-bottom: 8px;
   display: block;
@@ -890,7 +890,7 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__share-label {
   font-family: 'Space Mono', var(--font-mono-family), monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -922,7 +922,7 @@ details[open] .spec-sheet__accordion-caret {
 
 .spec-sheet__installment .installment {
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* --- RESPONSIVE: Mobile --- */
@@ -981,7 +981,7 @@ details[open] .spec-sheet__accordion-caret {
 
   .spec-sheet__add-to-cart .product-form__submit {
     min-height: 56px;
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 
@@ -995,7 +995,7 @@ details[open] .spec-sheet__accordion-caret {
   background: #fff0f0;
   border: 2px solid #ff4444;
   font-family: 'Space Grotesk', var(--font-body-family), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: #cc0000;
 }
 

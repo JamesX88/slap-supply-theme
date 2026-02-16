@@ -32,7 +32,7 @@
 
 .sc__hero-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -42,7 +42,7 @@
 
 .sc__hero-heading {
   font-family: 'Oswald', sans-serif !important;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(32px, 4vw, 48px);
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
@@ -52,7 +52,7 @@
 
 .sc__hero-sub {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.05rem;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
   max-width: 560px;
   line-height: 1.5;
@@ -89,7 +89,7 @@
 
 .sc__step-num {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 900;
   color: #d4d4d4;
   transition: color 0.2s ease;
@@ -97,7 +97,7 @@
 
 .sc__step-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -161,7 +161,7 @@
 
 .sc__panel-title {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 1.8rem;
+  font-size: 24px;
   font-weight: 900;
   text-transform: uppercase;
   margin: 0 0 0.5rem;
@@ -170,7 +170,7 @@
 
 .sc__panel-desc {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.95rem;
+  font-size: 14px;
   color: #737373;
   line-height: 1.5;
   margin: 0;
@@ -210,7 +210,7 @@
 
 .sc__upload-text {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.2rem;
+  font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -219,7 +219,7 @@
 
 .sc__upload-sub {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   color: #a3a3a3;
   margin: 0;
 }
@@ -233,7 +233,7 @@
 
 .sc__upload-info-item {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #737373;
   display: flex;
   align-items: center;
@@ -279,14 +279,14 @@
 .sc__upload-preview-name {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
   margin: 0 0 0.3rem;
   word-break: break-all;
 }
 
 .sc__upload-preview-meta {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 12px;
   color: #737373;
   margin-bottom: 0.5rem;
 }
@@ -299,7 +299,7 @@
   padding: 0.3rem 0.8rem;
   border: 2px solid;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 0.6rem;
@@ -327,7 +327,7 @@
 
 .sc__btn-remove-bg {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -350,7 +350,7 @@
 
 .sc__btn-toggle-bg {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -369,7 +369,7 @@
 
 .sc__btn-remove-file {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -405,7 +405,7 @@
 
 .sc__bg-status-text {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 12px;
   color: #737373;
 }
 
@@ -426,7 +426,7 @@
 
 .sc__option-label {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 0.95rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -437,7 +437,7 @@
 
 .sc__option-hint {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: #a3a3a3;
   margin: 0.5rem 0 0;
 }
@@ -453,7 +453,7 @@
   border-radius: 0;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 12px;
   padding: 0.6rem 1.2rem;
   background: var(--slap-white, #fff);
   color: var(--slap-black, #1a1a1a);
@@ -514,7 +514,7 @@
 
 .sc__shape-btn span {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -576,7 +576,7 @@
 
 .sc__slider-value {
   font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
+  font-size: 12px;
   font-weight: 700;
   min-width: 40px;
   text-align: right;
@@ -599,7 +599,7 @@
 
 .sc__custom-size-field label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -610,7 +610,7 @@
 
 .sc__input {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 700;
   padding: 0.6rem 0.8rem;
   border: 3px solid var(--slap-black, #1a1a1a);
@@ -627,7 +627,7 @@
 
 .sc__custom-size-x {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.4rem;
+  font-size: 16px;
   font-weight: 700;
   padding-bottom: 0.4rem;
 }
@@ -667,7 +667,7 @@
 
 .sc__material-btn span {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -740,7 +740,7 @@
 
 .sc__qty-tier-count {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
+  font-size: 14px;
   font-weight: 900;
   display: block;
   line-height: 1.2;
@@ -748,7 +748,7 @@
 
 .sc__qty-tier-price {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 12px;
   color: #737373;
   display: block;
 }
@@ -775,7 +775,7 @@
   justify-content: center;
   border: none;
   background: transparent;
-  font-size: 1.2rem;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -791,7 +791,7 @@
   text-align: center;
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 12px;
   border: none;
   border-left: 3px solid var(--slap-black, #1a1a1a);
   border-right: 3px solid var(--slap-black, #1a1a1a);
@@ -839,7 +839,7 @@
 
 .sc__rush-name {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
   min-width: 80px;
@@ -847,7 +847,7 @@
 
 .sc__rush-detail {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   color: #737373;
   flex: 1;
 }
@@ -858,7 +858,7 @@
 
 .sc__rush-price {
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -879,7 +879,7 @@
   align-items: center;
   gap: 0.4rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #737373;
 }
 
@@ -919,7 +919,7 @@
   align-items: center;
   justify-content: center;
   font-family: 'Oswald', sans-serif;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: 700;
   transition: all 0.15s ease;
 }
@@ -957,7 +957,7 @@
 
 .sc__summary-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -967,7 +967,7 @@
 .sc__summary-value {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
 }
 
 .sc__summary-row--total .sc__summary-label {
@@ -977,7 +977,7 @@
 .sc__summary-row--total .sc__summary-value {
   color: var(--slap-neon-green, #39FF14);
   font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
+  font-size: 14px;
   font-weight: 900;
 }
 
@@ -988,7 +988,7 @@
   border: 3px solid var(--slap-black, #1a1a1a);
   border-radius: 0;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   padding: 0.8rem;
   resize: vertical;
   box-sizing: border-box;
@@ -1014,7 +1014,7 @@
 
 .sc__success-inner h3 {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 1.8rem;
+  font-size: 18px;
   font-weight: 900;
   margin: 1rem 0 0.5rem;
 }
@@ -1044,7 +1044,7 @@
 .sc__btn-next,
 .sc__btn-submit {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1088,7 +1088,7 @@
 
 .sc__btn-back {
   font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1122,7 +1122,7 @@
 
 .sc__preview-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -1159,7 +1159,7 @@
 
 .sc__preview-placeholder p {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   margin: 0;
 }
 
@@ -1174,13 +1174,13 @@
 
 .sc__dim-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.4rem;
+  font-size: 16px;
   font-weight: 900;
 }
 
 .sc__dim-x {
   font-family: 'Oswald', sans-serif;
-  font-size: 1rem;
+  font-size: 12px;
   color: #737373;
 }
 
@@ -1207,7 +1207,7 @@
 
 .sc__preview-spec-label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1218,7 +1218,7 @@
 
 .sc__preview-spec-value {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   display: block;
@@ -1240,7 +1240,7 @@
 
 .sc__transform-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1251,7 +1251,7 @@
 
 .sc__btn-reset-transform {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1278,7 +1278,7 @@
 /* Enhanced Remove Background button (Issue 2 fix) */
 .sc__btn-remove-bg {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 0.75rem !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1304,7 +1304,7 @@
 
 .sc__btn-toggle-bg {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 0.7rem !important;
+  font-size: 12px !important;
   font-weight: 700 !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1375,11 +1375,11 @@
   }
 
   .sc__step-label {
-    font-size: 0.7rem;
+    font-size: 12px;
   }
 
   .sc__step-num {
-    font-size: 0.9rem;
+    font-size: 12px;
   }
 
   .sc__layout {
@@ -1520,7 +1520,7 @@
 
 .sc__bg-overlay-title {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1530,7 +1530,7 @@
 
 .sc__bg-overlay-status {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-size: 12px;
   font-weight: 600;
   color: #fff;
   margin-bottom: 1.5rem;
@@ -1584,7 +1584,7 @@
 
 .sc__bg-overlay-pct {
   font-family: 'Space Mono', monospace;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 700;
   color: var(--slap-neon-green, #39FF14);
   min-width: 48px;
@@ -1593,7 +1593,7 @@
 
 .sc__bg-overlay-substatus {
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 12px;
   color: #737373;
   letter-spacing: 0.05em;
 }
@@ -1646,7 +1646,7 @@
 
 .sc__ruler-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 700;
   color: var(--slap-black, #1a1a1a);
   white-space: nowrap;

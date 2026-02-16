@@ -30,7 +30,7 @@
 
 .slap-customizer__hero-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -40,7 +40,7 @@
 
 .slap-customizer__hero-heading {
   font-family: 'Oswald', sans-serif !important;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(32px, 4vw, 48px);
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
@@ -50,7 +50,7 @@
 
 .slap-customizer__hero-sub {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.05rem;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
   max-width: 500px;
   line-height: 1.5;
@@ -84,7 +84,7 @@
 
 .slap-customizer__step-num {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.2rem;
+  font-size: 14px;
   font-weight: 900;
   color: #d4d4d4;
   transition: color 0.2s ease;
@@ -92,7 +92,7 @@
 
 .slap-customizer__step-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -149,7 +149,7 @@
 
 .slap-customizer__panel-title {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 1.8rem;
+  font-size: 18px;
   font-weight: 900;
   text-transform: uppercase;
   margin: 0 0 0.5rem;
@@ -158,7 +158,7 @@
 
 .slap-customizer__panel-desc {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.95rem;
+  font-size: 12px;
   color: #737373;
   line-height: 1.5;
   margin: 0;
@@ -194,7 +194,7 @@
 
 .slap-customizer__upload-text {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.2rem;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -203,7 +203,7 @@
 
 .slap-customizer__upload-sub {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   color: #a3a3a3;
   margin: 0;
 }
@@ -217,7 +217,7 @@
 
 .slap-customizer__upload-info-item {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #737373;
   display: flex;
   align-items: center;
@@ -257,14 +257,14 @@
 .slap-customizer__upload-preview-name {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
   margin: 0 0 0.3rem;
   word-break: break-all;
 }
 
 .slap-customizer__upload-remove {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -289,7 +289,7 @@
 
 .slap-customizer__option-label {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 0.95rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -309,7 +309,7 @@
   border-radius: 0;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 12px;
   padding: 0.6rem 1.2rem;
   background: var(--slap-white);
   color: var(--slap-black);
@@ -348,7 +348,7 @@
   justify-content: center;
   border: none;
   background: transparent;
-  font-size: 1.2rem;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -364,7 +364,7 @@
   text-align: center;
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 12px;
   border: none;
   border-left: 3px solid var(--slap-black);
   border-right: 3px solid var(--slap-black);
@@ -386,7 +386,7 @@
 
 .slap-customizer__qty-preset {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   padding: 0.3rem 0.6rem;
   border: 2px solid #d4d4d4;
@@ -409,7 +409,7 @@
   border: 3px solid var(--slap-black);
   border-radius: 0;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   padding: 0.8rem;
   resize: vertical;
 }
@@ -430,7 +430,7 @@
 .slap-customizer__btn-next,
 .slap-customizer__btn-submit {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.1rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -455,7 +455,7 @@
 
 .slap-customizer__btn-back {
   font-family: 'Oswald', sans-serif;
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -498,7 +498,7 @@
 
 .slap-customizer__summary-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -508,7 +508,7 @@
 .slap-customizer__summary-value {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
 }
 
 .slap-customizer__summary-row--total .slap-customizer__summary-label {
@@ -518,7 +518,7 @@
 .slap-customizer__summary-row--total .slap-customizer__summary-value {
   color: var(--slap-neon-green);
   font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
+  font-size: 14px;
   font-weight: 900;
 }
 
@@ -534,7 +534,7 @@
 
 .slap-customizer__preview-label {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -563,7 +563,7 @@
 
 .slap-customizer__preview-placeholder p {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-size: 12px;
   margin: 0;
 }
 
@@ -596,7 +596,7 @@
 
 .slap-customizer__preview-spec-label {
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -607,7 +607,7 @@
 
 .slap-customizer__preview-spec-value {
   font-family: 'Oswald', sans-serif;
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
   display: block;

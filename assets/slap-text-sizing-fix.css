@@ -1,8 +1,8 @@
 /* ============================================================
-   SLAP SUPPLY — TEXT SIZING FIX
-   Ensures readable text across all pages, especially mobile.
-   Mobile body text minimum: 16px
-   Desktop body text: comfortable reading size
+   SLAP SUPPLY — COMPREHENSIVE TEXT SIZING FIX
+   Root font-size is 10px, so ALL rem values compute tiny.
+   This file uses px values exclusively to guarantee correct sizes.
+   This file MUST load LAST to override all other stylesheets.
    ============================================================ */
 
 /* ============================================================
@@ -19,17 +19,29 @@ body,
   line-height: 1.65;
 }
 
-/* Global body text elements — exclude p tags inside headings (Shopify richtext wraps in <p>) */
+/* ============================================================
+   GLOBAL p / body text — THE #1 ISSUE
+   Many Shopify richtext sections wrap content in <p> tags.
+   The old rule was 1.1rem = 11px. Must be 16px minimum.
+   ============================================================ */
 p, li, dd, td, th, blockquote {
-  font-size: 1.1rem;
-  line-height: 1.65;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
 }
 
 /* Prevent the global p rule from breaking headings that contain richtext <p> tags */
-h1 p, h2 p, h3 p, h4 p,
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p,
 .slap-about-hero__heading p,
 .slap-cta__heading p,
-.slap-cta-v2__heading p {
+.slap-cta-v2__heading p,
+.slap-hero-v2__heading p,
+.slap-hiw__heading p,
+.slap-about-acronym__heading p,
+.slap-about-story__heading p,
+.slap-about-facility__heading p,
+.slap-faq__hero-title p,
+.slap-collection__title p,
+.slap-catalog__hero-title p {
   font-size: inherit !important;
   line-height: inherit !important;
   font-weight: inherit !important;
@@ -39,48 +51,42 @@ h1 p, h2 p, h3 p, h4 p,
 
 /* RTE (Rich Text Editor) content */
 .rte {
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
 }
 
-.rte p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
-
-.rte li {
-  font-size: 1.1rem;
-  line-height: 1.65;
+.rte p, .rte li {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
 }
 
 /* ============================================================
-   GLOBAL HEADING SIZES — Increase from current small values
+   GLOBAL HEADING SIZES — px-based for reliability
    ============================================================ */
 h1:not(.header__heading):not(.slap-about-hero__heading):not(.slap-hero-v2__heading), .h1, .h0 {
-  font-size: clamp(2.25rem, 5vw, 3.5rem) !important;
+  font-size: clamp(36px, 5vw, 56px) !important;
   line-height: 1.1 !important;
   letter-spacing: -1px;
 }
 
-h2:not(.slap-hero-v2__heading):not(.slap-about-hero__heading):not(.slap-about-acronym__heading):not(.slap-about-story__heading):not(.slap-about-facility__heading):not(.slap-hiw__heading):not(.slap-cta__heading), .h2:not(.slap-hero-v2__heading) {
-  font-size: clamp(2rem, 4vw, 3rem) !important;
+h2:not(.slap-hero-v2__heading):not(.slap-about-hero__heading):not(.slap-about-acronym__heading):not(.slap-about-story__heading):not(.slap-about-facility__heading):not(.slap-hiw__heading):not(.slap-cta__heading):not(.slap-faq__hero-title), .h2:not(.slap-hero-v2__heading) {
+  font-size: clamp(32px, 4vw, 48px) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.5px;
 }
 
 h3, .h3 {
-  font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
+  font-size: clamp(24px, 3vw, 32px) !important;
   line-height: 1.2 !important;
 }
 
 h4, .h4 {
-  font-size: clamp(1.15rem, 2vw, 1.5rem) !important;
+  font-size: clamp(18px, 2vw, 24px) !important;
   line-height: 1.3 !important;
 }
 
 h5, .h5 {
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem) !important;
+  font-size: clamp(14px, 1.5vw, 16px) !important;
   line-height: 1.4 !important;
   letter-spacing: 0.5px;
 }
@@ -91,12 +97,24 @@ h5, .h5 {
 .header__menu-item,
 .header__menu-item span,
 .list-menu__item--link {
-  font-size: 13px !important;
+  font-size: 14px !important;
+}
+
+.slap-header-nav__link {
+  font-size: 14px !important;
+}
+
+.slap-header-nav__cta {
+  font-size: 14px !important;
 }
 
 .header__heading-link .h2,
 .header__heading-link span.slap-header-logo__brand {
   font-size: 28px !important;
+}
+
+.slap-header-logo__tagline {
+  font-size: 10px !important; /* Intentionally small decorative tagline */
 }
 
 /* Mobile drawer menu */
@@ -105,12 +123,22 @@ h5, .h5 {
   padding: 12px 0 !important;
 }
 
+/* Log in link in drawer */
+.menu-drawer__account {
+  font-size: 14px !important;
+}
+
+/* Search field label */
+.field__label {
+  font-size: 14px !important;
+}
+
 /* ============================================================
    ANNOUNCEMENT BAR
    ============================================================ */
 .slap-announcement-bar__item,
 .slap-announcement-bar__sep {
-  font-size: 12px !important;
+  font-size: 12px !important; /* Intentionally small for ticker */
 }
 
 /* ============================================================
@@ -121,8 +149,9 @@ h5, .h5 {
   line-height: 1.6 !important;
 }
 
-.slap-hero-v2__btn {
-  font-size: 15px !important;
+.slap-hero-v2__btn,
+.slap-hero__btn {
+  font-size: 16px !important;
   padding: 16px 32px !important;
 }
 
@@ -140,11 +169,11 @@ h5, .h5 {
 }
 
 .slap-cat-card__configure {
-  font-size: 13px !important;
+  font-size: 14px !important;
 }
 
 .slap-cat-card__badge {
-  font-size: 10px !important;
+  font-size: 11px !important;
 }
 
 /* ============================================================
@@ -162,6 +191,46 @@ h5, .h5 {
   line-height: 1.6 !important;
 }
 
+.slap-hiw__step-number,
+.slap-hiw-v2__step-number {
+  font-size: 14px !important;
+}
+
+/* ============================================================
+   REVIEWS SECTION TEXT
+   ============================================================ */
+.slap-reviews__card-text,
+.slap-product-reviews__card-text,
+.spec-sheet__review-text {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+.slap-reviews__card-author,
+.slap-product-reviews__card-author,
+.spec-sheet__review-author {
+  font-size: 14px !important;
+}
+
+.slap-reviews__card-title,
+.slap-product-reviews__card-title {
+  font-size: 18px !important;
+}
+
+.slap-reviews__card-role,
+.slap-product-reviews__card-role {
+  font-size: 14px !important;
+}
+
+.slap-reviews__card-verified,
+.slap-product-reviews__card-verified {
+  font-size: 12px !important;
+}
+
+.slap-reviews__rating-text {
+  font-size: 14px !important;
+}
+
 /* ============================================================
    CTA BANNER TEXT
    ============================================================ */
@@ -171,219 +240,605 @@ h5, .h5 {
   line-height: 1.6 !important;
 }
 
+.slap-cta__stat-label,
+.slap-cta-v2__stat-label {
+  font-size: 12px !important;
+}
+
+.slap-cta__stat-number,
+.slap-cta-v2__stat-number {
+  font-size: 25px !important;
+}
+
 /* ============================================================
-   PRODUCT PAGE TEXT
+   PRODUCT PAGE TEXT (Spec Sheet)
    ============================================================ */
+
+/* Product title */
+.spec-sheet__title {
+  font-size: 36px !important;
+  line-height: 1.1 !important;
+}
+
+/* Vendor */
+.spec-sheet__vendor {
+  font-size: 12px !important;
+}
+
+/* SKU */
+.spec-sheet__sku {
+  font-size: 12px !important;
+}
+
+/* Spec section numbers (decorative labels) */
+.spec-section__number {
+  font-size: 11px !important;
+}
+
+/* Social proof / rating */
+.spec-sheet__social-proof {
+  font-size: 14px !important;
+}
+
+.spec-sheet__stars {
+  font-size: 14px !important;
+}
+
+.spec-sheet__rating-text {
+  font-size: 14px !important;
+}
+
+.spec-sheet__rating-count {
+  font-size: 13px !important;
+}
+
+/* Pricing */
+.spec-sheet__price-current {
+  font-size: 36px !important;
+}
+
+.spec-sheet__price-compare {
+  font-size: 20px !important;
+}
+
+/* Sale badge */
+.spec-sheet__sale-badge,
+.spec-sheet__badge {
+  font-size: 11px !important;
+}
+
+.spec-sheet__image-counter {
+  font-size: 11px !important;
+}
+
+/* Urgency text */
+.spec-sheet__urgency,
+.spec-sheet__urgency span {
+  font-size: 14px !important;
+}
+
+/* Variant labels - CRITICAL FIX */
+.spec-sheet__details label,
+.spec-section label,
+variant-radios label,
+.product-form__input label {
+  font-size: 14px !important;
+}
+
+/* Variant option group title */
+.spec-sheet__option-title,
+.product-form__input .form__label,
+.spec-sheet__config-section .form__label {
+  font-size: 14px !important;
+}
+
+/* Variant pill labels */
+.spec-sheet__config-section .product-form__input--pill input[type="radio"] + label {
+  font-size: 14px !important;
+}
+
+/* Quantity label */
+.spec-sheet__qty-label {
+  font-size: 14px !important;
+}
+
+/* Add to Cart button - CRITICAL FIX */
+.spec-sheet__atc,
+.spec-sheet__atc span,
+#ProductSubmitButton-template--27887616262310__main,
+[id^="ProductSubmitButton"],
+.spec-sheet__add-to-cart .product-form__submit,
+.product-form__submit {
+  font-size: 16px !important;
+}
+
+/* Buy it now button - CRITICAL FIX */
+.shopify-payment-button__button,
+.shopify-payment-button__button * {
+  font-size: 16px !important;
+}
+
+/* Trust items */
+.spec-sheet__trust-item {
+  font-size: 14px !important;
+}
+
+/* Guarantee */
+.spec-sheet__guarantee-title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+.spec-sheet__guarantee-text {
+  font-size: 14px !important;
+}
+
+/* Payment label */
+.spec-sheet__payment-label {
+  font-size: 12px !important;
+}
+
+.spec-sheet__payment-badge {
+  font-size: 12px !important;
+}
+
+/* Product description - CRITICAL FIX for nested p tags */
+.spec-sheet__description,
 .product__description {
-  font-size: 1.1rem !important;
+  font-size: 16px !important;
   line-height: 1.75 !important;
 }
 
+.spec-sheet__description p,
 .product__description p {
-  font-size: 1.1rem !important;
+  font-size: 16px !important;
   line-height: 1.75 !important;
 }
 
+.spec-sheet__description li,
 .product__description li {
-  font-size: 1.05rem !important;
+  font-size: 16px !important;
   line-height: 1.65 !important;
 }
 
+.spec-sheet__description strong,
+.product__description strong {
+  font-size: inherit !important;
+}
+
+/* Accordion titles and content */
+.spec-sheet__accordion-title,
+.product__accordion .accordion__title {
+  font-size: 16px !important;
+}
+
+.spec-sheet__accordion-content,
 .product__accordion .accordion__content {
-  font-size: 1.05rem !important;
+  font-size: 16px !important;
   line-height: 1.7 !important;
 }
 
-.product__accordion .accordion__title {
-  font-size: 1.15rem !important;
+.spec-sheet__accordion-content p,
+.product__accordion .accordion__content p {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
 }
 
-.product-form__input .form__label {
-  font-size: 1.05rem !important;
+/* Product reviews on product page */
+.spec-sheet__reviews-title {
+  font-size: 20px !important;
 }
 
-.product-form__input input[type="radio"] + label,
-variant-radios label {
-  font-size: 1rem !important;
-}
-
+/* Product tax */
 .product__tax {
-  font-size: 0.9rem !important;
+  font-size: 14px !important;
 }
 
+/* Trust / value props */
 .slap-product-trust__item {
-  font-size: 0.9rem !important;
+  font-size: 14px !important;
 }
 
 .slap-value-props__item {
-  font-size: 0.9rem !important;
+  font-size: 14px !important;
+}
+
+.slap-guarantee__title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
 }
 
 .slap-guarantee__desc {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
   line-height: 1.5 !important;
 }
 
 .slap-social-proof {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 .slap-specs-table {
-  font-size: 1rem !important;
+  font-size: 14px !important;
 }
 
 .slap-specs-table td:first-child {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 /* ============================================================
    COLLECTION PAGE TEXT
    ============================================================ */
+
+/* Collection hero */
+.slap-catalog__hero-title,
+.collection-hero__title {
+  font-size: clamp(36px, 5vw, 56px) !important;
+}
+
 .collection-hero__description {
-  font-size: 1.1rem !important;
+  font-size: 16px !important;
   line-height: 1.6 !important;
 }
 
+/* Hero label */
+.slap-catalog__hero-label {
+  font-size: 11px !important;
+}
+
+/* Hero stat numbers */
+.slap-catalog__hero-stat-num {
+  font-size: 24px !important;
+}
+
+/* Hero stat labels - CRITICAL FIX */
+.slap-catalog__hero-stat-lbl {
+  font-size: 11px !important;
+}
+
+/* Product count */
+.slap-catalog__product-count,
+.product-count__text {
+  font-size: 12px !important;
+}
+
+/* Filter/sort controls */
+.slap-catalog__filter-btn,
+#SlapFilterToggle {
+  font-size: 14px !important;
+}
+
+.slap-catalog__sort-label {
+  font-size: 12px !important;
+}
+
+#SlapSortBy {
+  font-size: 14px !important;
+}
+
+/* Product card titles */
+.slap-catalog__card-name,
 .collection .card__heading {
-  font-size: 1.05rem !important;
+  font-size: 18px !important;
 }
 
-.collection .price-item {
-  font-size: 1.1rem !important;
+/* Product card prices - CRITICAL FIX */
+.slap-catalog__card-price {
+  font-size: 16px !important;
 }
 
+.slap-catalog__card-compare {
+  font-size: 14px !important;
+}
+
+/* Card badges - CRITICAL FIX */
+.slap-catalog__card-badge,
 .collection .card__badge .badge {
-  font-size: 10px !important;
+  font-size: 11px !important;
 }
 
+/* Quick view button */
+.slap-catalog__quick-view {
+  font-size: 12px !important;
+}
+
+/* Filter drawer */
+.slap-catalog__drawer-group-toggle,
+.slap-catalog__drawer-group-toggle span {
+  font-size: 14px !important;
+}
+
+.slap-catalog__drawer-label-text {
+  font-size: 14px !important;
+}
+
+.slap-catalog__drawer-label-count {
+  font-size: 12px !important;
+}
+
+.slap-catalog__drawer-clear,
+#SlapDrawerApply {
+  font-size: 14px !important;
+}
+
+.slap-catalog__price-currency {
+  font-size: 14px !important;
+}
+
+/* Collection label */
 .slap-collection-label {
   font-size: 11px !important;
 }
 
 .slap-category-tab {
-  font-size: 1rem !important;
-}
-
-.product-count__text {
-  font-size: 11px !important;
+  font-size: 14px !important;
 }
 
 .facets__heading,
 .facet-filters__label label,
 .facet-filters__label {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
+}
+
+/* ============================================================
+   FAQ PAGE TEXT
+   ============================================================ */
+
+/* FAQ answer text - CRITICAL FIX for nested p tags */
+.slap-faq__answer,
+.slap-faq__answer-inner {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+
+.slap-faq__answer p,
+.slap-faq__answer-inner p {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+
+.slap-faq__question-text {
+  font-size: 16px !important;
+}
+
+.slap-faq__category-title {
+  font-size: 24px !important;
+}
+
+.slap-faq__category-desc {
+  font-size: 14px !important;
+}
+
+.slap-faq__cta-text {
+  font-size: 16px !important;
+}
+
+.slap-faq__cta-btn {
+  font-size: 16px !important;
+}
+
+/* ============================================================
+   CUSTOMIZE / STICKER CUSTOMIZER PAGE TEXT
+   ============================================================ */
+
+/* Hero label */
+.sc__hero-label {
+  font-size: 11px !important;
+}
+
+/* Hero title */
+.sc__hero-title {
+  font-size: clamp(32px, 4vw, 48px) !important;
+}
+
+/* Hero subtitle */
+.sc__hero-subtitle {
+  font-size: 16px !important;
+}
+
+/* Step labels - CRITICAL FIX */
+.sc__step-label {
+  font-size: 12px !important;
+}
+
+.sc__step-num {
+  font-size: 12px !important;
+}
+
+/* Section titles */
+.sc__section-title {
+  font-size: 24px !important;
+}
+
+.sc__section-subtitle {
+  font-size: 16px !important;
+}
+
+/* Upload zone text - CRITICAL FIX */
+.sc__upload-text {
+  font-size: 16px !important;
+}
+
+.sc__upload-sub {
+  font-size: 14px !important;
+}
+
+/* Upload info items - CRITICAL FIX */
+.sc__upload-info-item {
+  font-size: 12px !important;
+}
+
+/* Buttons in customizer - CRITICAL FIX */
+.sc__btn-remove-bg,
+.sc__btn-toggle-bg,
+.sc__btn-remove-file {
+  font-size: 12px !important;
+}
+
+.sc__bg-status-text {
+  font-size: 12px !important;
+}
+
+/* Next/prev step buttons - CRITICAL FIX */
+#scStep1Next,
+#scStep2Next,
+#scStep3Next,
+#scStep4Next,
+#scStep5Next,
+.sc__btn-next,
+.sc__btn-prev,
+[id^="scStep"][id$="Next"],
+[id^="scStep"][id$="Prev"] {
+  font-size: 16px !important;
+}
+
+/* Preview panel */
+.sc__preview-label {
+  font-size: 11px !important;
+}
+
+.sc__preview-placeholder {
+  font-size: 16px !important;
+}
+
+/* Preview stats table */
+.sc__preview-stats td,
+.sc__preview-stats th {
+  font-size: 14px !important;
+}
+
+/* Shape option labels */
+.sc__shape-label {
+  font-size: 14px !important;
+}
+
+/* Config option labels */
+.sc__config-label,
+.sc__config-value {
+  font-size: 14px !important;
+}
+
+/* Summary items */
+.sc__summary-label,
+.sc__summary-value {
+  font-size: 14px !important;
+}
+
+.sc__summary-total-label,
+.sc__summary-total-value {
+  font-size: 18px !important;
 }
 
 /* ============================================================
    CART PAGE TEXT
    ============================================================ */
 .cart-items thead th {
-  font-size: 10px !important;
+  font-size: 11px !important;
 }
 
 .cart-item__name {
-  font-size: 1.15rem !important;
+  font-size: 16px !important;
 }
 
 .cart-item__details dt {
-  font-size: 0.85rem !important;
+  font-size: 12px !important;
 }
 
 .cart-item__details dd {
-  font-size: 0.9rem !important;
+  font-size: 14px !important;
 }
 
 .cart-item .price {
-  font-size: 1.15rem !important;
+  font-size: 16px !important;
 }
 
 .cart-item__totals .price {
-  font-size: 1.25rem !important;
+  font-size: 18px !important;
 }
 
 cart-remove-button .button {
-  font-size: 0.8rem !important;
+  font-size: 12px !important;
 }
 
 .totals__subtotal {
-  font-size: 1.05rem !important;
+  font-size: 16px !important;
 }
 
 .totals__subtotal-value {
-  font-size: 1.5rem !important;
+  font-size: 20px !important;
 }
 
 .tax-note {
-  font-size: 0.85rem !important;
+  font-size: 12px !important;
 }
 
 .cart__note label {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 .slap-shipping-bar__text {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 .slap-cart-trust__item {
-  font-size: 0.85rem !important;
+  font-size: 12px !important;
 }
 
 .slap-promo-code__label {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 .slap-promo-code__input {
-  font-size: 0.95rem !important;
+  font-size: 14px !important;
 }
 
 /* ============================================================
    ABOUT PAGE TEXT
    ============================================================ */
 .slap-about-hero__subheading {
-  font-size: 1.8rem !important;
+  font-size: 18px !important;
   line-height: 1.65 !important;
 }
 
 .slap-about-acronym__subheading {
-  font-size: 1.25rem !important;
+  font-size: 16px !important;
   line-height: 1.65 !important;
 }
 
 .slap-about-acronym__desc {
-  font-size: 1.1rem !important;
+  font-size: 16px !important;
   line-height: 1.6 !important;
 }
 
 .slap-about-acronym__word {
-  font-size: 1.6rem !important;
+  font-size: 18px !important;
 }
 
-.slap-about-story__text {
-  font-size: 1.2rem !important;
+.slap-about-story__text,
+.slap-about-story__text p {
+  font-size: 16px !important;
   line-height: 1.8 !important;
 }
 
 .slap-about-value__text {
-  font-size: 1.1rem !important;
+  font-size: 16px !important;
   line-height: 1.6 !important;
 }
 
 .slap-about-value__title {
-  font-size: 1.35rem !important;
+  font-size: 18px !important;
 }
 
 .slap-about-facility__desc {
-  font-size: 1.25rem !important;
+  font-size: 16px !important;
   line-height: 1.7 !important;
 }
 
 .slap-about-facility__cap-title {
-  font-size: 1.25rem !important;
+  font-size: 16px !important;
 }
 
 .slap-about-facility__cap-text {
-  font-size: 1.05rem !important;
+  font-size: 14px !important;
   line-height: 1.6 !important;
 }
 
@@ -425,13 +880,6 @@ cart-remove-button .button {
 }
 
 /* ============================================================
-   CUSTOMIZER PAGE TEXT
-   ============================================================ */
-.slap-customizer__hero-label {
-  font-size: 11px !important;
-}
-
-/* ============================================================
    FORM ELEMENTS — Ensure readable input text
    ============================================================ */
 input[type="text"],
@@ -446,22 +894,16 @@ select,
   font-size: 16px !important; /* Prevents iOS zoom on focus */
 }
 
-label,
-.field__label {
-  font-size: 0.95rem !important;
-}
-
-/* Buttons */
+/* Buttons - GLOBAL FIX */
 .button,
-.shopify-payment-button__button,
 button[type="submit"],
 .btn,
 a.button {
-  font-size: 1rem !important;
+  font-size: 16px !important;
 }
 
 /* ============================================================
-   STATION LABELS — Slightly increase for readability
+   STATION LABELS — Decorative, intentionally small
    ============================================================ */
 .slap-hero-v2__station-label,
 .slap-categories-v2__station-label,
@@ -491,7 +933,6 @@ a.button {
 
 /* ============================================================
    MOBILE-SPECIFIC OVERRIDES (max-width: 749px)
-   Ensure minimum 16px body text on mobile
    ============================================================ */
 @media screen and (max-width: 749px) {
   body {
@@ -506,10 +947,11 @@ a.button {
   }
 
   /* Keep heading child p tags inheriting on mobile too */
-  h1 p, h2 p, h3 p, h4 p,
+  h1 p, h2 p, h3 p, h4 p, h5 p, h6 p,
   .slap-about-hero__heading p,
   .slap-cta__heading p,
-  .slap-cta-v2__heading p {
+  .slap-cta-v2__heading p,
+  .slap-hero-v2__heading p {
     font-size: inherit !important;
     line-height: inherit !important;
     font-weight: inherit !important;
@@ -518,6 +960,8 @@ a.button {
   }
 
   /* Product description */
+  .spec-sheet__description,
+  .spec-sheet__description p,
   .product__description,
   .product__description p,
   .product__description li {
@@ -525,13 +969,17 @@ a.button {
     line-height: 1.7 !important;
   }
 
-  .product__accordion .accordion__content {
+  .spec-sheet__accordion-content,
+  .spec-sheet__accordion-content p,
+  .product__accordion .accordion__content,
+  .product__accordion .accordion__content p {
     font-size: 16px !important;
     line-height: 1.65 !important;
   }
 
+  .spec-sheet__accordion-title,
   .product__accordion .accordion__title {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
 
   /* About page text */
@@ -552,7 +1000,7 @@ a.button {
   }
 
   .slap-about-facility__cap-text {
-    font-size: 16px !important;
+    font-size: 14px !important;
     line-height: 1.6 !important;
   }
 
@@ -562,7 +1010,7 @@ a.button {
   }
 
   .slap-about-hero__subheading {
-    font-size: 1.35rem !important;
+    font-size: 16px !important;
     line-height: 1.6 !important;
   }
 
@@ -596,20 +1044,16 @@ a.button {
 
   /* Cart page */
   .cart-item__name {
-    font-size: 1.1rem !important;
-  }
-
-  .cart-item__details dt {
-    font-size: 0.85rem !important;
+    font-size: 16px !important;
   }
 
   .cart-item__details dd {
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
 
   .cart-item .price,
   .cart-item__totals .price {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
 
   /* Collection page */
@@ -618,8 +1062,9 @@ a.button {
     line-height: 1.6 !important;
   }
 
+  .slap-catalog__card-name,
   .collection .card__heading {
-    font-size: 1rem !important;
+    font-size: 16px !important;
   }
 
   /* Hero */
@@ -628,7 +1073,8 @@ a.button {
     line-height: 1.6 !important;
   }
 
-  .slap-hero-v2__btn {
+  .slap-hero-v2__btn,
+  .slap-hero__btn {
     font-size: 15px !important;
     padding: 14px 24px !important;
   }
@@ -648,11 +1094,11 @@ a.button {
   /* Trust/value props */
   .slap-product-trust__item,
   .slap-value-props__item {
-    font-size: 0.9rem !important;
+    font-size: 14px !important;
   }
 
   .slap-guarantee__desc {
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
 
   /* Buttons on mobile */
@@ -661,7 +1107,7 @@ a.button {
   button[type="submit"],
   .btn,
   a.button {
-    font-size: 1rem !important;
+    font-size: 16px !important;
     padding: 12px 20px !important;
   }
 
@@ -680,6 +1126,22 @@ a.button {
     font-size: 20px !important;
     padding: 14px 0 !important;
   }
+
+  /* FAQ answers on mobile */
+  .slap-faq__answer p,
+  .slap-faq__answer-inner p {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+
+  /* Customizer on mobile */
+  .sc__step-label {
+    font-size: 11px !important;
+  }
+
+  .sc__upload-info-item {
+    font-size: 11px !important;
+  }
 }
 
 /* ============================================================
@@ -687,17 +1149,22 @@ a.button {
    ============================================================ */
 @media screen and (min-width: 750px) and (max-width: 989px) {
   p, li, dd {
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: 16px !important;
+    line-height: 1.65 !important;
   }
 
-  .product__description,
+  .spec-sheet__description p,
   .product__description p {
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
   }
 
   .slap-about-story__text {
-    font-size: 1.1rem;
+    font-size: 16px !important;
+  }
+
+  .slap-faq__answer p,
+  .slap-faq__answer-inner p {
+    font-size: 16px !important;
   }
 }

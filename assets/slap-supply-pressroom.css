@@ -326,7 +326,7 @@ a.button:active {
   text-transform: uppercase;
   letter-spacing: 0.55px;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* Header icons */
@@ -418,7 +418,7 @@ select:focus,
   font-weight: 700;
   letter-spacing: 0.08em;
   border-radius: 0 !important;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 /* ============================================================
@@ -530,7 +530,7 @@ select:focus,
   border: 2px solid var(--slap-black);
   background: var(--slap-neon-green);
   color: var(--slap-black);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Stencil text effect */
@@ -639,7 +639,7 @@ select:focus,
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.55px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .slap-marquee__inner {
@@ -675,7 +675,7 @@ a:not(.button):not(.header__menu-item):hover {
 .breadcrumbs {
   font-family: 'Space Grotesk', sans-serif;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   font-weight: 600;
 }
@@ -867,7 +867,7 @@ a:not(.button):not(.header__menu-item):hover {
 
 .slap-hiw__label {
   font-family: 'Space Mono', monospace !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   font-weight: 400 !important;
   letter-spacing: 3px !important;
   text-transform: uppercase !important;
@@ -958,7 +958,7 @@ a:not(.button):not(.header__menu-item):hover {
 }
 
 .slap-hiw__step-icon {
-  font-size: 1.5rem !important;
+  font-size: 18px !important;
   margin-bottom: 1rem !important;
   line-height: 1 !important;
   opacity: 0.5 !important;
@@ -977,9 +977,9 @@ a:not(.button):not(.header__menu-item):hover {
 
 .slap-hiw__step-text {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   color: #737373 !important;
-  line-height: 22.75px !important;
+  line-height: 1.6 !important;
   margin: 0 !important;
 }
 
@@ -1158,7 +1158,7 @@ a:not(.button):not(.header__menu-item):hover {
 .slap-categories__station-label,
 .slap-categories .slap-label {
   font-family: 'Space Mono', monospace !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   letter-spacing: 3px !important;
 }
 

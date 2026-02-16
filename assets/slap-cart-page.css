@@ -16,7 +16,7 @@ cart-items .title {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(20px, 4vw, 32px);
   letter-spacing: -0.02em;
   line-height: 1;
   padding-bottom: 1.5rem;
@@ -30,7 +30,7 @@ cart-items .title {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
-  font-size: 9px;
+  font-size: 11px;
   color: #737373;
   border-bottom: 3px solid var(--slap-black, #121212);
   padding: 1rem 0;
@@ -68,7 +68,7 @@ cart-items .title {
   font-family: 'Oswald', sans-serif !important;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 12px;
   letter-spacing: 0.02em;
   text-decoration: none;
   color: var(--slap-black, #121212);
@@ -89,14 +89,14 @@ cart-items .title {
 
 .cart-item__details dt {
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #737373;
 }
 
 .cart-item__details dd {
-  font-size: 0.85rem;
+  font-size: 12px;
   margin-left: 0;
   color: var(--slap-black, #121212);
 }
@@ -105,7 +105,7 @@ cart-items .title {
 .cart-item .price {
   font-family: 'Oswald', sans-serif !important;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 12px;
 }
 
 /* --- Quantity Selector in Cart --- */
@@ -138,7 +138,7 @@ cart-items .title {
   text-align: center;
   font-family: 'Oswald', sans-serif !important;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 20px;
   border-left: 3px solid var(--slap-black, #121212) !important;
   border-right: 3px solid var(--slap-black, #121212) !important;
   border-top: none !important;
@@ -151,7 +151,7 @@ cart-remove-button .button {
   font-family: 'Space Grotesk', sans-serif !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   color: #737373;
   text-decoration: underline;
@@ -165,7 +165,7 @@ cart-remove-button .button:hover {
 .cart-item__totals .price {
   font-family: 'Oswald', sans-serif !important;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 14px;
 }
 
 /* --- Cart Footer / Totals --- */
@@ -180,7 +180,7 @@ cart-remove-button .button:hover {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.05em;
-  font-size: 0.9rem;
+  font-size: 12px;
 }
 
 .cart__note textarea {
@@ -208,18 +208,18 @@ cart-remove-button .button:hover {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.05em;
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 .totals__subtotal-value {
   font-family: 'Oswald', sans-serif !important;
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 .tax-note {
   font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 0.8rem;
+  font-size: 12px;
   color: #737373;
 }
 
@@ -230,7 +230,7 @@ cart-remove-button .button:hover {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.1em;
-  font-size: 1.2rem;
+  font-size: 14px;
   padding: 1.4rem 2rem !important;
   background-color: var(--slap-neon-green, #39FF14) !important;
   color: var(--slap-black, #121212) !important;
@@ -247,7 +247,7 @@ cart-remove-button .button:hover {
 .cart__ctas .cart__checkout-button::after {
   content: '→';
   margin-left: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 14px;
   transition: transform 0.2s ease;
   display: inline-block;
 }
@@ -336,7 +336,7 @@ cart-remove-button .button:hover {
 
 .cart--empty .cart__empty-text {
   font-family: 'Oswald', sans-serif !important;
-  font-size: 2rem;
+  font-size: 20px;
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
@@ -376,7 +376,7 @@ cart-remove-button .button:hover {
 .slap-shipping-bar__text {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -416,7 +416,7 @@ cart-remove-button .button:hover {
   align-items: center;
   gap: 0.5rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -424,7 +424,7 @@ cart-remove-button .button:hover {
 }
 
 .slap-cart-trust__icon {
-  font-size: 1.2rem;
+  font-size: 14px;
   color: var(--slap-neon-green, #39FF14);
 }
 
@@ -438,7 +438,7 @@ cart-remove-button .button:hover {
 
 .slap-promo-code__label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -465,7 +465,7 @@ cart-remove-button .button:hover {
   border-radius: 0 !important;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 12px;
   padding: 0.8rem 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -504,15 +504,15 @@ cart-remove-button .button:hover {
 /* --- Responsive --- */
 @media screen and (max-width: 749px) {
   cart-items .title {
-    font-size: 2rem;
+    font-size: 20px;
   }
 
   .cart-item__name {
-    font-size: 0.95rem;
+    font-size: 12px;
   }
 
   .totals__subtotal-value {
-    font-size: 1.5rem;
+    font-size: 16px;
   }
 
   .slap-cart-trust {
