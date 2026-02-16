@@ -811,7 +811,6 @@
       if (mask[i] === 0) transparentCount++;
     }
     var transparencyRatio = transparentCount / totalPixels;
-    console.log('[CONTOUR DEBUG] traceContour: isCanvas:', isCanvas, 'input:', w + 'x' + h, 'scaled:', cw + 'x' + ch, 'transparency:', (transparencyRatio * 100).toFixed(1) + '%');
 
     // ISSUE 2 FIX: Only fall back to edge detection if there's truly
     // no transparency (< 1% transparent pixels). After BG removal,
@@ -839,19 +838,6 @@
     var closeMask = dilateMask(mask, cw, ch, 2);
     closeMask = erodeMask(closeMask, cw, ch, 2);
     mask = closeMask;
-
-    // Debug: check mask shape after cleanup
-    var debugMidY = Math.round(ch / 2);
-    var debugMinX = cw, debugMaxX = 0;
-    for (var dx = 0; dx < cw; dx++) {
-      if (mask[debugMidY * cw + dx]) { debugMinX = Math.min(debugMinX, dx); debugMaxX = Math.max(debugMaxX, dx); }
-    }
-    var debugTopY = Math.round(ch * 0.1);
-    var debugTopMinX = cw, debugTopMaxX = 0;
-    for (var dx = 0; dx < cw; dx++) {
-      if (mask[debugTopY * cw + dx]) { debugTopMinX = Math.min(debugTopMinX, dx); debugTopMaxX = Math.max(debugTopMaxX, dx); }
-    }
-    console.log('[CONTOUR DEBUG] mask after cleanup: midRow y=' + debugMidY + ' width=' + (debugMaxX - debugMinX) + ' topRow y=' + debugTopY + ' width=' + (debugTopMaxX - debugTopMinX));
 
     // Dilate mask by padding amount
     var padPx = Math.round(padding * scale);
@@ -958,65 +944,74 @@
   }
 
   function marchingSquares(mask, w, h) {
-    // Find starting point on the boundary
-    var startX = -1, startY = -1;
+    // Moore-neighbor boundary tracing algorithm.
+    // Traces the outer boundary of the filled region in the binary mask.
+    // Works correctly for all shapes including single-pixel protrusions.
+
+    // Find starting pixel: topmost, then leftmost filled pixel
+    var sx = -1, sy = -1;
     outer:
     for (var y = 0; y < h; y++) {
       for (var x = 0; x < w; x++) {
         if (mask[y * w + x]) {
-          startX = x;
-          startY = y;
+          sx = x;
+          sy = y;
           break outer;
         }
       }
     }
-    if (startX === -1) return [];
+    if (sx === -1) return [];
+
+    // 8-connected neighbor offsets (clockwise order starting from left)
+    // 0=left, 1=up-left, 2=up, 3=up-right, 4=right, 5=down-right, 6=down, 7=down-left
+    var dx = [-1, -1, 0, 1, 1, 1, 0, -1];
+    var dy = [0, -1, -1, -1, 0, 1, 1, 1];
+
+    function isFilled(x, y) {
+      if (x < 0 || x >= w || y < 0 || y >= h) return false;
+      return mask[y * w + x] === 1;
+    }
 
     var points = [];
-    var x = startX, y = startY;
-    var dir = 0; // 0=right, 1=down, 2=left, 3=up
-    var maxIter = w * h * 2;
+    var cx = sx, cy = sy;
+    // Since we found the topmost-leftmost pixel, the pixel above is empty,
+    // so we enter from direction 6 (from above, looking down).
+    // The backtrack direction is 2 (up), so we start checking from (2+1)%8 = 3.
+    var enterDir = 6;
+    var startEnterDir = -1;
+    var maxIter = w * h * 4;
     var iter = 0;
+    var started = false;
 
-    // Simple boundary following
     do {
-      points.push({ x: x, y: y });
+      points.push({ x: cx, y: cy });
 
-      // Try to turn left, go straight, turn right, or go back
+      // Calculate backtrack direction and start checking clockwise from there
+      var backDir = (enterDir + 4) % 8;
+      var checkStart = (backDir + 1) % 8;
       var found = false;
-      for (var turn = -1; turn <= 2; turn++) {
-        var newDir = (dir + turn + 4) % 4;
-        var nx = x, ny = y;
-        if (newDir === 0) nx++;
-        else if (newDir === 1) ny++;
-        else if (newDir === 2) nx--;
-        else ny--;
 
-        if (nx >= 0 && nx < w && ny >= 0 && ny < h && mask[ny * w + nx]) {
-          // Check that we're on the boundary (has at least one empty neighbor)
-          var onBoundary = false;
-          var neighbors = [
-            ny > 0 ? mask[(ny - 1) * w + nx] : 0,
-            ny < h - 1 ? mask[(ny + 1) * w + nx] : 0,
-            nx > 0 ? mask[ny * w + nx - 1] : 0,
-            nx < w - 1 ? mask[ny * w + nx + 1] : 0
-          ];
-          for (var n = 0; n < 4; n++) {
-            if (!neighbors[n]) { onBoundary = true; break; }
+      for (var i = 0; i < 8; i++) {
+        var d = (checkStart + i) % 8;
+        var nx = cx + dx[d];
+        var ny = cy + dy[d];
+
+        if (isFilled(nx, ny)) {
+          if (!started) {
+            startEnterDir = d;
+            started = true;
           }
-          if (onBoundary || turn === 2) {
-            x = nx;
-            y = ny;
-            dir = newDir;
-            found = true;
-            break;
-          }
+          cx = nx;
+          cy = ny;
+          enterDir = d;
+          found = true;
+          break;
         }
       }
 
-      if (!found) break;
+      if (!found) break; // isolated pixel
       iter++;
-    } while ((x !== startX || y !== startY) && iter < maxIter);
+    } while (!((cx === sx && cy === sy && enterDir === startEnterDir) || iter >= maxIter));
 
     return points;
   }
@@ -1064,11 +1059,9 @@
     // For contour tracing, prefer the processedCanvas (has reliable alpha data)
     // over the processedImage (which may not be fully decoded yet)
     var activeSource = getContourSource();
-    console.log('[CONTOUR DEBUG] updateContour called. activeSource type:', activeSource instanceof HTMLCanvasElement ? 'Canvas' : (activeSource instanceof HTMLImageElement ? 'Image' : 'null'), 'showOriginal:', STATE.showOriginal, 'hasProcessedCanvas:', !!STATE.processedCanvas, 'hasProcessedImage:', !!STATE.processedImage);
     if (!activeSource) return;
     // Always re-trace — clear cached path so traceContour runs fresh
     STATE.contourPath = traceContour(activeSource, STATE.contourPadding);
-    console.log('[CONTOUR DEBUG] contourPath points:', STATE.contourPath ? STATE.contourPath.length : 0);
   }
 
   /** Get the best source for contour tracing (Canvas preferred over Image) */
