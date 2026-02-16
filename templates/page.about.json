@@ -4,7 +4,7 @@
       "type": "slap-about-hero",
       "settings": {
         "label_text": "ABOUT US",
-        "heading": "<p>WE ARE<br><em>SLAP SUPPLY</em></p>",
+        "heading": "<p>WE ARE<br><em>SLAP<span class=\"slap-about-hero__dot\">.</span>SUPPLY</em></p>",
         "subheading": "Born in the press room. Built for brands that refuse to blend in. Premium custom stickers, labels, adhesives, and prints — made for those who demand more.",
         "color_scheme": "scheme-3",
         "padding_top": 80,
