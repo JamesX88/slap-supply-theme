@@ -106,7 +106,7 @@
   .slap-about-hero__heading,
   h1.slap-about-hero__heading {
     font-family: 'Oswald', sans-serif !important;
-    font-size: clamp(6rem, 16vw, 14rem) !important;
+    font-size: clamp(60px, 16vw, 140px) !important;
     font-weight: 900 !important;
     text-transform: uppercase;
     line-height: 0.88 !important;
@@ -116,8 +116,35 @@
     letter-spacing: -3px;
   }
 
+  /* FIX: Shopify richtext fields wrap content in <p> tags.
+     slap-text-sizing-fix.css sets p { font-size: 1.1rem } which computes to 11px
+     (root font-size is 10px). This overrides the inherited h1 font-size.
+     Force ALL child elements to inherit the heading's font properties. */
+  .slap-about-hero__heading p,
+  .slap-about-hero__heading span,
   .slap-about-hero__heading em,
-  .slap-about-hero__heading i {
+  .slap-about-hero__heading i,
+  .slap-about-hero__heading strong,
+  .slap-about-hero__heading b,
+  h1.slap-about-hero__heading p,
+  h1.slap-about-hero__heading span,
+  h1.slap-about-hero__heading em,
+  h1.slap-about-hero__heading i,
+  h1.slap-about-hero__heading strong,
+  h1.slap-about-hero__heading b {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    font-weight: inherit !important;
+    font-family: inherit !important;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+  }
+
+  .slap-about-hero__heading em,
+  .slap-about-hero__heading i,
+  h1.slap-about-hero__heading em,
+  h1.slap-about-hero__heading i {
     color: var(--slap-neon-green);
     font-style: normal;
     -webkit-text-stroke: 1px var(--slap-white);
@@ -131,7 +158,7 @@
 
   .slap-about-hero__subheading {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 2rem !important;
+    font-size: 20px !important;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.65 !important;
     max-width: 700px;
@@ -168,11 +195,11 @@
     }
     .slap-about-hero__heading,
     h1.slap-about-hero__heading {
-      font-size: clamp(3rem, 15vw, 4rem) !important;
+      font-size: clamp(30px, 15vw, 48px) !important;
       letter-spacing: -2px;
     }
     .slap-about-hero__subheading {
-      font-size: 1.35rem !important;
+      font-size: 16px !important;
     }
   }
 </style>

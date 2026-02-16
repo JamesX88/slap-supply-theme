@@ -2,6 +2,11 @@
    SLAP SUPPLY — ABOUT PAGE TEXT SIZING FIX
    Comprehensive text sizing for the entire About page
    Ensures all text is properly sized for readability
+   
+   NOTE: Root font-size is 10px (Shopify Dawn sets html { font-size: 62.5% }).
+   All rem values are relative to 10px, so use px values for predictable sizing.
+   Also: Shopify richtext fields wrap content in <p> tags, which get styled by
+   slap-text-sizing-fix.css (p { font-size: 1.1rem } = 11px). Must override.
    ============================================================ */
 
 /* ============================================================
@@ -9,24 +14,45 @@
    ============================================================ */
 .slap-about-hero__heading,
 h1.slap-about-hero__heading {
-  font-size: clamp(6rem, 16vw, 14rem) !important;
+  font-size: clamp(60px, 16vw, 140px) !important;
   line-height: 0.88 !important;
   font-weight: 900 !important;
 }
 
+/* Force all child elements (especially <p> from richtext) to inherit heading styles */
+.slap-about-hero__heading p,
+.slap-about-hero__heading span,
+.slap-about-hero__heading em,
+.slap-about-hero__heading i,
+.slap-about-hero__heading strong,
+.slap-about-hero__heading b,
+h1.slap-about-hero__heading p,
+h1.slap-about-hero__heading span,
+h1.slap-about-hero__heading em,
+h1.slap-about-hero__heading i,
+h1.slap-about-hero__heading strong,
+h1.slap-about-hero__heading b {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-weight: inherit !important;
+  font-family: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .slap-about-hero__subheading {
-  font-size: 2rem !important;
+  font-size: 20px !important;
   line-height: 1.65 !important;
 }
 
 @media screen and (max-width: 749px) {
   .slap-about-hero__heading,
   h1.slap-about-hero__heading {
-    font-size: clamp(3rem, 15vw, 4rem) !important;
+    font-size: clamp(30px, 15vw, 48px) !important;
   }
   
   .slap-about-hero__subheading {
-    font-size: 1.5rem !important;
+    font-size: 16px !important;
   }
 }
 
@@ -34,41 +60,41 @@ h1.slap-about-hero__heading {
    ABOUT ACRONYM SECTION (S.L.A.P.)
    ============================================================ */
 .slap-about-acronym__heading {
-  font-size: clamp(3rem, 6vw, 5rem) !important;
+  font-size: clamp(30px, 6vw, 50px) !important;
   line-height: 1 !important;
   font-weight: 900 !important;
 }
 
 .slap-about-acronym__subheading {
-  font-size: 1.5rem !important;
+  font-size: 20px !important;
   line-height: 1.65 !important;
 }
 
 .slap-about-acronym__word {
-  font-size: 1.8rem !important;
+  font-size: 22px !important;
   font-weight: 700 !important;
 }
 
 .slap-about-acronym__desc {
-  font-size: 1.2rem !important;
+  font-size: 18px !important;
   line-height: 1.6 !important;
 }
 
 @media screen and (max-width: 749px) {
   .slap-about-acronym__heading {
-    font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
+    font-size: clamp(25px, 8vw, 35px) !important;
   }
   
   .slap-about-acronym__subheading {
-    font-size: 1.2rem !important;
+    font-size: 17px !important;
   }
   
   .slap-about-acronym__word {
-    font-size: 1.5rem !important;
+    font-size: 18px !important;
   }
   
   .slap-about-acronym__desc {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
 }
 
@@ -76,61 +102,61 @@ h1.slap-about-hero__heading {
    ABOUT STORY SECTION
    ============================================================ */
 .slap-about-story__heading {
-  font-size: clamp(3rem, 5vw, 4.5rem) !important;
+  font-size: clamp(30px, 5vw, 45px) !important;
   line-height: 1 !important;
   font-weight: 700 !important;
 }
 
 .slap-about-story__text,
 .slap-about-story__text p {
-  font-size: 1.3rem !important;
+  font-size: 20px !important;
   line-height: 1.8 !important;
 }
 
 .slap-about-values__heading {
-  font-size: 2.5rem !important;
+  font-size: 30px !important;
   font-weight: 700 !important;
 }
 
 .slap-about-value__title {
-  font-size: 1.5rem !important;
+  font-size: 20px !important;
   font-weight: 700 !important;
 }
 
 .slap-about-value__text {
-  font-size: 1.2rem !important;
+  font-size: 18px !important;
   line-height: 1.6 !important;
 }
 
 .slap-about-value__number {
-  font-size: 3rem !important;
+  font-size: 36px !important;
   font-weight: 700 !important;
 }
 
 @media screen and (max-width: 749px) {
   .slap-about-story__heading {
-    font-size: clamp(2.5rem, 8vw, 3rem) !important;
+    font-size: clamp(25px, 8vw, 32px) !important;
   }
   
   .slap-about-story__text,
   .slap-about-story__text p {
-    font-size: 1.1rem !important;
+    font-size: 17px !important;
   }
   
   .slap-about-values__heading {
-    font-size: 2rem !important;
+    font-size: 24px !important;
   }
   
   .slap-about-value__title {
-    font-size: 1.3rem !important;
+    font-size: 18px !important;
   }
   
   .slap-about-value__text {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
   
   .slap-about-value__number {
-    font-size: 2.5rem !important;
+    font-size: 28px !important;
   }
 }
 
@@ -138,18 +164,18 @@ h1.slap-about-hero__heading {
    ABOUT FACILITY SECTION
    ============================================================ */
 .slap-about-facility__heading {
-  font-size: clamp(3rem, 5vw, 4rem) !important;
+  font-size: clamp(30px, 5vw, 42px) !important;
   line-height: 1 !important;
   font-weight: 900 !important;
 }
 
 .slap-about-facility__desc {
-  font-size: 1.4rem !important;
+  font-size: 20px !important;
   line-height: 1.7 !important;
 }
 
 .slap-about-facility__stat-number {
-  font-size: 3.5rem !important;
+  font-size: 40px !important;
   font-weight: 900 !important;
 }
 
@@ -160,43 +186,43 @@ h1.slap-about-hero__heading {
 }
 
 .slap-about-facility__cap-heading {
-  font-size: 2rem !important;
+  font-size: 24px !important;
   font-weight: 900 !important;
 }
 
 .slap-about-facility__cap-title {
-  font-size: 1.4rem !important;
+  font-size: 20px !important;
   font-weight: 700 !important;
 }
 
 .slap-about-facility__cap-text {
-  font-size: 1.15rem !important;
+  font-size: 17px !important;
   line-height: 1.6 !important;
 }
 
 @media screen and (max-width: 749px) {
   .slap-about-facility__heading {
-    font-size: clamp(2.5rem, 8vw, 3rem) !important;
+    font-size: clamp(25px, 8vw, 32px) !important;
   }
   
   .slap-about-facility__desc {
-    font-size: 1.2rem !important;
+    font-size: 17px !important;
   }
   
   .slap-about-facility__stat-number {
-    font-size: 2.8rem !important;
+    font-size: 32px !important;
   }
   
   .slap-about-facility__cap-heading {
-    font-size: 1.6rem !important;
+    font-size: 20px !important;
   }
   
   .slap-about-facility__cap-title {
-    font-size: 1.2rem !important;
+    font-size: 18px !important;
   }
   
   .slap-about-facility__cap-text {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
 }
 
@@ -210,47 +236,47 @@ h1.slap-about-hero__heading {
 
 .page-about .slap-hiw__heading,
 .page-about .slap-hiw-v2__heading {
-  font-size: clamp(3rem, 5vw, 4rem) !important;
+  font-size: clamp(30px, 5vw, 42px) !important;
   font-weight: 900 !important;
 }
 
 .page-about .slap-hiw__description,
 .page-about .slap-hiw-v2__description {
-  font-size: 1.3rem !important;
+  font-size: 20px !important;
   line-height: 1.7 !important;
 }
 
 .page-about .slap-hiw__step-title,
 .page-about .slap-hiw-v2__step-title {
-  font-size: 1.5rem !important;
+  font-size: 20px !important;
   font-weight: 700 !important;
 }
 
 .page-about .slap-hiw__step-text,
 .page-about .slap-hiw-v2__step-text {
-  font-size: 1.2rem !important;
+  font-size: 18px !important;
   line-height: 1.6 !important;
 }
 
 @media screen and (max-width: 749px) {
   .page-about .slap-hiw__heading,
   .page-about .slap-hiw-v2__heading {
-    font-size: clamp(2.5rem, 8vw, 3rem) !important;
+    font-size: clamp(25px, 8vw, 32px) !important;
   }
   
   .page-about .slap-hiw__description,
   .page-about .slap-hiw-v2__description {
-    font-size: 1.1rem !important;
+    font-size: 17px !important;
   }
   
   .page-about .slap-hiw__step-title,
   .page-about .slap-hiw-v2__step-title {
-    font-size: 1.3rem !important;
+    font-size: 18px !important;
   }
   
   .page-about .slap-hiw__step-text,
   .page-about .slap-hiw-v2__step-text {
-    font-size: 1.1rem !important;
+    font-size: 16px !important;
   }
 }
 
@@ -258,26 +284,44 @@ h1.slap-about-hero__heading {
    ABOUT PAGE - CTA BANNER SECTION
    ============================================================ */
 .page-about .slap-cta-banner__heading,
-.page-about .slap-cta-v2__heading {
-  font-size: clamp(3rem, 6vw, 5rem) !important;
+.page-about .slap-cta-v2__heading,
+.slap-cta__heading {
+  font-size: clamp(30px, 6vw, 50px) !important;
   font-weight: 900 !important;
+}
+
+/* Fix CTA heading child elements (richtext <p> tags) */
+.slap-cta__heading p,
+.slap-cta__heading em,
+.slap-cta__heading i,
+.slap-cta__heading span,
+.slap-cta-v2__heading p,
+.slap-cta-v2__heading em,
+.slap-cta-v2__heading i,
+.slap-cta-v2__heading span {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-weight: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .page-about .slap-cta-banner__description,
 .page-about .slap-cta-v2__description {
-  font-size: 1.4rem !important;
+  font-size: 20px !important;
   line-height: 1.6 !important;
 }
 
 @media screen and (max-width: 749px) {
   .page-about .slap-cta-banner__heading,
-  .page-about .slap-cta-v2__heading {
-    font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
+  .page-about .slap-cta-v2__heading,
+  .slap-cta__heading {
+    font-size: clamp(25px, 10vw, 38px) !important;
   }
   
   .page-about .slap-cta-banner__description,
   .page-about .slap-cta-v2__description {
-    font-size: 1.1rem !important;
+    font-size: 17px !important;
   }
 }
 

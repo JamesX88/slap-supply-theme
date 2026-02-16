@@ -19,10 +19,22 @@ body,
   line-height: 1.65;
 }
 
-/* Global body text elements */
+/* Global body text elements — exclude p tags inside headings (Shopify richtext wraps in <p>) */
 p, li, dd, td, th, blockquote {
   font-size: 1.1rem;
   line-height: 1.65;
+}
+
+/* Prevent the global p rule from breaking headings that contain richtext <p> tags */
+h1 p, h2 p, h3 p, h4 p,
+.slap-about-hero__heading p,
+.slap-cta__heading p,
+.slap-cta-v2__heading p {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-weight: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* RTE (Rich Text Editor) content */
@@ -51,7 +63,7 @@ h1:not(.header__heading):not(.slap-about-hero__heading):not(.slap-hero-v2__headi
   letter-spacing: -1px;
 }
 
-h2:not(.slap-hero-v2__heading):not(.slap-about-hero__heading), .h2:not(.slap-hero-v2__heading) {
+h2:not(.slap-hero-v2__heading):not(.slap-about-hero__heading):not(.slap-about-acronym__heading):not(.slap-about-story__heading):not(.slap-about-facility__heading):not(.slap-hiw__heading):not(.slap-cta__heading), .h2:not(.slap-hero-v2__heading) {
   font-size: clamp(2rem, 4vw, 3rem) !important;
   line-height: 1.15 !important;
   letter-spacing: -0.5px;
@@ -491,6 +503,18 @@ a.button {
   .rte p, .rte li {
     font-size: 16px !important;
     line-height: 1.65 !important;
+  }
+
+  /* Keep heading child p tags inheriting on mobile too */
+  h1 p, h2 p, h3 p, h4 p,
+  .slap-about-hero__heading p,
+  .slap-cta__heading p,
+  .slap-cta-v2__heading p {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    font-weight: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Product description */
