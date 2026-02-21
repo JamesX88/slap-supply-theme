@@ -25,6 +25,15 @@
 }
 
 /* ===== GLOBAL STYLES ===== */
+.slap-mockup-body,
+body.slap-mockup-body {
+  background: var(--slap-background) !important;
+  color: var(--slap-foreground) !important;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+}
+
 .slap-mockup-wrapper {
   background: var(--slap-background);
   color: var(--slap-foreground);

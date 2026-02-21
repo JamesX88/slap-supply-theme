@@ -1,4 +1,5 @@
 {
+  "layout": "theme.mockup",
   "sections": {
     "mockup_full": {
       "type": "slap-mockup-full",
