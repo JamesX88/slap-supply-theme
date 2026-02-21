@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "mockup_hero": {
+      "type": "slap-mockup-hero",
+      "settings": {
+        "headline_line1": "YOUR BRAND, BUT",
+        "headline_line2": "STICKIER.",
+        "subheadline": "(custom die-cut stickers, labels & adhesive prints)",
+        "primary_button_text": "LET'S SLAP",
+        "primary_button_link": "/pages/custom-order",
+        "secondary_button_text": "SHOW ME THE GOODS",
+        "secondary_button_link": "/collections/all"
+      }
+    },
+    "mockup_marquee": {
+      "type": "slap-mockup-marquee",
+      "settings": {}
+    },
+    "mockup_products": {
+      "type": "slap-mockup-products",
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "tag": "BEST SELLER",
+            "title": "CUSTOM STICKERS",
+            "description": "Die-cut, kiss-cut, vinyl, holographic"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "tag": "B2B READY",
+            "title": "PRODUCT LABELS",
+            "description": "Rolls, sheets, waterproof, freezer-safe"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "tag": "NEW",
+            "title": "ADHESIVE PRINTS",
+            "description": "Posters, wall graphics, floor decals"
+          }
+        },
+        "product_4": {
+          "type": "product",
+          "settings": {
+            "tag": "POPULAR",
+            "title": "PACKAGING TAPE",
+            "description": "Custom branded, bulk orders, fast turnaround"
+          }
+        }
+      },
+      "block_order": ["product_1", "product_2", "product_3", "product_4"],
+      "settings": {
+        "heading": "WHAT WE SLAP"
+      }
+    },
+    "mockup_how": {
+      "type": "slap-mockup-how",
+      "settings": {}
+    },
+    "mockup_reviews": {
+      "type": "slap-mockup-reviews",
+      "settings": {}
+    },
+    "mockup_cta": {
+      "type": "slap-mockup-cta",
+      "settings": {}
+    }
+  },
+  "order": [
+    "mockup_hero",
+    "mockup_marquee",
+    "mockup_products",
+    "mockup_how",
+    "mockup_reviews",
+    "mockup_cta"
+  ]
+}

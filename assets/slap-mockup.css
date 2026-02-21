@@ -1,0 +1,289 @@
+/* SLAP Supply Mockup Styles
+ * "Sticker Bomb Chaos" — Neo-Brutalism meets sticker culture
+ * Typography: Oswald (headlines), Space Grotesk (body), Permanent Marker (asides)
+ * Colors: #0a0a0a base, #39FF14 neon green, #FFE600 hazard yellow
+ */
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Permanent+Marker&display=swap');
+
+/* Global mockup styles */
+.slap-mockup-page {
+  background: #0a0a0a;
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Scrolling marquee */
+.slap-mockup-marquee {
+  background: #39FF14;
+  color: #0a0a0a;
+  padding: 1rem 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.slap-mockup-marquee__track {
+  display: flex;
+  gap: 4rem;
+  animation: marquee 30s linear infinite;
+}
+
+.slap-mockup-marquee__item {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* How It Works section */
+.slap-mockup-how {
+  background: #0a0a0a;
+  padding: 6rem 2rem;
+  border-top: 2px solid #2a2a2a;
+}
+
+.slap-mockup-how__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.slap-mockup-how__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.slap-mockup-how__header p {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #39FF14;
+  font-size: 0.875rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.slap-mockup-how__header h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.slap-mockup-how__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+}
+
+.slap-mockup-how__step {
+  text-align: center;
+}
+
+.slap-mockup-how__step-number {
+  font-family: 'Oswald', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  color: #39FF14;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.slap-mockup-how__step h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem 0;
+}
+
+.slap-mockup-how__step p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #888;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.slap-mockup-how__step em {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 0.875rem;
+  color: #666;
+  font-style: normal;
+}
+
+/* Reviews section */
+.slap-mockup-reviews {
+  background: #1a1a1a;
+  padding: 6rem 2rem;
+}
+
+.slap-mockup-reviews__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.slap-mockup-reviews__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.slap-mockup-reviews__header p {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #39FF14;
+  font-size: 0.875rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.slap-mockup-reviews__header h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.slap-mockup-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.slap-mockup-review-card {
+  background: #0a0a0a;
+  border: 2px solid #2a2a2a;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.slap-mockup-review-card:hover {
+  border-color: #39FF14;
+}
+
+.slap-mockup-review-card__stars {
+  color: #FFE600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.slap-mockup-review-card__text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.slap-mockup-review-card__author {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #39FF14;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* CTA section */
+.slap-mockup-cta {
+  background: linear-gradient(135deg, #39FF14 0%, #FFE600 100%);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.slap-mockup-cta__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.slap-mockup-cta h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  color: #0a0a0a;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+.slap-mockup-cta p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  color: #0a0a0a;
+  margin: 0 0 2rem 0;
+}
+
+.slap-mockup-cta__button {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1.25rem 3rem;
+  background: #0a0a0a;
+  color: #39FF14;
+  border: 3px solid #0a0a0a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.slap-mockup-cta__button:hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 #0a0a0a;
+}
+
+/* Draggable sticker */
+.slap-mockup-draggable {
+  position: fixed;
+  z-index: 9999;
+  cursor: move;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.slap-mockup-draggable:active {
+  cursor: grabbing;
+  transform: scale(1.05) rotate(5deg);
+}
+
+.slap-mockup-draggable img {
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.5));
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .slap-mockup-how,
+  .slap-mockup-reviews,
+  .slap-mockup-cta {
+    padding: 4rem 1rem;
+  }
+
+  .slap-mockup-how__steps,
+  .slap-mockup-reviews__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .slap-mockup-draggable img {
+    width: 100px;
+  }
+}

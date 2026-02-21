@@ -45,6 +45,9 @@
     {{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
     {{ 'slap-text-sizing-fix.css' | asset_url | stylesheet_tag }}
     {{ 'slap-about-page-text-fix.css' | asset_url | stylesheet_tag }}
+    {% if template.name == 'page' and page.handle == 'mockup' %}
+      {{ 'slap-mockup.css' | asset_url | stylesheet_tag }}
+    {% endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -388,5 +391,9 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {% if template.name == 'page' and page.handle == 'mockup' %}
+      <script src="{{ 'slap-mockup.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
   </body>
 </html>

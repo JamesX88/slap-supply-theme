@@ -1,0 +1,245 @@
+{% comment %}
+  SLAP Supply Mockup Hero Section
+  "Sticker Bomb Chaos" design with parallax effect
+{% endcomment %}
+
+<style>
+  .slap-mockup-hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+
+  .slap-mockup-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('{{ section.settings.hero_bg | img_url: '2048x' }}');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+  }
+
+  .slap-mockup-hero__content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .slap-mockup-hero__left h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    color: white;
+  }
+
+  .slap-mockup-hero__left h1 .highlight {
+    color: #39FF14;
+  }
+
+  .slap-mockup-hero__left p {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.25rem;
+    color: #888;
+    margin: 0 0 2rem 0;
+  }
+
+  .slap-mockup-hero__buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .slap-mockup-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .slap-mockup-btn--primary {
+    background: #39FF14;
+    border-color: #39FF14;
+    color: #0a0a0a;
+  }
+
+  .slap-mockup-btn--primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 8px 8px 0 #39FF14;
+  }
+
+  .slap-mockup-btn--secondary {
+    background: transparent;
+    border-color: white;
+    color: white;
+  }
+
+  .slap-mockup-btn--secondary:hover {
+    background: white;
+    color: #0a0a0a;
+  }
+
+  .slap-mockup-hero__right {
+    position: relative;
+  }
+
+  .slap-mockup-hero__stickers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .slap-mockup-hero__stickers img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.5));
+  }
+
+  .slap-mockup-hero__warning {
+    position: absolute;
+    bottom: -2rem;
+    right: -2rem;
+    width: 200px;
+    z-index: 20;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.5));
+  }
+
+  @media (max-width: 768px) {
+    .slap-mockup-hero__content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .slap-mockup-hero__left h1 {
+      font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .slap-mockup-hero__warning {
+      width: 150px;
+      bottom: -1rem;
+      right: -1rem;
+    }
+  }
+</style>
+
+<section class="slap-mockup-hero">
+  <div class="slap-mockup-hero__bg"></div>
+  
+  <div class="slap-mockup-hero__content">
+    <div class="slap-mockup-hero__left">
+      <p style="color: #39FF14; font-size: 0.875rem; letter-spacing: 2px; margin-bottom: 0.5rem;">—— STATION 01 — HERO</p>
+      
+      <h1>
+        {{ section.settings.headline_line1 }}<br>
+        <span class="highlight">{{ section.settings.headline_line2 }}</span>
+      </h1>
+      
+      <p>{{ section.settings.subheadline }}</p>
+      
+      <div class="slap-mockup-hero__buttons">
+        <a href="{{ section.settings.primary_button_link }}" class="slap-mockup-btn slap-mockup-btn--primary">
+          {{ section.settings.primary_button_text }} →
+        </a>
+        <a href="{{ section.settings.secondary_button_link }}" class="slap-mockup-btn slap-mockup-btn--secondary">
+          {{ section.settings.secondary_button_text }}
+        </a>
+      </div>
+    </div>
+    
+    <div class="slap-mockup-hero__right">
+      <div class="slap-mockup-hero__stickers">
+        <img src="{{ section.settings.sticker_collage | img_url: '800x' }}" alt="SLAP Supply Stickers">
+      </div>
+      
+      {% if section.settings.warning_sticker %}
+        <img src="{{ section.settings.warning_sticker | img_url: '400x' }}" alt="Warning Sticker" class="slap-mockup-hero__warning">
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mockup Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_bg",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Headline Line 1",
+      "default": "YOUR BRAND, BUT"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Headline Line 2 (highlighted)",
+      "default": "STICKIER."
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "(custom die-cut stickers, labels & adhesive prints)"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary Button Text",
+      "default": "LET'S SLAP"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary Button Text",
+      "default": "SHOW ME THE GOODS"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "sticker_collage",
+      "label": "Sticker Collage Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "warning_sticker",
+      "label": "Warning Sticker"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mockup Hero"
+    }
+  ]
+}
+{% endschema %}
