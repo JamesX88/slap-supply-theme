@@ -1,0 +1,393 @@
+{% comment %}
+  SLAP Supply Mockup - Full Page Section
+  Pixel-perfect conversion from React mockup
+{% endcomment %}
+
+<div class="slap-mockup-wrapper" id="slap-mockup-page">
+  {%- comment -%} ===== NAVBAR ===== {%- endcomment -%}
+  <nav class="slap-mockup-nav">
+    <div class="slap-mockup-container">
+      <div class="slap-mockup-nav__logo">
+        SLAP<span class="slap-neon">.</span>SUPPLY
+      </div>
+      <div class="slap-mockup-nav__links">
+        <a href="/collections/all">PRODUCTS</a>
+        <a href="/pages/custom-order">CUSTOM ORDER</a>
+        <a href="/pages/bulk">BULK / B2B</a>
+        <a href="/pages/about">ABOUT</a>
+      </div>
+      <div class="slap-mockup-nav__cta">
+        <a href="/pages/custom-order" class="slap-btn slap-btn--primary slap-btn--sm">
+          LET'S SLAP →
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  {%- comment -%} ===== MARQUEE ===== {%- endcomment -%}
+  <div class="slap-mockup-marquee">
+    <div class="slap-mockup-marquee__track">
+      <span>FREE SHIPPING ON ORDERS $75+</span>
+      <span>///</span>
+      <span>BULK PRICING AVAILABLE</span>
+      <span>///</span>
+      <span>3-DAY TURNAROUND</span>
+      <span>///</span>
+      <span>100% ADHESIVE</span>
+      <span>///</span>
+      <span>NO STICKER REGRETS</span>
+      <span>///</span>
+      <span>MADE BY PRINT NERDS</span>
+      <span>///</span>
+      <span>SLAP RESPONSIBLY</span>
+      <span>///</span>
+      <span>YOUR LAPTOP CALLED — IT WANTS MORE STICKERS</span>
+      <span>///</span>
+      <span>CERTIFIED SLAP-WORTHY</span>
+    </div>
+  </div>
+
+  {%- comment -%} ===== HERO SECTION ===== {%- endcomment -%}
+  <section class="slap-mockup-hero">
+    <div class="slap-mockup-hero__bg">
+      <img src="{{ section.settings.hero_bg | img_url: '2048x' }}" alt="SLAP Supply workshop">
+      <div class="slap-mockup-hero__overlay"></div>
+    </div>
+    <div class="slap-mockup-hero__hazard"></div>
+    
+    <div class="slap-mockup-container">
+      <div class="slap-mockup-hero__content">
+        <div class="slap-mockup-hero__left">
+          <div class="slap-station-label">
+            <div class="slap-station-line"></div>
+            <span>STATION 01 — HERO</span>
+          </div>
+          
+          <h1 class="slap-mockup-hero__headline">
+            YOUR BRAND,<br>
+            BUT <span class="slap-neon">STICKIER.</span>
+          </h1>
+          
+          <p class="slap-mockup-hero__subtext">
+            (custom die-cut stickers, labels & adhesive prints)
+          </p>
+          
+          <div class="slap-mockup-hero__buttons">
+            <a href="/pages/custom-order" class="slap-btn slap-btn--primary">
+              LET'S SLAP →
+            </a>
+            <a href="/collections/all" class="slap-btn slap-btn--secondary">
+              SHOW ME THE GOODS
+            </a>
+          </div>
+        </div>
+        
+        <div class="slap-mockup-hero__right">
+          {% if section.settings.sticker_collage %}
+            <img src="{{ section.settings.sticker_collage | img_url: '800x' }}" alt="Sticker collage" class="slap-mockup-hero__collage">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    {% if section.settings.warning_sticker %}
+      <div class="slap-mockup-warning slap-mockup-warning--hero">
+        <img src="{{ section.settings.warning_sticker | img_url: '400x' }}" alt="Warning sticker">
+      </div>
+    {% endif %}
+  </section>
+
+  {%- comment -%} ===== SECOND MARQUEE ===== {%- endcomment -%}
+  <div class="slap-mockup-marquee">
+    <div class="slap-mockup-marquee__track">
+      <span>FREE SHIPPING ON ORDERS $75+</span>
+      <span>///</span>
+      <span>BULK PRICING AVAILABLE</span>
+      <span>///</span>
+      <span>3-DAY TURNAROUND</span>
+      <span>///</span>
+      <span>100% ADHESIVE</span>
+      <span>///</span>
+      <span>NO STICKER REGRETS</span>
+      <span>///</span>
+      <span>MADE BY PRINT NERDS</span>
+      <span>///</span>
+      <span>SLAP RESPONSIBLY</span>
+      <span>///</span>
+      <span>YOUR LAPTOP CALLED — IT WANTS MORE STICKERS</span>
+      <span>///</span>
+      <span>CERTIFIED SLAP-WORTHY</span>
+    </div>
+  </div>
+
+  {%- comment -%} ===== PRODUCTS SECTION ===== {%- endcomment -%}
+  <section class="slap-mockup-products">
+    <div class="slap-mockup-container">
+      <div class="slap-station-label">
+        <div class="slap-station-line"></div>
+        <span>STATION 02 — PRODUCTS</span>
+      </div>
+      
+      <div class="slap-mockup-products__header">
+        <h2>WHAT WE <span class="slap-neon">MAKE</span></h2>
+        <p class="slap-marker">(spoiler: it's all stickers. but like, really good ones)</p>
+      </div>
+      
+      <div class="slap-mockup-products__grid">
+        <div class="slap-product-card slap-product-card--neon">
+          <span class="slap-product-card__tag">BEST SELLER</span>
+          <h3>CUSTOM STICKERS</h3>
+          <p>Die-cut, kiss-cut, vinyl, holographic</p>
+          <div class="slap-product-card__cta">CONFIGURE ›</div>
+        </div>
+        
+        <div class="slap-product-card slap-product-card--hazard">
+          <span class="slap-product-card__tag">B2B READY</span>
+          <h3>PRODUCT LABELS</h3>
+          <p>Rolls, sheets, waterproof, freezer-safe</p>
+          <div class="slap-product-card__cta">CONFIGURE ›</div>
+        </div>
+        
+        <div class="slap-product-card slap-product-card--neon">
+          <span class="slap-product-card__tag">LARGE FORMAT</span>
+          <h3>ADHESIVE PRINTS</h3>
+          <p>Wall graphics, floor decals, window clings</p>
+          <div class="slap-product-card__cta">CONFIGURE ›</div>
+        </div>
+        
+        <div class="slap-product-card slap-product-card--hazard">
+          <span class="slap-product-card__tag">NEW</span>
+          <h3>CUSTOM PRINTS</h3>
+          <p>Art prints, posters, packaging inserts</p>
+          <div class="slap-product-card__cta">CONFIGURE ›</div>
+        </div>
+      </div>
+    </div>
+    
+    {% if section.settings.caution_sticker %}
+      <div class="slap-mockup-warning slap-mockup-warning--products">
+        <img src="{{ section.settings.caution_sticker | img_url: '400x' }}" alt="Caution sticker">
+      </div>
+    {% endif %}
+  </section>
+
+  {%- comment -%} ===== HOW IT WORKS ===== {%- endcomment -%}
+  <section class="slap-mockup-how">
+    <div class="slap-mockup-how__hazard"></div>
+    <div class="slap-mockup-container">
+      <div class="slap-station-label">
+        <div class="slap-station-line"></div>
+        <span>STATION 03 — THE PROCESS</span>
+      </div>
+      
+      <h2>HOW IT <span class="slap-neon">WORKS</span></h2>
+      <p class="slap-marker">(it's not rocket science. but our stickers could survive re-entry)</p>
+      
+      <div class="slap-mockup-how__grid">
+        <div class="slap-step-card">
+          <span class="slap-step-card__number">01</span>
+          <div class="slap-step-card__icon">📤</div>
+          <h3>UPLOAD</h3>
+          <p>Drop your artwork or design from scratch using our editor</p>
+          <p class="slap-marker-sm">(we accept napkin sketches too)</p>
+        </div>
+        
+        <div class="slap-step-card">
+          <span class="slap-step-card__number">02</span>
+          <div class="slap-step-card__icon">⚙️</div>
+          <h3>CONFIGURE</h3>
+          <p>Choose size, material, finish, and quantity</p>
+          <p class="slap-marker-sm">(yes, we have holographic)</p>
+        </div>
+        
+        <div class="slap-step-card">
+          <span class="slap-step-card__number">03</span>
+          <div class="slap-step-card__icon">👀</div>
+          <h3>PROOF</h3>
+          <p>Review your digital proof — adjust until it's perfect</p>
+          <p class="slap-marker-sm">(we're patient, promise)</p>
+        </div>
+        
+        <div class="slap-step-card">
+          <span class="slap-step-card__number">04</span>
+          <div class="slap-step-card__icon">📦</div>
+          <h3>SHIP</h3>
+          <p>We print, cut, and ship in as fast as 3 business days</p>
+          <p class="slap-marker-sm">(faster than your ex texting back)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ===== REVIEWS ===== {%- endcomment -%}
+  <section class="slap-mockup-reviews">
+    <div class="slap-mockup-container">
+      <div class="slap-station-label">
+        <div class="slap-station-line"></div>
+        <span>STATION 04 — SOCIAL PROOF</span>
+      </div>
+      
+      <h2>WHAT THEY'RE <span class="slap-neon">SAYING</span></h2>
+      <p class="slap-marker">(we didn't bribe them. we just make really good stickers)</p>
+      
+      <div class="slap-mockup-reviews__grid">
+        <div class="slap-review-card">
+          <div class="slap-review-card__stars">★★★★★</div>
+          <p class="slap-review-card__text">
+            "Ordered 500 die-cut stickers for our product launch and they came out PERFECT. Colors matched our Pantone specs exactly."
+          </p>
+          <div class="slap-review-card__author">
+            <div class="slap-review-card__avatar">M</div>
+            <div>
+              <p class="slap-review-card__name">Marcus T.</p>
+              <p class="slap-review-card__role">Custom Die-Cut Vinyl Stickers</p>
+            </div>
+          </div>
+          <div class="slap-review-card__verified">✓ VERIFIED</div>
+        </div>
+        
+        <div class="slap-review-card">
+          <div class="slap-review-card__stars">★★★★★</div>
+          <p class="slap-review-card__text">
+            "We switched to SLAP Supply for our candle labels 6 months ago and haven't looked back. Our customers always comment on the packaging."
+          </p>
+          <div class="slap-review-card__author">
+            <div class="slap-review-card__avatar">J</div>
+            <div>
+              <p class="slap-review-card__name">Jessica R.</p>
+              <p class="slap-review-card__role">Waterproof Product Labels</p>
+            </div>
+          </div>
+          <div class="slap-review-card__verified">✓ VERIFIED</div>
+        </div>
+        
+        <div class="slap-review-card">
+          <div class="slap-review-card__stars">★★★★★</div>
+          <p class="slap-review-card__text">
+            "Needed a rush order of 1,000 holographic stickers for a trade show. SLAP delivered in 3 days and the quality was flawless."
+          </p>
+          <div class="slap-review-card__author">
+            <div class="slap-review-card__avatar">D</div>
+            <div>
+              <p class="slap-review-card__name">David K.</p>
+              <p class="slap-review-card__role">Holographic Stickers</p>
+            </div>
+          </div>
+          <div class="slap-review-card__verified">✓ VERIFIED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ===== CTA SECTION ===== {%- endcomment -%}
+  <section class="slap-mockup-cta">
+    <div class="slap-mockup-cta__pattern"></div>
+    <div class="slap-mockup-container">
+      <h2>
+        READY TO <span class="slap-marker-inline">SLAP</span>?
+      </h2>
+      <p class="slap-marker">(your stickers are waiting to be born)</p>
+      <div class="slap-mockup-cta__buttons">
+        <a href="/pages/custom-order" class="slap-btn slap-btn--cta-primary">
+          GET A QUOTE
+        </a>
+        <a href="/collections/all" class="slap-btn slap-btn--cta-secondary">
+          MAKE IT STICK
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
+  <footer class="slap-mockup-footer">
+    <div class="slap-mockup-container">
+      <div class="slap-mockup-footer__grid">
+        <div class="slap-mockup-footer__col">
+          <h3>SLAP<span class="slap-neon">.</span>SUPPLY</h3>
+          <p>Born in the press room. Built for brands that refuse to blend in.</p>
+          <p class="slap-marker-sm">Made with 100% adhesive love ❤️</p>
+        </div>
+        
+        <div class="slap-mockup-footer__col">
+          <h4>PRODUCTS</h4>
+          <ul>
+            <li><a href="/collections/stickers">Custom Stickers</a></li>
+            <li><a href="/collections/labels">Product Labels</a></li>
+            <li><a href="/collections/prints">Adhesive Prints</a></li>
+            <li><a href="/collections/art-prints">Art Prints</a></li>
+            <li><a href="/pages/bulk">Bulk Orders</a></li>
+          </ul>
+        </div>
+        
+        <div class="slap-mockup-footer__col">
+          <h4>COMPANY</h4>
+          <ul>
+            <li><a href="/pages/about">Our Origin Story (It involves a lot of glue)</a></li>
+            <li><a href="/pages/how-it-works">How It Works</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="slap-mockup-footer__col">
+          <h4>CONNECT</h4>
+          <ul>
+            <li><a href="https://instagram.com/slapsupply">Instagram</a></li>
+            <li><a href="https://twitter.com/slapsupply">Twitter</a></li>
+            <li><a href="https://tiktok.com/@slapsupply">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="slap-mockup-footer__bottom">
+        <p>© 2026 SLAP Supply. All rights reserved. Stickers not included with website visit.</p>
+        <p class="slap-marker-sm">psst... you found the bottom. here's a virtual sticker: 🏆</p>
+      </div>
+    </div>
+  </footer>
+
+  {%- comment -%} ===== DRAGGABLE SLAP STICKER ===== {%- endcomment -%}
+  {% if section.settings.draggable_sticker %}
+    <div class="slap-draggable" id="slap-draggable-sticker">
+      <img src="{{ section.settings.draggable_sticker | img_url: '300x' }}" alt="SLAP sticker" draggable="false">
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Mockup Full Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_bg",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "sticker_collage",
+      "label": "Sticker Collage"
+    },
+    {
+      "type": "image_picker",
+      "id": "warning_sticker",
+      "label": "Warning Sticker"
+    },
+    {
+      "type": "image_picker",
+      "id": "caution_sticker",
+      "label": "Caution Sticker"
+    },
+    {
+      "type": "image_picker",
+      "id": "draggable_sticker",
+      "label": "Draggable SLAP Sticker"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mockup Full Page"
+    }
+  ]
+}
+{% endschema %}
