@@ -1,13 +1,14 @@
 {
   "sections": {
-    "slap_hero": {
-      "type": "slap-hero",
+    "slap_new_hero": {
+      "type": "slap-new-hero",
       "settings": {
-        "button_label_1": "START CUSTOMIZING",
-        "button_link_1": "/pages/customize",
-        "button_label_2": "VIEW CATALOG",
-        "button_link_2": "/collections/all",
-        "color_scheme": "scheme-1"
+        "station_label": "STATION 01 — HERO",
+        "subtext": "(custom die-cut stickers, labels & adhesive prints)",
+        "primary_cta_text": "LET'S SLAP →",
+        "primary_cta_link": "/pages/customize",
+        "secondary_cta_text": "SHOW ME THE GOODS",
+        "secondary_cta_link": "/collections/all"
       }
     },
     "slap_marquee_1": {
@@ -217,7 +218,7 @@
     }
   },
   "order": [
-    "slap_hero",
+    "slap_new_hero",
     "slap_marquee_1",
     "slap_categories",
     "slap_how_it_works",

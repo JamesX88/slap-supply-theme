@@ -45,6 +45,7 @@
     {{ 'slap-supply-pressroom.css' | asset_url | stylesheet_tag }}
     {{ 'slap-text-sizing-fix.css' | asset_url | stylesheet_tag }}
     {{ 'slap-about-page-text-fix.css' | asset_url | stylesheet_tag }}
+    {{ 'slap-new-hero.css' | asset_url | stylesheet_tag }}
     {% if template.name == 'page' and page.handle == 'mockup' %}
       {{ 'slap-mockup.css' | asset_url | stylesheet_tag }}
     {% endif %}
@@ -392,6 +393,7 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    <script src="{{ 'slap-new-hero.js' | asset_url }}" defer="defer"></script>
     {% if template.name == 'page' and page.handle == 'mockup' %}
       <script src="{{ 'slap-mockup.js' | asset_url }}" defer="defer"></script>
     {% endif %}

@@ -1,0 +1,224 @@
+/* ===== NEW HERO SECTION (MOCKUP DESIGN) ===== */
+
+.slap-new-hero {
+  position: relative;
+  background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+}
+
+/* Marquee Banner */
+.slap-new-hero__marquee {
+  background: #39FF14;
+  border-top: 4px solid #000;
+  border-bottom: 4px solid #000;
+  padding: 12px 0;
+  overflow: hidden;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: #000;
+}
+
+.slap-new-hero__marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+}
+
+.slap-new-hero__marquee-track span {
+  padding-right: 2rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Hero Wrapper */
+.slap-new-hero__wrapper {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background Image */
+.slap-new-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.slap-new-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.2);
+  opacity: 0.2;
+}
+
+.slap-new-hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.7), transparent);
+}
+
+/* Content Grid */
+.slap-new-hero__content {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .slap-new-hero__content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Text Content */
+.slap-new-hero__text {
+  max-width: 48rem;
+}
+
+/* Station Label */
+.slap-new-hero__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.slap-new-hero__label-line {
+  width: 32px;
+  height: 1px;
+  background: #39FF14;
+}
+
+.slap-new-hero__label-text {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+}
+
+/* Headline */
+.slap-new-hero__headline {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.75rem, 10vw, 8.75rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  color: #000;
+}
+
+.slap-new-hero__typed,
+.slap-new-hero__highlight {
+  color: #39FF14;
+  text-shadow: 
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+}
+
+/* Subtext */
+.slap-new-hero__subtext {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 18px;
+  color: #6b7280;
+  transform: rotate(-1deg);
+  margin-bottom: 32px;
+}
+
+/* CTAs */
+.slap-new-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.slap-new-hero__cta {
+  display: inline-block;
+  padding: 16px 32px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.slap-new-hero__cta--primary {
+  background: #39FF14;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.slap-new-hero__cta--primary:hover {
+  background: #000;
+  color: #39FF14;
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 #39FF14;
+}
+
+.slap-new-hero__cta--secondary {
+  background: transparent;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.slap-new-hero__cta--secondary:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* Right Side Image */
+.slap-new-hero__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slap-new-hero__collage {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .slap-new-hero__wrapper {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+
+  .slap-new-hero__content {
+    padding: 3rem 1rem;
+    gap: 2rem;
+  }
+
+  .slap-new-hero__headline {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .slap-new-hero__ctas {
+    flex-direction: column;
+  }
+
+  .slap-new-hero__cta {
+    width: 100%;
+    text-align: center;
+  }
+}
