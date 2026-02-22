@@ -26,6 +26,48 @@
       const content = marquee.innerHTML;
       marquee.innerHTML = content + content;
     });
+    
+    // Initialize typing effect
+    const typingElement = document.getElementById('slap-typing-word');
+    if (typingElement) {
+      initTypingEffect(typingElement);
+    }
+  }
+  
+  function initTypingEffect(element) {
+    const words = ['BRAND', 'EVENT', 'APP', 'BUSINESS', 'PRODUCT', 'BOXES', 'WINDOWS'];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 150;
+    
+    function type() {
+      const currentWord = words[wordIndex];
+      
+      if (isDeleting) {
+        element.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 75;
+      } else {
+        element.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 150;
+      }
+      
+      if (!isDeleting && charIndex === currentWord.length) {
+        // Pause at end of word
+        typingSpeed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        typingSpeed = 500;
+      }
+      
+      setTimeout(type, typingSpeed);
+    }
+    
+    type();
   }
   
   function makeDraggable(element) {

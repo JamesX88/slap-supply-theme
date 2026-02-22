@@ -50,7 +50,7 @@
   {%- comment -%} ===== HERO SECTION ===== {%- endcomment -%}
   <section class="slap-mockup-hero">
     <div class="slap-mockup-hero__bg">
-      <img src="{{ section.settings.hero_bg | img_url: '2048x' }}" alt="SLAP Supply workshop">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031492016/hJUZfqrifMRJoCkl.jpg" alt="SLAP Supply workshop">
       <div class="slap-mockup-hero__overlay"></div>
     </div>
     <div class="slap-mockup-hero__hazard"></div>
@@ -64,7 +64,7 @@
           </div>
           
           <h1 class="slap-mockup-hero__headline">
-            YOUR BRAND,<br>
+            YOUR <span id="slap-typing-word" class="slap-neon">BRAND</span>,<br>
             BUT <span class="slap-neon">STICKIER.</span>
           </h1>
           
@@ -83,18 +83,14 @@
         </div>
         
         <div class="slap-mockup-hero__right">
-          {% if section.settings.sticker_collage %}
-            <img src="{{ section.settings.sticker_collage | img_url: '800x' }}" alt="Sticker collage" class="slap-mockup-hero__collage">
-          {% endif %}
+          <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031492016/CYpvZkaTTkAnzGwg.png" alt="Sticker collage" class="slap-mockup-hero__collage">
         </div>
       </div>
     </div>
     
-    {% if section.settings.warning_sticker %}
-      <div class="slap-mockup-warning slap-mockup-warning--hero">
-        <img src="{{ section.settings.warning_sticker | img_url: '400x' }}" alt="Warning sticker">
-      </div>
-    {% endif %}
+    <div class="slap-mockup-warning slap-mockup-warning--hero">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031492016/CAfxXLXEJthTKPQp.png" alt="Warning sticker">
+    </div>
   </section>
 
   {%- comment -%} ===== SECOND MARQUEE ===== {%- endcomment -%}
@@ -164,11 +160,9 @@
       </div>
     </div>
     
-    {% if section.settings.caution_sticker %}
-      <div class="slap-mockup-warning slap-mockup-warning--products">
-        <img src="{{ section.settings.caution_sticker | img_url: '400x' }}" alt="Caution sticker">
-      </div>
-    {% endif %}
+    <div class="slap-mockup-warning slap-mockup-warning--products">
+      <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663031492016/rmHoHVpdqIbOLgqf.png" alt="Caution sticker">
+    </div>
   </section>
 
   {%- comment -%} ===== HOW IT WORKS ===== {%- endcomment -%}

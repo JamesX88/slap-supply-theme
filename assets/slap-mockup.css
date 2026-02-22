@@ -340,7 +340,7 @@ body.slap-mockup-body {
 .slap-mockup-hero__headline {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(3.75rem, 10vw, 8.75rem);
   line-height: 0.9;
   letter-spacing: -0.02em;
   margin: 0 0 1.5rem 0;
@@ -374,7 +374,6 @@ body.slap-mockup-body {
 
 .slap-mockup-hero__collage {
   width: 100%;
-  max-width: 500px;
   filter: drop-shadow(0 8px 32px rgba(57, 255, 20, 0.15));
   transform: rotate(3deg);
 }
@@ -884,6 +883,10 @@ body.slap-mockup-body {
 
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 768px) {
+  .slap-draggable {
+    display: none;
+  }
+  
   .slap-btn {
     font-size: 1rem;
     padding: 1rem 2rem;
