@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
     "slap-announcement": {
       "type": "slap-announcement-bar",
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-4"
       }
@@ -11,16 +21,17 @@
     "header": {
       "type": "header",
       "settings": {
-        "color_scheme": "scheme-1",
         "logo_position": "middle-left",
+        "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "",
         "enable_country_selector": false,
         "enable_language_selector": false,
         "enable_customer_avatar": false,
-        "mobile_logo_position": "center",
         "margin_bottom": 0,
         "padding_top": 16,
         "padding_bottom": 16
