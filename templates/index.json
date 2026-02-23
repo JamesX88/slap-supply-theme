@@ -41,7 +41,7 @@
         "typed_words": "[\"BRAND\", \"EVENT\", \"APP\", \"BUSINESS\", \"PRODUCT\", \"BOXES\", \"WINDOWS\"]",
         "headline_color": "#000000",
         "headline_size_min": 5,
-        "headline_size_max": 12,
+        "headline_size_max": 8,
         "headline_margin_bottom": 12,
         "text_stroke_width": 2,
         "text_stroke_color": "#000000",
