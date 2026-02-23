@@ -69,20 +69,6 @@
         "accent_color": "#39ff14"
       }
     },
-    "slap_new_hero": {
-      "type": "slap-new-hero",
-      "disabled": true,
-      "settings": {
-        "station_label": "STATION 01 — HERO",
-        "subtext": "(custom die-cut stickers, labels & adhesive prints)",
-        "hero_image": "shopify://shop_images/hJUZfqrifMRJoCkl.png",
-        "collage_image": "shopify://shop_images/CYpvZkaTTkAnzGwg.png",
-        "primary_cta_text": "LET'S SLAP →",
-        "primary_cta_link": "/pages/customize",
-        "secondary_cta_text": "SHOW ME THE GOODS",
-        "secondary_cta_link": "/collections/all"
-      }
-    },
     "slap_marquee_1": {
       "type": "slap-marquee",
       "settings": {
@@ -310,7 +296,6 @@
   "order": [
     "slap_scrolling_marquee",
     "slap_hero_v2_wkn7kC",
-    "slap_new_hero",
     "slap_marquee_1",
     "slap_categories",
     "slap_how_it_works",
