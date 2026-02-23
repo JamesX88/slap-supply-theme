@@ -1,51 +1,59 @@
 {% comment %}
-  New Hero Section — Light Theme with Animated Typing
-  Replaces the existing "PRINT IT. STICK IT. OWN IT." hero
+  New Hero Section — Pixel-Perfect Mockup Match
+  Fully customizable in Shopify theme editor
 {% endcomment %}
 
 <section class="slap-new-hero" data-section-id="{{ section.id }}" data-section-type="slap-new-hero">
-  {%- comment -%} Hero Content {%- endcomment -%}
   <div class="slap-new-hero__wrapper">
     {%- comment -%} Background Image {%- endcomment -%}
-    <div class="slap-new-hero__bg">
+    <div class="slap-new-hero__bg" style="opacity: {{ section.settings.bg_opacity | divided_by: 100.0 }};">
       {%- if section.settings.hero_image != blank -%}
-        {{ section.settings.hero_image | image_url: width: 1920 | image_tag: loading: 'eager', class: 'slap-new-hero__bg-img' }}
+        {{ section.settings.hero_image | image_url: width: 1920 | image_tag: loading: 'eager', class: 'slap-new-hero__bg-img', style: 'filter: brightness(' | append: section.settings.bg_brightness | append: '%)' }}
       {%- endif -%}
+      <div class="slap-new-hero__bg-overlay"></div>
     </div>
 
     {%- comment -%} Content Grid {%- endcomment -%}
-    <div class="slap-new-hero__content">
+    <div class="slap-new-hero__content" style="max-width: {{ section.settings.container_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; gap: {{ section.settings.grid_gap }}px;">
       <div class="slap-new-hero__text">
         {%- comment -%} Station Label {%- endcomment -%}
-        <div class="slap-new-hero__label">
-          <span class="slap-new-hero__label-line"></span>
-          <span class="slap-new-hero__label-text">{{ section.settings.station_label | default: "STATION 01 — HERO" }}</span>
+        {%- if section.settings.show_station_label -%}
+        <div class="slap-new-hero__label" style="margin-bottom: {{ section.settings.label_margin_bottom }}px;">
+          <span class="slap-new-hero__label-line" style="width: {{ section.settings.label_line_width }}px; background: {{ section.settings.accent_color }};"></span>
+          <span class="slap-new-hero__label-text" style="color: {{ section.settings.label_color }}; font-size: {{ section.settings.label_font_size }}px; letter-spacing: {{ section.settings.label_letter_spacing }};">{{ section.settings.station_label }}</span>
         </div>
+        {%- endif -%}
 
         {%- comment -%} Main Headline with Animated Typing {%- endcomment -%}
-        <h1 class="slap-new-hero__headline">
-          YOUR <span class="slap-new-hero__typed" data-words='["BRAND", "EVENT", "APP", "BUSINESS", "PRODUCT", "BOXES", "WINDOWS"]'></span>,<br>
-          BUT <span class="slap-new-hero__highlight">STICKIER.</span>
+        <h1 class="slap-new-hero__headline" style="color: {{ section.settings.headline_color }}; margin-bottom: {{ section.settings.headline_margin_bottom }}px; font-size: clamp({{ section.settings.headline_size_min }}rem, 10vw, {{ section.settings.headline_size_max }}rem);">
+          {{ section.settings.headline_part1 }} <span class="slap-new-hero__typed" data-words='{{ section.settings.typed_words }}' style="color: {{ section.settings.accent_color }}; -webkit-text-stroke-width: {{ section.settings.text_stroke_width }}px; -webkit-text-stroke-color: {{ section.settings.text_stroke_color }};"></span>{{ section.settings.headline_punctuation }}<br>
+          {{ section.settings.headline_part2 }} <span class="slap-new-hero__highlight" style="color: {{ section.settings.accent_color }}; -webkit-text-stroke-width: {{ section.settings.text_stroke_width }}px; -webkit-text-stroke-color: {{ section.settings.text_stroke_color }};">{{ section.settings.headline_part3 }}</span>
         </h1>
 
         {%- comment -%} Subtext {%- endcomment -%}
-        <p class="slap-new-hero__subtext">{{ section.settings.subtext | default: "(custom die-cut stickers, labels & adhesive prints)" }}</p>
+        {%- if section.settings.subtext != blank -%}
+        <p class="slap-new-hero__subtext" style="color: {{ section.settings.subtext_color }}; font-size: {{ section.settings.subtext_font_size }}px; margin-bottom: {{ section.settings.subtext_margin_bottom }}px; transform: rotate({{ section.settings.subtext_rotation }}deg);">{{ section.settings.subtext }}</p>
+        {%- endif -%}
 
         {%- comment -%} CTAs {%- endcomment -%}
-        <div class="slap-new-hero__ctas">
-          <a href="{{ section.settings.primary_cta_link }}" class="slap-new-hero__cta slap-new-hero__cta--primary">
-            {{ section.settings.primary_cta_text | default: "LET'S SLAP →" }}
+        <div class="slap-new-hero__ctas" style="gap: {{ section.settings.cta_gap }}px;">
+          {%- if section.settings.primary_cta_text != blank -%}
+          <a href="{{ section.settings.primary_cta_link }}" class="slap-new-hero__cta slap-new-hero__cta--primary" style="background: {{ section.settings.primary_cta_bg }}; color: {{ section.settings.primary_cta_color }}; border-color: {{ section.settings.primary_cta_border }}; padding: {{ section.settings.cta_padding_y }}px {{ section.settings.cta_padding_x }}px; font-size: {{ section.settings.cta_font_size }}px;">
+            {{ section.settings.primary_cta_text }}
           </a>
-          <a href="{{ section.settings.secondary_cta_link }}" class="slap-new-hero__cta slap-new-hero__cta--secondary">
-            {{ section.settings.secondary_cta_text | default: "SHOW ME THE GOODS" }}
+          {%- endif -%}
+          {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_link }}" class="slap-new-hero__cta slap-new-hero__cta--secondary" style="background: {{ section.settings.secondary_cta_bg }}; color: {{ section.settings.secondary_cta_color }}; border-color: {{ section.settings.secondary_cta_border }}; padding: {{ section.settings.cta_padding_y }}px {{ section.settings.cta_padding_x }}px; font-size: {{ section.settings.cta_font_size }}px;">
+            {{ section.settings.secondary_cta_text }}
           </a>
+          {%- endif -%}
         </div>
       </div>
 
       {%- comment -%} Right Side Image {%- endcomment -%}
       <div class="slap-new-hero__image">
         {%- if section.settings.collage_image != blank -%}
-          {{ section.settings.collage_image | image_url: width: 800 | image_tag: loading: 'eager', class: 'slap-new-hero__collage' }}
+          {{ section.settings.collage_image | image_url: width: section.settings.collage_max_width | image_tag: loading: 'eager', class: 'slap-new-hero__collage', style: 'max-width: ' | append: section.settings.collage_max_width | append: 'px' }}
         {%- endif -%}
       </div>
     </div>
@@ -57,10 +65,229 @@
   "name": "New Hero (Mockup)",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Grid Gap (Space Between Columns)",
+      "default": 64
+    },
+    {
+      "type": "header",
+      "content": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Image Opacity",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "bg_brightness",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Background Image Brightness",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Station Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_station_label",
+      "label": "Show Station Label",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "station_label",
-      "label": "Station Label",
+      "label": "Station Label Text",
       "default": "STATION 01 — HERO"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Label Font Size",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "label_letter_spacing",
+      "label": "Label Letter Spacing",
+      "default": "0.3em"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Text Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "label_line_width",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Label Line Width",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "label_margin_bottom",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Label Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Main Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part1",
+      "label": "Headline Part 1 (before animated word)",
+      "default": "YOUR"
+    },
+    {
+      "type": "text",
+      "id": "headline_punctuation",
+      "label": "Punctuation After Animated Word",
+      "default": ","
+    },
+    {
+      "type": "text",
+      "id": "headline_part2",
+      "label": "Headline Part 2 (second line start)",
+      "default": "BUT"
+    },
+    {
+      "type": "text",
+      "id": "headline_part3",
+      "label": "Headline Part 3 (second line end)",
+      "default": "STICKIER."
+    },
+    {
+      "type": "textarea",
+      "id": "typed_words",
+      "label": "Animated Words (JSON array)",
+      "default": "[\"BRAND\", \"EVENT\", \"APP\", \"BUSINESS\", \"PRODUCT\", \"BOXES\", \"WINDOWS\"]"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "headline_size_min",
+      "min": 2,
+      "max": 5,
+      "step": 0.25,
+      "unit": "rem",
+      "label": "Headline Min Size (Mobile)",
+      "default": 3.75
+    },
+    {
+      "type": "range",
+      "id": "headline_size_max",
+      "min": 6,
+      "max": 12,
+      "step": 0.25,
+      "unit": "rem",
+      "label": "Headline Max Size (Desktop)",
+      "default": 8.75
+    },
+    {
+      "type": "range",
+      "id": "headline_margin_bottom",
+      "min": 12,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Headline Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Text Stroke (for neon green text)"
+    },
+    {
+      "type": "range",
+      "id": "text_stroke_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Text Stroke Width",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "text_stroke_color",
+      "label": "Text Stroke Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Subtext"
     },
     {
       "type": "text",
@@ -69,14 +296,44 @@
       "default": "(custom die-cut stickers, labels & adhesive prints)"
     },
     {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Background Image"
+      "type": "range",
+      "id": "subtext_font_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtext Font Size",
+      "default": 18
     },
     {
-      "type": "image_picker",
-      "id": "collage_image",
-      "label": "Sticker Collage Image"
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "subtext_rotation",
+      "min": -5,
+      "max": 5,
+      "step": 1,
+      "unit": "deg",
+      "label": "Subtext Rotation",
+      "default": -1
+    },
+    {
+      "type": "range",
+      "id": "subtext_margin_bottom",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Subtext Margin Bottom",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Call-to-Action Buttons"
     },
     {
       "type": "text",
@@ -90,6 +347,24 @@
       "label": "Primary CTA Link"
     },
     {
+      "type": "color",
+      "id": "primary_cta_bg",
+      "label": "Primary CTA Background",
+      "default": "#39FF14"
+    },
+    {
+      "type": "color",
+      "id": "primary_cta_color",
+      "label": "Primary CTA Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "primary_cta_border",
+      "label": "Primary CTA Border Color",
+      "default": "#000000"
+    },
+    {
       "type": "text",
       "id": "secondary_cta_text",
       "label": "Secondary CTA Text",
@@ -99,6 +374,93 @@
       "type": "url",
       "id": "secondary_cta_link",
       "label": "Secondary CTA Link"
+    },
+    {
+      "type": "color",
+      "id": "secondary_cta_bg",
+      "label": "Secondary CTA Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "secondary_cta_color",
+      "label": "Secondary CTA Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "secondary_cta_border",
+      "label": "Secondary CTA Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "cta_padding_y",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "CTA Vertical Padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cta_padding_x",
+      "min": 20,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "CTA Horizontal Padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "cta_font_size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cta_gap",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap Between CTAs",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Right Side Image (Sticker Collage)"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image",
+      "label": "Sticker Collage Image"
+    },
+    {
+      "type": "range",
+      "id": "collage_max_width",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Collage Max Width",
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Neon Green)",
+      "default": "#39FF14"
     }
   ],
   "presets": [
