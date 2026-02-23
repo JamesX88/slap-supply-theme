@@ -184,7 +184,7 @@
   }
 
   .slap-hero-v2__headline {
-    font-size: clamp(2.5rem, 12vw, 4rem) !important;
+    font-size: calc(var(--hero-headline-size, 96px) * 0.5);
   }
 
   .slap-hero-v2__ctas {
