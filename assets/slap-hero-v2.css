@@ -101,6 +101,9 @@
   -webkit-text-stroke: var(--hero-stroke-width, 2px) var(--hero-stroke-color, #000);
   text-stroke: var(--hero-stroke-width, 2px) var(--hero-stroke-color, #000);
   paint-order: stroke fill;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
 }
 
 /* Subtext */
