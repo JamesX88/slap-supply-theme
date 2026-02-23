@@ -12,23 +12,24 @@
     "slap_scrolling_marquee": {
       "type": "slap-scrolling-marquee",
       "settings": {
-        "marquee_text": "FREE SHIPPING ON ORDERS $75+ /// BULK PRICING AVAILABLE /// 3-DAY TURNAROUND /// 100% SATISFACTION GUARANTEED /// NO STICKER REGRETS /// MADE BY PRINT NERDS /// SLAP RESPONSIBLY /// ",
+        "marquee_text": "FREE SHIPPING ON ORDERS $75+ /// BULK PRICING AVAILABLE /// 3-DAY TURNAROUND /// 100% SATISFACTION GUARANTEED /// NO STICKER REGRETS /// MADE BY PRINT NERDS /// SLAP RESPONSIBLY ///",
         "scroll_speed": "medium"
       }
     },
-    "slap_new_hero": {
-      "type": "slap-new-hero",
+    "slap_hero_v2_wkn7kC": {
+      "type": "slap-hero-v2",
+      "name": "Hero V2",
       "settings": {
-        "container_width": 1280,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "grid_gap": 64,
+        "container_width": 1600,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "grid_gap": 40,
         "hero_image": "shopify://shop_images/hJUZfqrifMRJoCkl.png",
         "bg_opacity": 20,
-        "bg_brightness": 120,
+        "bg_brightness": 90,
         "show_station_label": true,
         "station_label": "STATION 01 — HERO",
-        "label_font_size": 12,
+        "label_font_size": 14,
         "label_letter_spacing": "0.3em",
         "label_color": "#6b7280",
         "label_line_width": 32,
@@ -39,24 +40,24 @@
         "headline_part3": "STICKIER.",
         "typed_words": "[\"BRAND\", \"EVENT\", \"APP\", \"BUSINESS\", \"PRODUCT\", \"BOXES\", \"WINDOWS\"]",
         "headline_color": "#000000",
-        "headline_size_min": 3.75,
-        "headline_size_max": 8.75,
-        "headline_margin_bottom": 24,
+        "headline_size_min": 5,
+        "headline_size_max": 12,
+        "headline_margin_bottom": 12,
         "text_stroke_width": 2,
         "text_stroke_color": "#000000",
-        "subtext": "(custom die-cut stickers, labels & adhesive prints)",
-        "subtext_font_size": 18,
-        "subtext_color": "#6b7280",
+        "subtext": "(custom stickers, labels & adhesive prints)",
+        "subtext_font_size": 24,
+        "subtext_color": "#000000",
         "subtext_rotation": -1,
-        "subtext_margin_bottom": 32,
+        "subtext_margin_bottom": 36,
         "primary_cta_text": "LET'S SLAP →",
-        "primary_cta_link": "/pages/customize",
+        "primary_cta_link": "shopify://products/vinyl-stickers",
         "primary_cta_bg": "#39FF14",
         "primary_cta_color": "#000000",
         "primary_cta_border": "#000000",
         "secondary_cta_text": "SHOW ME THE GOODS",
-        "secondary_cta_link": "/collections/all",
-        "secondary_cta_bg": "transparent",
+        "secondary_cta_link": "shopify://collections/custom-stickers",
+        "secondary_cta_bg": "#ffffff",
         "secondary_cta_color": "#000000",
         "secondary_cta_border": "#000000",
         "cta_padding_y": 16,
@@ -66,6 +67,20 @@
         "collage_image": "shopify://shop_images/CYpvZkaTTkAnzGwg.png",
         "collage_max_width": 600,
         "accent_color": "#39FF14"
+      }
+    },
+    "slap_new_hero": {
+      "type": "slap-new-hero",
+      "disabled": true,
+      "settings": {
+        "station_label": "STATION 01 — HERO",
+        "subtext": "(custom die-cut stickers, labels & adhesive prints)",
+        "hero_image": "shopify://shop_images/hJUZfqrifMRJoCkl.png",
+        "collage_image": "shopify://shop_images/CYpvZkaTTkAnzGwg.png",
+        "primary_cta_text": "LET'S SLAP →",
+        "primary_cta_link": "/pages/customize",
+        "secondary_cta_text": "SHOW ME THE GOODS",
+        "secondary_cta_link": "/collections/all"
       }
     },
     "slap_marquee_1": {
@@ -294,6 +309,7 @@
   },
   "order": [
     "slap_scrolling_marquee",
+    "slap_hero_v2_wkn7kC",
     "slap_new_hero",
     "slap_marquee_1",
     "slap_categories",
