@@ -97,11 +97,9 @@
 .slap-new-hero__typed,
 .slap-new-hero__highlight {
   color: #39FF14;
-  text-shadow: 
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
+  -webkit-text-stroke: 2px #000;
+  text-stroke: 2px #000;
+  paint-order: stroke fill;
 }
 
 /* Subtext */
