@@ -63,7 +63,7 @@ h1 p, h2 p, h3 p, h4 p, h5 p, h6 p,
 /* ============================================================
    GLOBAL HEADING SIZES — px-based for reliability
    ============================================================ */
-h1:not(.header__heading):not(.slap-about-hero__heading):not(.slap-hero-v2__heading), .h1, .h0 {
+h1:not(.header__heading):not(.slap-about-hero__heading):not(.slap-hero-v2__heading):not(.slap-hero-v2__headline), .h1, .h0 {
   font-size: clamp(36px, 5vw, 56px) !important;
   line-height: 1.1 !important;
   letter-spacing: -1px;
