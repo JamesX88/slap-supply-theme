@@ -87,7 +87,7 @@
 .slap-hero-v2__headline {
   font-family: 'Oswald', sans-serif;
   font-weight: 900;
-  font-size: clamp(var(--hero-headline-min, 3.75rem), 10vw, var(--hero-headline-max, 8.75rem));
+  font-size: clamp(var(--hero-headline-min, 3.5rem), calc(var(--hero-headline-min, 3.5rem) + (var(--hero-headline-max, 8.5rem) - var(--hero-headline-min, 3.5rem)) * ((100vw - 20rem) / (80rem - 20rem))), var(--hero-headline-max, 8.5rem));
   line-height: 0.9;
   letter-spacing: -0.02em;
   margin-bottom: var(--hero-headline-margin, 24px);
