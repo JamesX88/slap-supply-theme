@@ -17,8 +17,7 @@
     --hero-label-line-width: {{ section.settings.label_line_width }}px;
     --hero-label-margin: {{ section.settings.label_margin_bottom }}px;
     --hero-headline-color: {{ section.settings.headline_color }};
-    --hero-headline-min: {{ section.settings.headline_size_min }}rem;
-    --hero-headline-max: {{ section.settings.headline_size_max }}rem;
+    --hero-headline-size: {{ section.settings.headline_font_size }}px;
     --hero-headline-margin: {{ section.settings.headline_margin_bottom }}px;
     --hero-accent-color: {{ section.settings.accent_color }};
     --hero-stroke-width: {{ section.settings.text_stroke_width }}px;
@@ -331,23 +330,13 @@
     },
     {
       "type": "range",
-      "id": "headline_size_min",
-      "min": 2,
-      "max": 5,
-      "step": 0.5,
-      "unit": "rem",
-      "label": "Min Size (Mobile)",
-      "default": 3.5
-    },
-    {
-      "type": "range",
-      "id": "headline_size_max",
-      "min": 6,
-      "max": 12,
-      "step": 0.5,
-      "unit": "rem",
-      "label": "Max Size (Desktop)",
-      "default": 8.5
+      "id": "headline_font_size",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 96
     },
     {
       "type": "range",
