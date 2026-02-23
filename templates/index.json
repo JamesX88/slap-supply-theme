@@ -41,7 +41,7 @@
         "typed_words": "[\"BRAND\", \"EVENT\", \"APP\", \"BUSINESS\", \"PRODUCT\", \"BOXES\", \"WINDOWS\"]",
         "headline_color": "#000000",
         "headline_size_min": 5,
-        "headline_size_max": 6,
+        "headline_size_max": 12,
         "headline_margin_bottom": 12,
         "text_stroke_width": 2,
         "text_stroke_color": "#000000",
@@ -52,7 +52,7 @@
         "subtext_margin_bottom": 36,
         "primary_cta_text": "LET'S SLAP →",
         "primary_cta_link": "shopify://products/vinyl-stickers",
-        "primary_cta_bg": "#39FF14",
+        "primary_cta_bg": "#39ff14",
         "primary_cta_color": "#000000",
         "primary_cta_border": "#000000",
         "secondary_cta_text": "SHOW ME THE GOODS",
@@ -66,7 +66,7 @@
         "cta_gap": 16,
         "collage_image": "shopify://shop_images/CYpvZkaTTkAnzGwg.png",
         "collage_max_width": 600,
-        "accent_color": "#39FF14"
+        "accent_color": "#39ff14"
       }
     },
     "slap_new_hero": {
