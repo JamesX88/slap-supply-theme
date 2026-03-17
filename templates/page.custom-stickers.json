@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "sticker_customizer_v2": {
+      "type": "slap-sticker-v2",
+      "settings": {
+        "label_text": "CUSTOM STICKERS",
+        "heading": "DESIGN YOUR CUSTOM STICKERS",
+        "subheading": "Upload your artwork — we'll remove the background automatically and generate a print-ready file with cut lines.",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "sticker_customizer_v2"
+  ]
+}

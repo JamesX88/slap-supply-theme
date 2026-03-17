@@ -1,0 +1,457 @@
+{{ 'slap-sticker-v2.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sv2-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .sv2-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sv2 color-{{ section.settings.color_scheme }}" id="sv2Root">
+
+  <!-- ════════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════════════ -->
+  <div class="sv2__hero">
+    <div class="page-width">
+      <div class="sv2__hero-label">{{ section.settings.label_text }}</div>
+      <h1 class="sv2__hero-heading">{{ section.settings.heading }}</h1>
+      <p class="sv2__hero-sub">{{ section.settings.subheading }}</p>
+    </div>
+    <div class="section-divider-caution"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       PROGRESS STEPS
+       ════════════════════════════════════════════════════════════ -->
+  <div class="sv2__progress">
+    <div class="page-width">
+      <div class="sv2__steps">
+        <button class="sv2__step sv2__step--active" data-step="1">
+          <span class="sv2__step-num">01</span>
+          <span class="sv2__step-label">UPLOAD</span>
+        </button>
+        <div class="sv2__step-line"></div>
+        <button class="sv2__step" data-step="2">
+          <span class="sv2__step-num">02</span>
+          <span class="sv2__step-label">SHAPE</span>
+        </button>
+        <div class="sv2__step-line"></div>
+        <button class="sv2__step" data-step="3">
+          <span class="sv2__step-num">03</span>
+          <span class="sv2__step-label">CONFIGURE</span>
+        </button>
+        <div class="sv2__step-line"></div>
+        <button class="sv2__step" data-step="4">
+          <span class="sv2__step-num">04</span>
+          <span class="sv2__step-label">ORDER</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN LAYOUT
+       ════════════════════════════════════════════════════════════ -->
+  <div class="sv2__body sv2-section-{{ section.id }}">
+    <div class="page-width">
+      <div class="sv2__layout">
+
+        <!-- ────────────────────────────────────────────────────────
+             LEFT  —  CONFIGURATION PANELS
+             ──────────────────────────────────────────────────────── -->
+        <div class="sv2__config">
+
+          <!-- ══════════ STEP 1: UPLOAD ══════════ -->
+          <div class="sv2__panel sv2__panel--active" data-panel="1">
+            <div class="sv2__panel-header">
+              <span class="sv2__panel-eyebrow">Step 01</span>
+              <h2 class="sv2__panel-title">Upload Your Artwork</h2>
+              <p class="sv2__panel-desc">PNG or JPG recommended. 300 DPI or higher for best print quality. We'll automatically remove the background.</p>
+            </div>
+
+            <!-- Upload zone -->
+            <div class="sv2__upload-zone" id="sv2UploadZone">
+              <input type="file" id="sv2FileInput" accept="image/*" tabindex="-1">
+              <svg class="sv2__upload-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 8L24 32M24 8L16 16M24 8L32 16" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                <path d="M8 36H40" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+                <path d="M8 36V44H40V36" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+              </svg>
+              <div class="sv2__upload-title">Drop file here or click to browse</div>
+              <div class="sv2__upload-hint">PNG · JPG · GIF · WebP · Max 25 MB</div>
+            </div>
+
+            <!-- File preview (shown after upload) -->
+            <div class="sv2__file-preview" id="sv2FilePreview">
+              <img class="sv2__file-thumb" id="sv2FileThumb" src="" alt="Preview">
+              <div class="sv2__file-info">
+                <div class="sv2__file-name" id="sv2FileName">—</div>
+                <div class="sv2__file-meta" id="sv2FileMeta">—</div>
+                <span class="sv2__dpi-badge" id="sv2DpiBadge"></span>
+              </div>
+              <button class="sv2__file-remove" id="sv2FileRemove" title="Remove file">✕</button>
+            </div>
+
+            <!-- BG removal progress -->
+            <div class="sv2__bg-status" id="sv2BgStatus">
+              <div class="sv2__bg-bar-wrap">
+                <div class="sv2__bg-bar-fill" id="sv2BgBarFill"></div>
+              </div>
+              <div class="sv2__bg-text" id="sv2BgText">Waiting for image...</div>
+              <div class="sv2__bg-actions">
+                <button class="sv2__btn sv2__btn--ghost" id="sv2BgSkip" style="display:none;">
+                  SKIP BG REMOVAL
+                </button>
+                <button class="sv2__btn sv2__btn--ghost" id="sv2BgToggle" style="display:none;">
+                  SHOW ORIGINAL
+                </button>
+              </div>
+            </div>
+
+            <div class="sv2__nav">
+              <button class="sv2__btn sv2__btn--primary" data-goto="2" id="sv2Step1Next" disabled>
+                NEXT: CHOOSE SHAPE →
+              </button>
+            </div>
+          </div><!-- /panel 1 -->
+
+
+          <!-- ══════════ STEP 2: SHAPE ══════════ -->
+          <div class="sv2__panel" data-panel="2">
+            <div class="sv2__panel-header">
+              <span class="sv2__panel-eyebrow">Step 02</span>
+              <h2 class="sv2__panel-title">Choose Your Shape</h2>
+              <p class="sv2__panel-desc">Die-cut follows your artwork's exact outline. Preset shapes clip your image to a fixed shape.</p>
+            </div>
+
+            <div class="sv2__shape-grid">
+
+              <!-- Die-cut -->
+              <button class="sv2__shape-btn sv2__shape-btn--active" data-shape="die-cut">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 4C10 4 4 10 4 16C4 18 5 20 6 21L9 28H23L26 21C27 20 28 18 28 16C28 10 22 4 16 4Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                DIE-CUT
+              </button>
+
+              <!-- Circle -->
+              <button class="sv2__shape-btn" data-shape="circle">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                CIRCLE
+              </button>
+
+              <!-- Square -->
+              <button class="sv2__shape-btn" data-shape="square">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="4" width="24" height="24" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                SQUARE
+              </button>
+
+              <!-- Rectangle -->
+              <button class="sv2__shape-btn" data-shape="rectangle">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="8" width="28" height="16" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                RECT
+              </button>
+
+              <!-- Oval -->
+              <button class="sv2__shape-btn" data-shape="oval">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="16" cy="16" rx="13" ry="9" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                OVAL
+              </button>
+
+              <!-- Hexagon -->
+              <button class="sv2__shape-btn" data-shape="hexagon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 3L28 9.5V22.5L16 29L4 22.5V9.5L16 3Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                HEXAGON
+              </button>
+
+              <!-- Heart -->
+              <button class="sv2__shape-btn" data-shape="heart">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 27C16 27 4 19 4 11C4 7.5 7 5 10.5 5C12.5 5 14.5 6 16 8C17.5 6 19.5 5 21.5 5C25 5 28 7.5 28 11C28 19 16 27 16 27Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                HEART
+              </button>
+
+              <!-- Star -->
+              <button class="sv2__shape-btn" data-shape="star">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 3L19.5 12.5H29.5L21.5 18.5L24.5 28L16 22L7.5 28L10.5 18.5L2.5 12.5H12.5L16 3Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                STAR
+              </button>
+
+            </div><!-- /shape-grid -->
+
+            <!-- Die-cut padding control -->
+            <div id="sv2DiecutOptions">
+              <div class="sv2__divider"></div>
+              <div class="sv2__slider-row">
+                <span class="sv2__slider-label">CONTOUR PADDING</span>
+                <input type="range" class="sv2__slider" id="sv2ContourPadding" min="2" max="30" value="10" step="1">
+                <span class="sv2__slider-val" id="sv2ContourPaddingVal">10px</span>
+              </div>
+              <p class="sv2__panel-desc" style="margin-top:-.5rem;">Controls how closely the cut line follows your artwork edge. Drag the image in the preview to reposition.</p>
+            </div>
+
+            <div class="sv2__nav">
+              <button class="sv2__btn sv2__btn--ghost" data-goto="1">← BACK</button>
+              <button class="sv2__btn sv2__btn--primary" data-goto="3">NEXT: CONFIGURE →</button>
+            </div>
+          </div><!-- /panel 2 -->
+
+
+          <!-- ══════════ STEP 3: CONFIGURE ══════════ -->
+          <div class="sv2__panel" data-panel="3">
+            <div class="sv2__panel-header">
+              <span class="sv2__panel-eyebrow">Step 03</span>
+              <h2 class="sv2__panel-title">Configure Your Order</h2>
+              <p class="sv2__panel-desc">Pick your size, material, finish and quantity. Pricing updates in real-time.</p>
+            </div>
+
+            <!-- Size -->
+            <span class="sv2__option-label">SIZE (INCHES)</span>
+            <div class="sv2__size-grid">
+              <button class="sv2__size-btn sv2__size-btn--active" data-size="2x2">
+                <span class="sv2__size-btn-dim">2×2"</span>
+                <span class="sv2__size-btn-note">Small</span>
+              </button>
+              <button class="sv2__size-btn" data-size="3x3">
+                <span class="sv2__size-btn-dim">3×3"</span>
+                <span class="sv2__size-btn-note">Standard</span>
+              </button>
+              <button class="sv2__size-btn" data-size="4x4">
+                <span class="sv2__size-btn-dim">4×4"</span>
+                <span class="sv2__size-btn-note">Large</span>
+              </button>
+              <button class="sv2__size-btn" data-size="2x3">
+                <span class="sv2__size-btn-dim">2×3"</span>
+                <span class="sv2__size-btn-note">Portrait</span>
+              </button>
+              <button class="sv2__size-btn" data-size="3x4">
+                <span class="sv2__size-btn-dim">3×4"</span>
+                <span class="sv2__size-btn-note">Tall</span>
+              </button>
+              <button class="sv2__size-btn" data-size="4x6">
+                <span class="sv2__size-btn-dim">4×6"</span>
+                <span class="sv2__size-btn-note">Jumbo</span>
+              </button>
+            </div>
+
+            <!-- Material -->
+            <span class="sv2__option-label">MATERIAL</span>
+            <div class="sv2__option-group">
+              <button class="sv2__option-btn sv2__option-btn--active" data-material="vinyl">VINYL</button>
+              <button class="sv2__option-btn" data-material="clear">CLEAR</button>
+              <button class="sv2__option-btn" data-material="glitter">GLITTER</button>
+              <button class="sv2__option-btn" data-material="holographic">HOLOGRAPHIC</button>
+            </div>
+
+            <!-- Finish -->
+            <span class="sv2__option-label">FINISH</span>
+            <div class="sv2__option-group">
+              <button class="sv2__option-btn sv2__option-btn--active" data-finish="matte">MATTE</button>
+              <button class="sv2__option-btn" data-finish="gloss">GLOSSY</button>
+            </div>
+
+            <!-- Quantity -->
+            <span class="sv2__option-label">QUANTITY</span>
+            <div class="sv2__option-group">
+              <button class="sv2__option-btn" data-qty="50">50</button>
+              <button class="sv2__option-btn sv2__option-btn--active" data-qty="100">100</button>
+              <button class="sv2__option-btn" data-qty="250">250</button>
+              <button class="sv2__option-btn" data-qty="500">500</button>
+              <button class="sv2__option-btn" data-qty="1000">1000</button>
+            </div>
+
+            <!-- Turnaround -->
+            <span class="sv2__option-label">TURNAROUND</span>
+            <div class="sv2__option-group">
+              <button class="sv2__option-btn sv2__option-btn--active" data-rush="standard">STANDARD (3–5 DAYS)</button>
+              <button class="sv2__option-btn" data-rush="rush">RUSH (1–2 DAYS +$15)</button>
+            </div>
+
+            <div class="sv2__nav">
+              <button class="sv2__btn sv2__btn--ghost" data-goto="2">← BACK</button>
+              <button class="sv2__btn sv2__btn--primary" data-goto="4">NEXT: REVIEW ORDER →</button>
+            </div>
+          </div><!-- /panel 3 -->
+
+
+          <!-- ══════════ STEP 4: ORDER ══════════ -->
+          <div class="sv2__panel" data-panel="4">
+            <div class="sv2__panel-header">
+              <span class="sv2__panel-eyebrow">Step 04</span>
+              <h2 class="sv2__panel-title">Review & Order</h2>
+              <p class="sv2__panel-desc">Check your preview and specs. Add to cart when you're ready.</p>
+            </div>
+
+            <!-- Special instructions -->
+            <span class="sv2__option-label">SPECIAL INSTRUCTIONS (OPTIONAL)</span>
+            <textarea class="sv2__textarea" id="sv2Instructions" placeholder="Any special requests, colour notes, or finishing details…" rows="3"></textarea>
+
+            <!-- Success message -->
+            <div class="sv2__success" id="sv2Success">
+              <div class="sv2__success-title">Added to Cart!</div>
+              <p class="sv2__success-text">Your custom sticker order has been added. Your processed artwork has been saved and will be included with your order details.</p>
+            </div>
+
+            <div class="sv2__nav">
+              <button class="sv2__btn sv2__btn--ghost" data-goto="3">← BACK</button>
+              <button class="sv2__btn sv2__btn--green sv2__btn--full" id="sv2AddToCart">
+                ADD TO CART →
+              </button>
+            </div>
+          </div><!-- /panel 4 -->
+
+        </div><!-- /config -->
+
+
+        <!-- ────────────────────────────────────────────────────────
+             RIGHT  —  STICKY PREVIEW
+             ──────────────────────────────────────────────────────── -->
+        <div class="sv2__preview">
+          <span class="sv2__preview-label">LIVE PREVIEW</span>
+
+          <!-- Zoom controls -->
+          <div class="sv2__zoom">
+            <button class="sv2__zoom-btn" id="sv2ZoomOut" title="Zoom out">−</button>
+            <span class="sv2__zoom-label" id="sv2ZoomLabel">100%</span>
+            <button class="sv2__zoom-btn" id="sv2ZoomIn" title="Zoom in">+</button>
+            <button class="sv2__zoom-btn" id="sv2ZoomReset" title="Reset" style="font-size:10px;width:auto;padding:0 6px;letter-spacing:1px;font-family:var(--sv-font-m)">RESET</button>
+          </div>
+
+          <!-- Canvas -->
+          <div class="sv2__canvas-wrap">
+            <canvas class="sv2__canvas" id="sv2Canvas"></canvas>
+            <div class="sv2__canvas-empty" id="sv2CanvasEmpty">
+              <svg class="sv2__canvas-empty-icon" viewBox="0 0 48 48" fill="none">
+                <rect x="8" y="8" width="32" height="32" rx="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 32L16 24L22 30L30 20L40 32" stroke="currentColor" stroke-width="2"/>
+                <circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="sv2__canvas-empty-text">Upload an image<br>to see preview</span>
+            </div>
+          </div>
+
+          <!-- Specs summary -->
+          <div class="sv2__specs">
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Shape</span>
+              <span class="sv2__specs-val" id="sv2SpecShape">Die-Cut</span>
+            </div>
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Size</span>
+              <span class="sv2__specs-val" id="sv2SpecSize">2" × 2"</span>
+            </div>
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Material</span>
+              <span class="sv2__specs-val" id="sv2SpecMaterial">Vinyl</span>
+            </div>
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Finish</span>
+              <span class="sv2__specs-val" id="sv2SpecFinish">Matte</span>
+            </div>
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Quantity</span>
+              <span class="sv2__specs-val" id="sv2SpecQty">100 pcs</span>
+            </div>
+            <div class="sv2__specs-row">
+              <span class="sv2__specs-key">Turnaround</span>
+              <span class="sv2__specs-val" id="sv2SpecTurn">3–5 Days</span>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="sv2__price-total">
+            <div>
+              <div class="sv2__price-label">Estimated Total</div>
+              <div class="sv2__price-unit" id="sv2PriceUnit">$1.20/ea</div>
+            </div>
+            <div class="sv2__price-amount" id="sv2PriceAmount">$120.00</div>
+          </div>
+
+        </div><!-- /preview -->
+
+      </div><!-- /layout -->
+    </div><!-- /page-width -->
+  </div><!-- /body -->
+
+</div><!-- /sv2Root -->
+
+<script src="{{ 'slap-sticker-v2.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Sticker Customizer V2",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Eyebrow Label",
+      "default": "CUSTOM STICKERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "DESIGN YOUR CUSTOM STICKERS"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Upload your artwork — we'll remove the background and generate a print-ready file with cut lines automatically."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticker Customizer V2"
+    }
+  ]
+}
+{% endschema %}
