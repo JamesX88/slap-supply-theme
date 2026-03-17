@@ -425,56 +425,55 @@
   /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
-  /* Resize image to max 1024px and convert to JPEG before sending.
-     Replicate's RMBG model works at 1024px internally — sending larger images
-     just wastes memory and causes OOM errors in the Worker / model. */
-  function resizeForUpload(dataURL, callback) {
-    var img = new Image();
-    img.onload = function () {
-      var MAX = 1024;
-      var w = img.naturalWidth, h = img.naturalHeight;
-      if (Math.max(w, h) > MAX) {
-        var sc = MAX / Math.max(w, h);
-        w = Math.round(w * sc);
-        h = Math.round(h * sc);
-      }
-      var c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      c.getContext('2d').drawImage(img, 0, 0, w, h);
-      callback(c.toDataURL('image/jpeg', 0.88));
-    };
-    img.src = dataURL;
-  }
-
   function startBgRemoval() {
-    if (!S.originalDataURL) return;
+    if (!S.file) return;
 
     showLoadingOverlay();
-    fauxProgressTo(5, 'Preparing image...');
-    setBgProgress('Preparing image...', 5);
+    fauxProgressTo(5, 'Uploading file...');
+    setBgProgress('Uploading file...', 5);
     if (D.bgStatus)   D.bgStatus.classList.add('sv2__bg-status--show');
     if (D.step1Next)  D.step1Next.disabled = true;
     S.bgAttempts = 0;
 
-    resizeForUpload(S.originalDataURL, function (resizedDataURL) {
-      fauxProgressTo(12, 'Uploading image...');
-      setBgProgress('Uploading image...', 12);
-
-    fetch(CFG.workerUrl + '/remove-bg', {
+    /* Step 1: stream raw file to R2 via Worker — no base64, no memory bloat */
+    fetch(CFG.workerUrl + '/upload', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: resizedDataURL })
+      headers: {
+        'Content-Type': S.file.type || 'application/octet-stream',
+        'X-Filename':   encodeURIComponent(S.file.name),
+        'X-File-Type':  S.file.type || 'application/octet-stream'
+      },
+      body: S.file   /* send raw File object — streamed, never base64 encoded */
     })
     .then(function (r) {
-      if (!r.ok) return r.text().then(function (t) { throw new Error('Worker ' + r.status + ': ' + t); });
+      if (!r.ok) return r.text().then(function (t) { throw new Error('Upload ' + r.status + ': ' + t); });
+      return r.json();
+    })
+    .then(function (upload) {
+      if (upload.error) throw new Error(upload.error);
+      S.artworkKey = upload.key;
+      S.artworkUrl = upload.url;
+
+      fauxProgressTo(20, 'Sending to AI...');
+      setBgProgress('Sending to AI...', 20);
+
+      /* Step 2: tell Worker to start BG removal using the R2 URL */
+      return fetch(CFG.workerUrl + '/remove-bg', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: upload.key })
+      });
+    })
+    .then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { throw new Error('BG removal ' + r.status + ': ' + t); });
       return r.json();
     })
     .then(function (data) {
       if (data.error) throw new Error(data.error);
       if (!data.id)   throw new Error('Worker returned no prediction ID');
       S.bgPredictionId = data.id;
-      fauxProgressTo(20, 'Sending to AI...');
-      setBgProgress('Removing background...', 20);
+      fauxProgressTo(30, 'Removing background...');
+      setBgProgress('Removing background...', 30);
       schedulePoll();
     })
     .catch(function (err) {
@@ -482,7 +481,6 @@
       setBgProgress('Error: ' + (err.message || 'unknown') + ' — upload a transparent PNG to skip', 0);
       if (D.bgSkipBtn) D.bgSkipBtn.style.display = '';
     });
-    }); // end resizeForUpload
   }
 
   function schedulePoll() {
