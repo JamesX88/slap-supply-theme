@@ -340,6 +340,25 @@
           <!-- Canvas -->
           <div class="sv2__canvas-wrap">
             <canvas class="sv2__canvas" id="sv2Canvas"></canvas>
+
+            <!-- Loading overlay (shown during BG removal) -->
+            <div class="sv2__canvas-loading" id="sv2CanvasLoading" style="display:none;">
+              <div class="sv2__canvas-loading-inner">
+                <div class="sv2__canvas-loading-icon">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <circle cx="18" cy="18" r="15" stroke="rgba(57,255,20,0.2)" stroke-width="3"/>
+                    <path d="M18 3 A15 15 0 0 1 33 18" stroke="#39FF14" stroke-width="3" stroke-linecap="square">
+                      <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"/>
+                    </path>
+                  </svg>
+                </div>
+                <div class="sv2__canvas-loading-text" id="sv2LoadingText">Processing...</div>
+                <div class="sv2__canvas-loading-bar-wrap">
+                  <div class="sv2__canvas-loading-bar" id="sv2LoadingBar"></div>
+                </div>
+              </div>
+            </div>
+
             <div class="sv2__canvas-empty" id="sv2CanvasEmpty">
               <svg class="sv2__canvas-empty-icon" viewBox="0 0 48 48" fill="none">
                 <rect x="8" y="8" width="32" height="32" rx="2" stroke="currentColor" stroke-width="2"/>

@@ -149,8 +149,11 @@
     D.success     = document.getElementById('sv2Success');
 
     /* preview (right column) */
-    D.canvas      = document.getElementById('sv2Canvas');
-    D.canvasEmpty = document.getElementById('sv2CanvasEmpty');
+    D.canvas        = document.getElementById('sv2Canvas');
+    D.canvasEmpty   = document.getElementById('sv2CanvasEmpty');
+    D.canvasLoading = document.getElementById('sv2CanvasLoading');
+    D.loadingBar    = document.getElementById('sv2LoadingBar');
+    D.loadingText   = document.getElementById('sv2LoadingText');
     D.zoomIn      = document.getElementById('sv2ZoomIn');
     D.zoomOut     = document.getElementById('sv2ZoomOut');
     D.zoomReset   = document.getElementById('sv2ZoomReset');
@@ -212,8 +215,15 @@
     var zone = document.getElementById('sv2UploadZone');
     if (!zone) return;
 
-    zone.addEventListener('click', function () {
-      D.fileInput && D.fileInput.click();
+    /* The file input covers the whole zone via CSS, so a plain click on the zone
+       already triggers the native file dialog.  Adding a second fileInput.click()
+       call caused the dialog to open twice (double-select bug).  We only
+       programmatically open the dialog when the click did NOT originate from the
+       input itself (e.g. keyboard activation or label click). */
+    zone.addEventListener('click', function (e) {
+      if (e.target !== D.fileInput) {
+        D.fileInput && D.fileInput.click();
+      }
     });
     zone.addEventListener('dragover', function (e) {
       e.preventDefault();
@@ -368,10 +378,58 @@
   }
 
   /* ──────────────────────────────────────────────────────────────────────────
+     CANVAS LOADING OVERLAY
+     ────────────────────────────────────────────────────────────────────────── */
+  var _fauxTimer  = null;
+  var _fauxTarget = 0;
+  var _fauxCurrent= 0;
+
+  var LOADING_STEPS = [
+    { at: 5,  text: 'Uploading image...' },
+    { at: 20, text: 'Sending to AI...' },
+    { at: 40, text: 'Analyzing artwork...' },
+    { at: 65, text: 'Removing background...' },
+    { at: 85, text: 'Finalizing...' }
+  ];
+
+  function showLoadingOverlay() {
+    if (D.canvasLoading) D.canvasLoading.style.display = 'flex';
+    if (D.canvasEmpty)   D.canvasEmpty.style.display   = 'none';
+    _fauxCurrent = 0;
+    _fauxTarget  = 0;
+    setLoadingBar(0, 'Preparing...');
+  }
+
+  function hideLoadingOverlay() {
+    clearTimeout(_fauxTimer);
+    setLoadingBar(100, 'Done!');
+    setTimeout(function () {
+      if (D.canvasLoading) D.canvasLoading.style.display = 'none';
+    }, 600);
+  }
+
+  function setLoadingBar(pct, text) {
+    if (D.loadingBar)  D.loadingBar.style.width = pct + '%';
+    if (D.loadingText) D.loadingText.textContent = text || '';
+  }
+
+  /* Drive a smooth faux progress animation toward a target % */
+  function fauxProgressTo(targetPct, label) {
+    clearTimeout(_fauxTimer);
+    _fauxTarget = targetPct;
+    var step = LOADING_STEPS.slice().reverse().find(function (s) { return s.at <= targetPct; });
+    var text = label || (step ? step.text : 'Processing...');
+    setLoadingBar(targetPct, text);
+  }
+
+  /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
   function startBgRemoval() {
     if (!S.originalDataURL) return;
+
+    showLoadingOverlay();
+    fauxProgressTo(5, 'Uploading image...');
     setBgProgress('Starting AI background removal...', 5);
     if (D.bgStatus)   D.bgStatus.classList.add('sv2__bg-status--show');
     if (D.step1Next)  D.step1Next.disabled = true;
@@ -382,15 +440,20 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image: S.originalDataURL })
     })
-    .then(function (r) { return r.json(); })
+    .then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { throw new Error('Worker ' + r.status + ': ' + t); });
+      return r.json();
+    })
     .then(function (data) {
       if (data.error) throw new Error(data.error);
       if (!data.id)   throw new Error('Worker returned no prediction ID');
       S.bgPredictionId = data.id;
+      fauxProgressTo(20, 'Sending to AI...');
       setBgProgress('Removing background...', 20);
       schedulePoll();
     })
     .catch(function (err) {
+      hideLoadingOverlay();
       setBgProgress('Error: ' + (err.message || 'unknown') + ' — upload a transparent PNG to skip', 0);
       if (D.bgSkipBtn) D.bgSkipBtn.style.display = '';
     });
@@ -410,28 +473,38 @@
     S.bgAttempts++;
 
     if (S.bgAttempts > CFG.pollMaxAttempts) {
+      hideLoadingOverlay();
       setBgProgress('Timed out — upload a transparent PNG to skip', 0);
       if (D.bgSkipBtn) D.bgSkipBtn.style.display = '';
       return;
     }
 
-    /* Animate progress (15% → 90% while waiting) */
-    var pct = 20 + Math.min(70, S.bgAttempts * (70 / CFG.pollMaxAttempts));
-    setBgProgress('Removing background...', pct);
+    /* Smoothly advance faux progress bar: 20% → 88% over all poll attempts */
+    var pct = 20 + Math.min(68, S.bgAttempts * (68 / CFG.pollMaxAttempts));
+    var labels = ['Analyzing artwork...', 'Removing background...', 'Removing background...', 'Finalizing...'];
+    var labelIdx = Math.min(labels.length - 1, Math.floor((pct - 20) / 17));
+    fauxProgressTo(Math.round(pct), labels[labelIdx]);
+    setBgProgress(labels[labelIdx], pct);
 
     fetch(CFG.workerUrl + '/check/' + S.bgPredictionId)
-    .then(function (r) { return r.json(); })
+    .then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { throw new Error('Poll ' + r.status + ': ' + t); });
+      return r.json();
+    })
     .then(function (data) {
       if (data.status === 'succeeded') {
+        fauxProgressTo(95, 'Loading result...');
         onBgRemoved(data.url, data.key);
       } else if (data.status === 'failed') {
-        setBgProgress('BG removal failed — ' + (data.error || 'unknown error'), 0);
+        hideLoadingOverlay();
+        setBgProgress('Failed: ' + (data.error || 'unknown') + ' — upload a PNG with transparent background to skip', 0);
         if (D.bgSkipBtn) D.bgSkipBtn.style.display = '';
       } else {
         schedulePoll();
       }
     })
-    .catch(function () {
+    .catch(function (err) {
+      console.warn('Poll error (retrying):', err);
       schedulePoll();
     });
   }
@@ -447,10 +520,11 @@
     img.crossOrigin = 'anonymous';
     img.onload = function () {
       S.processedImage   = img;
-      S.processedDataURL = null; // use URL directly
+      S.processedDataURL = null;
       S.showOriginal     = false;
       S.contourPath      = null;
 
+      hideLoadingOverlay();
       setBgProgress('Background removed!', 100);
       setTimeout(function () {
         if (D.bgStatus) D.bgStatus.classList.remove('sv2__bg-status--show');
@@ -500,6 +574,7 @@
 
   function skipBgRemoval() {
     stopBgPoll();
+    hideLoadingOverlay();
     S.processedImage   = S.originalImage;
     S.processedDataURL = S.originalDataURL;
     S.processedUrl     = null; // will use originalDataURL at cart time
