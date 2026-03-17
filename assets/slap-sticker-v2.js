@@ -265,6 +265,42 @@
     }
   }
 
+  /* Read actual pixel dimensions from the file header — no decode needed.
+     Covers PNG (IHDR at byte 16) and JPEG (SOF0/SOF1/SOF2 markers). */
+  function parseImageDimensions(file) {
+    return new Promise(function (resolve) {
+      var fr = new FileReader();
+      fr.onload = function (e) {
+        try {
+          var buf  = e.target.result;
+          var view = new DataView(buf);
+          var sig  = view.getUint32(0, false);
+          // PNG: 0x89504E47; width at byte 16, height at 20 (big-endian)
+          if (sig === 0x89504E47) {
+            resolve({ w: view.getUint32(16, false), h: view.getUint32(20, false) });
+            return;
+          }
+          // JPEG: 0xFFD8xxxx; scan for SOF0(FFC0)/SOF1/SOF2 markers
+          if ((sig >>> 16) === 0xFFD8) {
+            var i = 2;
+            while (i + 8 < buf.byteLength) {
+              var marker = view.getUint16(i, false);
+              var len    = view.getUint16(i + 2, false);
+              if ((marker & 0xFFF0) === 0xFFC0 && (marker & 0x000F) <= 2) {
+                resolve({ w: view.getUint16(i + 7, false), h: view.getUint16(i + 5, false) });
+                return;
+              }
+              i += 2 + len;
+            }
+          }
+          resolve(null);
+        } catch (ex) { resolve(null); }
+      };
+      fr.onerror = function () { resolve(null); };
+      fr.readAsArrayBuffer(file.slice(0, 65536)); // first 64 KB covers all JPEG SOF headers
+    });
+  }
+
   function handleFile(file) {
     if (!file.type.match(/^image\//)) {
       alert('Please upload an image file (PNG, JPG, GIF, WebP).');
@@ -285,24 +321,50 @@
     S.contourPath      = null;
     stopBgPoll();
 
-    /* Use a blob URL — zero-copy reference to the file on disk.
-       FileReader.readAsDataURL() base64-encodes the whole file in RAM
-       which causes Chrome OOM on large print files. */
-    if (S.originalDataURL && S.originalDataURL.startsWith('blob:')) {
-      URL.revokeObjectURL(S.originalDataURL);
-    }
-    S.originalDataURL = URL.createObjectURL(file);
-    var img = new Image();
-    img.onload = function () {
-      S.originalImage  = img;
-      S.imageWidth     = img.naturalWidth;
-      S.imageHeight    = img.naturalHeight;
-      S.imageDPI       = guessDPI(file, img);
-      showFilePreview();
-      renderCanvas();
-      startBgRemoval();
-    };
-    img.src = S.originalDataURL;
+    /* NEVER load the full-res original into an HTMLImageElement.
+       Even a blob URL triggers a full pixel decode when drawImage is called,
+       which OOMs Chrome on large print files.
+       Strategy:
+         1. Parse actual dimensions from file header (no decode at all)
+         2. Create an ≤800px display image via createImageBitmap — JPEG uses
+            libjpeg's scale factors so it never decodes the full resolution */
+    parseImageDimensions(file).then(function (dims) {
+      S.imageWidth  = dims ? dims.w : 0;
+      S.imageHeight = dims ? dims.h : 0;
+      S.imageDPI    = (S.imageWidth && S.imageHeight)
+        ? guessDPI(file, S.imageWidth, S.imageHeight)
+        : 0;
+      return createImageBitmap(file, { resizeWidth: 800, resizeQuality: 'medium' });
+    })
+    .then(function (bmp) {
+      // If header parse failed, fall back to bitmap dimensions
+      if (!S.imageWidth) { S.imageWidth = bmp.width; S.imageHeight = bmp.height; }
+      var c = document.createElement('canvas');
+      c.width = bmp.width; c.height = bmp.height;
+      c.getContext('2d').drawImage(bmp, 0, 0);
+      bmp.close(); // release GPU memory immediately
+      return new Promise(function (resolve) {
+        c.toBlob(function (blob) { resolve(URL.createObjectURL(blob)); }, 'image/jpeg', 0.92);
+      });
+    })
+    .then(function (displayUrl) {
+      if (S.originalDataURL && S.originalDataURL.startsWith('blob:')) {
+        URL.revokeObjectURL(S.originalDataURL);
+      }
+      S.originalDataURL = displayUrl;
+      var img = new Image();
+      img.onload = function () {
+        S.originalImage = img; // ≤800px display copy — never full-res
+        showFilePreview();
+        renderCanvas();
+        startBgRemoval();
+      };
+      img.src = displayUrl;
+    })
+    .catch(function (err) {
+      console.error('Image load error:', err);
+      alert('Could not load image: ' + (err.message || 'Try a different file format.'));
+    });
   }
 
   function showFilePreview() {
@@ -359,11 +421,11 @@
     return (b/1024/1024).toFixed(1) + ' MB';
   }
 
-  function guessDPI(file, img) {
+  function guessDPI(file, w, h) {
     /* Very rough estimate from file size vs pixel count.
        Accurate DPI is only in the file's EXIF/metadata — not easily readable
        without a dedicated library. We use size/pixel heuristic as a proxy. */
-    var px = img.naturalWidth * img.naturalHeight;
+    var px = w * h;
     var kb = file.size / 1024;
     if (px === 0) return 0;
     /* JPEG at 300 DPI typically compresses to ~0.1–0.3 bytes/pixel.
