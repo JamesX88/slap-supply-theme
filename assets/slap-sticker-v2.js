@@ -285,22 +285,24 @@
     S.contourPath      = null;
     stopBgPoll();
 
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      S.originalDataURL = ev.target.result;
-      var img = new Image();
-      img.onload = function () {
-        S.originalImage  = img;
-        S.imageWidth     = img.naturalWidth;
-        S.imageHeight    = img.naturalHeight;
-        S.imageDPI       = guessDPI(file, img);
-        showFilePreview();
-        renderCanvas();
-        startBgRemoval();
-      };
-      img.src = S.originalDataURL;
+    /* Use a blob URL — zero-copy reference to the file on disk.
+       FileReader.readAsDataURL() base64-encodes the whole file in RAM
+       which causes Chrome OOM on large print files. */
+    if (S.originalDataURL && S.originalDataURL.startsWith('blob:')) {
+      URL.revokeObjectURL(S.originalDataURL);
+    }
+    S.originalDataURL = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      S.originalImage  = img;
+      S.imageWidth     = img.naturalWidth;
+      S.imageHeight    = img.naturalHeight;
+      S.imageDPI       = guessDPI(file, img);
+      showFilePreview();
+      renderCanvas();
+      startBgRemoval();
     };
-    reader.readAsDataURL(file);
+    img.src = S.originalDataURL;
   }
 
   function showFilePreview() {
@@ -334,6 +336,8 @@
   }
 
   function resetUpload() {
+    if (S.originalDataURL  && S.originalDataURL.startsWith('blob:'))  URL.revokeObjectURL(S.originalDataURL);
+    if (S.processedDataURL && S.processedDataURL.startsWith('blob:')) URL.revokeObjectURL(S.processedDataURL);
     S.file = S.originalDataURL = S.processedDataURL = S.processedUrl = null;
     S.originalImage = S.processedImage = null;
     S.bgDone = false; S.showOriginal = true; S.contourPath = null;
@@ -597,31 +601,31 @@
       renderCanvas();
     };
     img.onerror = function () {
-      /* Fallback: fetch as blob and convert to data URL */
+      /* Fallback: fetch as blob → object URL (no base64 copy) */
       fetch(url)
       .then(function (r) { return r.blob(); })
       .then(function (blob) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          S.processedDataURL = e.target.result;
-          var img2 = new Image();
-          img2.onload = function () {
-            S.processedImage   = img2;
-            S.showOriginal     = false;
-            S.contourPath      = null;
-            setBgProgress('Background removed!', 100);
-            setTimeout(function () {
-              if (D.bgStatus) D.bgStatus.classList.remove('sv2__bg-status--show');
-            }, 1500);
-            if (D.bgToggleBtn) D.bgToggleBtn.style.display = '';
-            if (D.fileThumb)   D.fileThumb.src = S.processedDataURL;
-            if (D.step1Next)   D.step1Next.disabled = false;
-            updateContour();
-            renderCanvas();
-          };
-          img2.src = e.target.result;
+        if (S.processedDataURL && S.processedDataURL.startsWith('blob:')) {
+          URL.revokeObjectURL(S.processedDataURL);
+        }
+        var blobUrl = URL.createObjectURL(blob);
+        S.processedDataURL = blobUrl;
+        var img2 = new Image();
+        img2.onload = function () {
+          S.processedImage   = img2;
+          S.showOriginal     = false;
+          S.contourPath      = null;
+          setBgProgress('Background removed!', 100);
+          setTimeout(function () {
+            if (D.bgStatus) D.bgStatus.classList.remove('sv2__bg-status--show');
+          }, 1500);
+          if (D.bgToggleBtn) D.bgToggleBtn.style.display = '';
+          if (D.fileThumb)   D.fileThumb.src = blobUrl;
+          if (D.step1Next)   D.step1Next.disabled = false;
+          updateContour();
+          renderCanvas();
         };
-        reader.readAsDataURL(blob);
+        img2.src = blobUrl;
       })
       .catch(function () {
         setBgProgress('Could not load processed image — try skipping', 0);
