@@ -481,9 +481,9 @@
       S.artworkUrl = original.url;
       fauxProgressTo(18, 'Preparing for AI...');
 
-      /* Step 2: resize to 1500px for Replicate — same result quality,
-         no GPU OOM. Original is already safely stored above. */
-      return resizeToBlob(S.originalImage, 1500, 0.92)
+      /* Step 2: resize to 1024px for Replicate — model processes at 1024px
+         internally, anything larger is wasted GPU memory → OOM. */
+      return resizeToBlob(S.originalImage, 1024, 0.92)
       .then(function (blob) {
         return uploadRaw(blob, 'preview.jpg', 'image/jpeg');
       });
