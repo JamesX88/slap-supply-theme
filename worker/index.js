@@ -69,15 +69,17 @@ async function startRemoveBg(request, env, corsHeaders) {
     return json({ error: 'Missing "image" field (base64 data URL or HTTPS URL)' }, 400, corsHeaders);
   }
 
-  // lucataco/remove-bg uses RMBG-1.4 — using the model endpoint so it always picks the latest version
-  const replicateRes = await fetch('https://api.replicate.com/v1/models/lucataco/remove-bg/predictions', {
+  // lucataco/remove-bg version-based endpoint
+  const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
     method: 'POST',
     headers: {
       Authorization: `Token ${env.REPLICATE_API_TOKEN}`,
       'Content-Type': 'application/json',
-      Prefer: 'respond-async',
     },
-    body: JSON.stringify({ input: { image: body.image } }),
+    body: JSON.stringify({
+      version: '95fcc2a26d3899cd6c2691c900465aaeff466285a65c14638cc5f36f34befaf1',
+      input: { image: body.image },
+    }),
   });
 
   if (!replicateRes.ok) {
