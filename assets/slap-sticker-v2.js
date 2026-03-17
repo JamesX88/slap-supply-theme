@@ -425,8 +425,47 @@
   /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
+  /* Resize image to maxPx on longest side and return a Blob (JPEG).
+     Used to create a Replicate-safe version — the model runs at 1024px
+     internally so anything beyond 1500px is wasted GPU memory. */
+  function resizeToBlob(imgEl, maxPx, quality) {
+    return new Promise(function (resolve) {
+      var w = imgEl.naturalWidth  || imgEl.width;
+      var h = imgEl.naturalHeight || imgEl.height;
+      if (Math.max(w, h) > maxPx) {
+        var sc = maxPx / Math.max(w, h);
+        w = Math.round(w * sc);
+        h = Math.round(h * sc);
+      }
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(imgEl, 0, 0, w, h);
+      c.toBlob(resolve, 'image/jpeg', quality || 0.92);
+    });
+  }
+
+  function uploadRaw(blob, filename, mimeType) {
+    return fetch(CFG.workerUrl + '/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': mimeType,
+        'X-Filename':   encodeURIComponent(filename),
+        'X-File-Type':  mimeType
+      },
+      body: blob
+    })
+    .then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { throw new Error('Upload ' + r.status + ': ' + t); });
+      return r.json();
+    })
+    .then(function (data) {
+      if (data.error) throw new Error(data.error);
+      return data;
+    });
+  }
+
   function startBgRemoval() {
-    if (!S.file) return;
+    if (!S.file || !S.originalImage) return;
 
     showLoadingOverlay();
     fauxProgressTo(5, 'Uploading file...');
@@ -435,33 +474,29 @@
     if (D.step1Next)  D.step1Next.disabled = true;
     S.bgAttempts = 0;
 
-    /* Step 1: stream raw file to R2 via Worker — no base64, no memory bloat */
-    fetch(CFG.workerUrl + '/upload', {
-      method: 'POST',
-      headers: {
-        'Content-Type': S.file.type || 'application/octet-stream',
-        'X-Filename':   encodeURIComponent(S.file.name),
-        'X-File-Type':  S.file.type || 'application/octet-stream'
-      },
-      body: S.file   /* send raw File object — streamed, never base64 encoded */
-    })
-    .then(function (r) {
-      if (!r.ok) return r.text().then(function (t) { throw new Error('Upload ' + r.status + ': ' + t); });
-      return r.json();
-    })
-    .then(function (upload) {
-      if (upload.error) throw new Error(upload.error);
-      S.artworkKey = upload.key;
-      S.artworkUrl = upload.url;
+    /* Step 1: stream original full-res file to R2 — this is the print file */
+    uploadRaw(S.file, S.file.name, S.file.type || 'application/octet-stream')
+    .then(function (original) {
+      S.artworkKey = original.key;
+      S.artworkUrl = original.url;
+      fauxProgressTo(18, 'Preparing for AI...');
 
-      fauxProgressTo(20, 'Sending to AI...');
-      setBgProgress('Sending to AI...', 20);
+      /* Step 2: resize to 1500px for Replicate — same result quality,
+         no GPU OOM. Original is already safely stored above. */
+      return resizeToBlob(S.originalImage, 1500, 0.92)
+      .then(function (blob) {
+        return uploadRaw(blob, 'preview.jpg', 'image/jpeg');
+      });
+    })
+    .then(function (preview) {
+      fauxProgressTo(28, 'Sending to AI...');
+      setBgProgress('Sending to AI...', 28);
 
-      /* Step 2: tell Worker to start BG removal using the R2 URL */
+      /* Step 3: tell Replicate to process the 1500px preview */
       return fetch(CFG.workerUrl + '/remove-bg', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: upload.key })
+        body: JSON.stringify({ key: preview.key })
       });
     })
     .then(function (r) {
@@ -472,8 +507,8 @@
       if (data.error) throw new Error(data.error);
       if (!data.id)   throw new Error('Worker returned no prediction ID');
       S.bgPredictionId = data.id;
-      fauxProgressTo(30, 'Removing background...');
-      setBgProgress('Removing background...', 30);
+      fauxProgressTo(35, 'Removing background...');
+      setBgProgress('Removing background...', 35);
       schedulePoll();
     })
     .catch(function (err) {
