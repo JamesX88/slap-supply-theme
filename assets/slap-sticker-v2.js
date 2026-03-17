@@ -425,20 +425,45 @@
   /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
+  /* Resize image to max 1024px and convert to JPEG before sending.
+     Replicate's RMBG model works at 1024px internally — sending larger images
+     just wastes memory and causes OOM errors in the Worker / model. */
+  function resizeForUpload(dataURL, callback) {
+    var img = new Image();
+    img.onload = function () {
+      var MAX = 1024;
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (Math.max(w, h) > MAX) {
+        var sc = MAX / Math.max(w, h);
+        w = Math.round(w * sc);
+        h = Math.round(h * sc);
+      }
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      callback(c.toDataURL('image/jpeg', 0.88));
+    };
+    img.src = dataURL;
+  }
+
   function startBgRemoval() {
     if (!S.originalDataURL) return;
 
     showLoadingOverlay();
-    fauxProgressTo(5, 'Uploading image...');
-    setBgProgress('Starting AI background removal...', 5);
+    fauxProgressTo(5, 'Preparing image...');
+    setBgProgress('Preparing image...', 5);
     if (D.bgStatus)   D.bgStatus.classList.add('sv2__bg-status--show');
     if (D.step1Next)  D.step1Next.disabled = true;
     S.bgAttempts = 0;
 
+    resizeForUpload(S.originalDataURL, function (resizedDataURL) {
+      fauxProgressTo(12, 'Uploading image...');
+      setBgProgress('Uploading image...', 12);
+
     fetch(CFG.workerUrl + '/remove-bg', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: S.originalDataURL })
+      body: JSON.stringify({ image: resizedDataURL })
     })
     .then(function (r) {
       if (!r.ok) return r.text().then(function (t) { throw new Error('Worker ' + r.status + ': ' + t); });
@@ -457,6 +482,7 @@
       setBgProgress('Error: ' + (err.message || 'unknown') + ' — upload a transparent PNG to skip', 0);
       if (D.bgSkipBtn) D.bgSkipBtn.style.display = '';
     });
+    }); // end resizeForUpload
   }
 
   function schedulePoll() {
