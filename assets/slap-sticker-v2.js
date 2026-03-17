@@ -429,22 +429,26 @@
   /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
-  /* Resize image to maxPx on longest side and return a Blob (JPEG).
-     Used to create a Replicate-safe version — the model runs at 1024px
-     internally so anything beyond 1500px is wasted GPU memory. */
-  function resizeToBlob(imgEl, maxPx, quality) {
-    return new Promise(function (resolve) {
-      var w = imgEl.naturalWidth  || imgEl.width;
-      var h = imgEl.naturalHeight || imgEl.height;
-      if (Math.max(w, h) > maxPx) {
-        var sc = maxPx / Math.max(w, h);
-        w = Math.round(w * sc);
-        h = Math.round(h * sc);
-      }
+  /* Resize a File/Blob to maxPx on the longest side, return a JPEG Blob.
+     Uses createImageBitmap() with built-in resize — decodes + scales in one
+     step without ever uploading a full-res texture to the GPU (which causes
+     STATUS_ACCESS_VIOLATION / OOM crashes on large print files). */
+  function resizeToBlob(file, maxPx, quality) {
+    var w = S.imageWidth, h = S.imageHeight;
+    if (Math.max(w, h) > maxPx) {
+      var sc = maxPx / Math.max(w, h);
+      w = Math.round(w * sc);
+      h = Math.round(h * sc);
+    }
+    return createImageBitmap(file, { resizeWidth: w, resizeHeight: h, resizeQuality: 'medium' })
+    .then(function (bitmap) {
       var c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      c.getContext('2d').drawImage(imgEl, 0, 0, w, h);
-      c.toBlob(resolve, 'image/jpeg', quality || 0.92);
+      c.width = bitmap.width; c.height = bitmap.height;
+      c.getContext('2d').drawImage(bitmap, 0, 0);
+      bitmap.close();
+      return new Promise(function (resolve) {
+        c.toBlob(resolve, 'image/jpeg', quality || 0.92);
+      });
     });
   }
 
@@ -485,9 +489,9 @@
       S.artworkUrl = original.url;
       fauxProgressTo(18, 'Preparing for AI...');
 
-      /* Step 2: resize to 1024px for Replicate — model processes at 1024px
-         internally, anything larger is wasted GPU memory → OOM. */
-      return resizeToBlob(S.originalImage, 1024, 0.92)
+      /* Step 2: resize to 1024px for Replicate via createImageBitmap —
+         never touches the GPU with a full-res texture. */
+      return resizeToBlob(S.file, 1024, 0.92)
       .then(function (blob) {
         return uploadRaw(blob, 'preview.jpg', 'image/jpeg');
       });
