@@ -2,6 +2,11 @@ name = "slap-bg-remover"
 main = "index.js"
 compatibility_date = "2024-09-01"
 
+# ── Custom domain route (bypasses workers.dev Access policy) ────────────────
+routes = [
+  { pattern = "stickers-api.slap.supply/*", zone_id = "54a406fe465c93103efb0c87c1cbeed2" }
+]
+
 # ── R2 bucket binding ───────────────────────────────────────────────────────
 # Create the bucket first: wrangler r2 bucket create slap-artwork
 [[r2_buckets]]

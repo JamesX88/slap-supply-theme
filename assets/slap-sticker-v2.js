@@ -18,7 +18,7 @@
      ────────────────────────────────────────────────────────────────────────── */
   var CFG = {
     /** Your deployed Cloudflare Worker URL — no trailing slash */
-    workerUrl: 'https://slap-bg-remover.walbridge-james.workers.dev',
+    workerUrl: 'https://stickers-api.slap.supply',
 
     /** Polling interval for BG removal (ms) */
     pollInterval: 2500,
