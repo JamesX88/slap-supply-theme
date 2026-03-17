@@ -321,49 +321,32 @@
     S.contourPath      = null;
     stopBgPoll();
 
-    /* NEVER load the full-res original into an HTMLImageElement.
-       Even a blob URL triggers a full pixel decode when drawImage is called,
-       which OOMs Chrome on large print files.
-       Strategy:
-         1. Parse actual dimensions from file header (no decode at all)
-         2. Create an ≤800px display image via createImageBitmap — JPEG uses
-            libjpeg's scale factors so it never decodes the full resolution */
+    /* Do NOT decode the image in the browser at all.
+       Any decode (createImageBitmap, drawImage, img.onload on a canvas)
+       allocates the full raw pixel buffer — 100MB+ for large print files.
+       We only read the file header for dimensions, set a blob URL for
+       the thumbnail <img> tag, and let the canvas show a placeholder.
+       The processed result (1024px from Replicate) is decoded later — safe. */
     parseImageDimensions(file).then(function (dims) {
       S.imageWidth  = dims ? dims.w : 0;
       S.imageHeight = dims ? dims.h : 0;
       S.imageDPI    = (S.imageWidth && S.imageHeight)
         ? guessDPI(file, S.imageWidth, S.imageHeight)
         : 0;
-      return createImageBitmap(file, { resizeWidth: 800, resizeQuality: 'medium' });
-    })
-    .then(function (bmp) {
-      // If header parse failed, fall back to bitmap dimensions
-      if (!S.imageWidth) { S.imageWidth = bmp.width; S.imageHeight = bmp.height; }
-      var c = document.createElement('canvas');
-      c.width = bmp.width; c.height = bmp.height;
-      c.getContext('2d').drawImage(bmp, 0, 0);
-      bmp.close(); // release GPU memory immediately
-      return new Promise(function (resolve) {
-        c.toBlob(function (blob) { resolve(URL.createObjectURL(blob)); }, 'image/jpeg', 0.92);
-      });
-    })
-    .then(function (displayUrl) {
+
       if (S.originalDataURL && S.originalDataURL.startsWith('blob:')) {
         URL.revokeObjectURL(S.originalDataURL);
       }
-      S.originalDataURL = displayUrl;
-      var img = new Image();
-      img.onload = function () {
-        S.originalImage = img; // ≤800px display copy — never full-res
-        showFilePreview();
-        renderCanvas();
-        startBgRemoval();
-      };
-      img.src = displayUrl;
-    })
-    .catch(function (err) {
+      // Blob URL for the <img> thumbnail only — browser renders it lazily at CSS size
+      S.originalDataURL = URL.createObjectURL(file);
+      S.originalImage   = null; // canvas shows placeholder until processed image arrives
+
+      showFilePreview();
+      renderCanvas();
+      startBgRemoval();
+    }).catch(function (err) {
       console.error('Image load error:', err);
-      alert('Could not load image: ' + (err.message || 'Try a different file format.'));
+      alert('Could not read image: ' + (err.message || 'Try a different file format.'));
     });
   }
 
@@ -491,29 +474,6 @@
   /* ──────────────────────────────────────────────────────────────────────────
      BACKGROUND REMOVAL — Cloudflare Worker + Replicate polling
      ────────────────────────────────────────────────────────────────────────── */
-  /* Resize a File/Blob to maxPx on the longest side, return a JPEG Blob.
-     Uses createImageBitmap() with built-in resize — decodes + scales in one
-     step without ever uploading a full-res texture to the GPU (which causes
-     STATUS_ACCESS_VIOLATION / OOM crashes on large print files). */
-  function resizeToBlob(file, maxPx, quality) {
-    var w = S.imageWidth, h = S.imageHeight;
-    if (Math.max(w, h) > maxPx) {
-      var sc = maxPx / Math.max(w, h);
-      w = Math.round(w * sc);
-      h = Math.round(h * sc);
-    }
-    return createImageBitmap(file, { resizeWidth: w, resizeHeight: h, resizeQuality: 'medium' })
-    .then(function (bitmap) {
-      var c = document.createElement('canvas');
-      c.width = bitmap.width; c.height = bitmap.height;
-      c.getContext('2d').drawImage(bitmap, 0, 0);
-      bitmap.close();
-      return new Promise(function (resolve) {
-        c.toBlob(resolve, 'image/jpeg', quality || 0.92);
-      });
-    });
-  }
-
   function uploadRaw(blob, filename, mimeType) {
     return fetch(CFG.workerUrl + '/upload', {
       method: 'POST',
@@ -535,7 +495,7 @@
   }
 
   function startBgRemoval() {
-    if (!S.file || !S.originalImage) return;
+    if (!S.file) return;
 
     showLoadingOverlay();
     fauxProgressTo(5, 'Uploading file...');
@@ -544,29 +504,20 @@
     if (D.step1Next)  D.step1Next.disabled = true;
     S.bgAttempts = 0;
 
-    /* Step 1: stream original full-res file to R2 — this is the print file */
+    /* Stream the original file to R2 — no decode, no buffering.
+       Then pass the R2 URL to Replicate. The RMBG-1.4 model resizes
+       internally to 1024×1024 so we don't need a client-side resize. */
     uploadRaw(S.file, S.file.name, S.file.type || 'application/octet-stream')
     .then(function (original) {
       S.artworkKey = original.key;
       S.artworkUrl = original.url;
-      fauxProgressTo(18, 'Preparing for AI...');
+      fauxProgressTo(25, 'Sending to AI...');
+      setBgProgress('Sending to AI...', 25);
 
-      /* Step 2: resize to 1024px for Replicate via createImageBitmap —
-         never touches the GPU with a full-res texture. */
-      return resizeToBlob(S.file, 1024, 0.92)
-      .then(function (blob) {
-        return uploadRaw(blob, 'preview.jpg', 'image/jpeg');
-      });
-    })
-    .then(function (preview) {
-      fauxProgressTo(28, 'Sending to AI...');
-      setBgProgress('Sending to AI...', 28);
-
-      /* Step 3: tell Replicate to process the 1500px preview */
       return fetch(CFG.workerUrl + '/remove-bg', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: preview.key })
+        body: JSON.stringify({ key: original.key })
       });
     })
     .then(function (r) {
